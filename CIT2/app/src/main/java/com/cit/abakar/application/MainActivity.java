@@ -116,7 +116,7 @@ public class MainActivity extends Activity {
     public void onBackPressed() {
     }
 
-    public boolean isContain(ArrayList<String> arrayList, String str){
+   /* public boolean isContain(ArrayList<String> arrayList, String str){
 
         for(int i = 0; i < arrayList.size(); i++){
             if(arrayList.get(i).equals(str)){
@@ -124,7 +124,7 @@ public class MainActivity extends Activity {
             }
         }
         return false;
-    }
+    }*/
 
 
     class YourAdapter extends BaseAdapter{
