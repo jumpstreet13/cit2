@@ -13,6 +13,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
+import static com.cit.abakar.application.MainActivity.hasConnection;
+
 public class EquipmentActivity extends Activity {
 
     ListView listView;
@@ -22,7 +24,11 @@ public class EquipmentActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment);
-        getActionBar().setTitle("Список оборудования");
+        if(!hasConnection(this)) {
+            getActionBar().setTitle("Список оборудования (оффлайн режим)");
+        }else{
+            getActionBar().setTitle("Список оборудования (онлайн режим)");
+        }
         for(int i = 0; i<10; i++){
             arr.add("Оборудование "+i+"");
         }

@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static com.cit.abakar.application.MainActivity.hasConnection;
+
 
 public class EquipmentStateActivity extends Activity implements MultiSelectionSpinner.MultiSpinnerListener {
 
@@ -27,7 +29,12 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_state);
-        getActionBar().setTitle("Состояние оборудования");
+        if(!hasConnection(this)) {
+            getActionBar().setTitle("Состояние оборудования (оффлайн режим)");
+        }else{
+            getActionBar().setTitle("Состояние оборудования (онлайн режим)");
+        }
+
         button1 = (Button) findViewById(R.id.buttonInEquipmentState);
         button2 = (Button) findViewById(R.id.button2InEquipmentState);
         switch1 = (Switch) findViewById(R.id.switch1InEquipmentState);
