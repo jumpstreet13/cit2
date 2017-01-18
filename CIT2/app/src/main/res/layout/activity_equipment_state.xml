@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_equipment_state"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/background"
+    tools:context="com.cit.abakar.application.EquipmentStateActivity">
+
+    <Switch
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/switch1InEquipmentState"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="37dp" />
+
+    <Switch
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="39dp"
+        android:id="@+id/switch2InEquipmentState"
+        android:layout_below="@+id/switch1InEquipmentState"
+        android:layout_alignStart="@+id/switch1InEquipmentState" />
+
+    <Spinner
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:id="@+id/spinnerInEquipmentActivity"
+        android:layout_below="@+id/buttonInEquipmentState"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Неисправно"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonInEquipmentState"
+        android:layout_below="@+id/switch1InEquipmentState"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Отправить"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2InEquipmentState"
+        android:layout_below="@+id/spinnerInEquipmentActivity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
+
+</RelativeLayout>

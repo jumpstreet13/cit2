@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Application</string>
+    <string-array name="exampleForList">
+        <item>Узел1</item>
+        <item>Узел2</item>
+        <item>Узел3</item>
+        <item>Узел4</item>
+        <item>Узел5</item>
+        <item>Узел6</item>
+        <item>Узел7</item>
+        <item>Узел8</item>
+        <item>Узел9</item>
+        <item>Узел10</item>
+    </string-array>
+
+    <string-array name="forSpinner">
+        <item>Сломан кулер</item>
+        <item>Сгорела видеокарта</item>
+        <item>Отсутствует автофокус</item>
+        <item>Другое</item>
+    </string-array>
+</resources>
