@@ -50,9 +50,16 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 button2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //Log.e("getSelected", s);
+                        if(spinner.getSelectedItem().toString().equals("") ||
+                                spinner.getSelectedItem().toString().equals("Выбрать причину")){
+                            Toast toast = Toast.makeText(EquipmentStateActivity.this,"Вы ничего не выбрали",Toast.LENGTH_SHORT);
+                            toast.show();
+                            return;
+
+                        }
                         Toast toast = Toast.makeText(EquipmentStateActivity.this,spinner.getSelectedItem().toString(),Toast.LENGTH_SHORT);
                         toast.show();
-                        //Log.e("getSelected", s);
                         Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
                         startActivity(intent);
                     }
