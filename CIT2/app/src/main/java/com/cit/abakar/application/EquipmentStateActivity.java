@@ -17,6 +17,7 @@ public class EquipmentStateActivity extends Activity {
 
     Button button1, button2;
     Switch switch1, switch2;
+    //MultiSelectionSpinner spinner;
     Spinner spinner;
 
     @Override
@@ -32,6 +33,7 @@ public class EquipmentStateActivity extends Activity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.forSpinner, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+      //  spinner.setItems(getResources().getStringArray(R.array.forSpinner));
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
