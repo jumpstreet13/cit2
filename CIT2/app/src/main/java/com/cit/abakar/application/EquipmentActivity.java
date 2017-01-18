@@ -3,11 +3,15 @@ package com.cit.abakar.application;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 public class EquipmentActivity extends Activity {
 
@@ -36,6 +40,8 @@ public class EquipmentActivity extends Activity {
         });
 
     }
+
+
 
     @Override
     public void onBackPressed() {
