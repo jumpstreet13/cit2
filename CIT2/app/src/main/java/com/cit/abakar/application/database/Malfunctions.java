@@ -8,8 +8,11 @@ import com.activeandroid.annotation.Table;
 @Table(name = "Malfunctions")
 public class Malfunctions extends Model {
 
-    @Column(name = "inspection_id")
-    public String inspection_id;
+   @Column(name = "visit_id")
+   public String visit_id;
+
+    @Column(name = "equipment_id")
+    public String equipment_id;
 
     @Column(name = "description")
     public String description;
@@ -24,10 +27,11 @@ public class Malfunctions extends Model {
         super();
     }
 
-    public Malfunctions(String inspection_id, String description,
+    public Malfunctions(String visit_id, String equipment_id, String description,
                         Directory_Equipment_Condition directory_equipment_condition,
                         Inspection inspection) {
-        this.inspection_id = inspection_id;
+        this.visit_id = visit_id;
+        this.equipment_id = equipment_id;
         this.description = description;
         this.directory_equipment_condition = directory_equipment_condition;
         this.inspection = inspection;

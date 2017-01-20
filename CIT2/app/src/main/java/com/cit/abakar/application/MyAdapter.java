@@ -43,6 +43,7 @@ public class MyAdapter extends BaseAdapter {
 
         if(convertView == null){
             convertView = inflater.inflate(R.layout.mylist, parent, false);
+            //convertView = inflater.inflate(R.layout.mylist_forequipments, parent, false);
         }
         TextView main = (TextView) convertView.findViewById(R.id.myListTextView);
 
