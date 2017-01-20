@@ -34,14 +34,15 @@ public class MainActivity extends Activity {
     ArrayList<String> arr = new ArrayList<String>();
     YourAdapter adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if(!hasConnection(this)) {
-            getActionBar().setTitle("Список узлов (оффлайн режим)");
+            getActionBar().setTitle("Список узлов (оффлайн)");
         }else{
-            getActionBar().setTitle("Список узлов (онлайн режим)");
+            getActionBar().setTitle("Список узлов (онлайн)");
         }
         for(int i = 0; i<10; i++){
             arr.add("Uzel " + i);
@@ -67,6 +68,16 @@ public class MainActivity extends Activity {
         return this.arr;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(!hasConnection(this)) {
+            getActionBar().setTitle("Список узлов (оффлайн)");
+        }else{
+            getActionBar().setTitle("Список узлов (онлайн)");
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

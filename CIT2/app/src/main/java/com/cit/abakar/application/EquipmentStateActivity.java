@@ -30,9 +30,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_state);
         if(!hasConnection(this)) {
-            getActionBar().setTitle("Состояние оборудования (оффлайн режим)");
+            getActionBar().setTitle("Состояние оборудования (оффлайн)");
         }else{
-            getActionBar().setTitle("Состояние оборудования (онлайн режим)");
+            getActionBar().setTitle("Состояние оборудования (онлайн)");
         }
 
         button1 = (Button) findViewById(R.id.buttonInEquipmentState);
@@ -74,6 +74,16 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!hasConnection(this)) {
+            getActionBar().setTitle("Список узлов (оффлайн)");
+        }else{
+            getActionBar().setTitle("Список узлов (онлайн)");
+        }
     }
 
     @Override
