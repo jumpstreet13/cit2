@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Application</string>
+    <string name="ActionBarISOffline">Состояние оборудования (оффлайн)</string>
+    <string name="ActionBarIsOnline">Состояние оборудования (онлайн)</string>
+    <string name="ChooseTheReason">Выбрать причину</string>
+    <string name="ToastYouDoNotChosenAnything">Вы ничего не выбрали</string>
+    <string name="DoesNotWork">Неисправно</string>
+    <string name="Send">Отправить</string>
     <string-array name="exampleForList">
         <item>Узел1</item>
         <item>Узел2</item>

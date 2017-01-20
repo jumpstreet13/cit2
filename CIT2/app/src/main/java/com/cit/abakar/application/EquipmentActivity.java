@@ -26,9 +26,9 @@ public class EquipmentActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment);
         if(!hasConnection(this)) {
-            getActionBar().setTitle("Список оборудования (оффлайн)");
+            getActionBar().setTitle(R.string.ActionBarISOffline);
         }else{
-            getActionBar().setTitle("Список оборудования (онлайн)");
+            getActionBar().setTitle(R.string.ActionBarIsOnline);
         }
         for(int i = 0; i<10; i++){
             arr.add("Оборудование "+i+"");
@@ -53,9 +53,9 @@ public class EquipmentActivity extends Activity {
     protected void onResume() {
         super.onResume();
         if(!hasConnection(this)) {
-            getActionBar().setTitle("Список узлов (оффлайн)");
+            getActionBar().setTitle(R.string.ActionBarISOffline);
         }else{
-            getActionBar().setTitle("Список узлов (онлайн)");
+            getActionBar().setTitle(R.string.ActionBarIsOnline);
         }
     }
 

@@ -44,9 +44,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         ActiveAndroid.initialize(this);
         if(!hasConnection(this)) {
-            getActionBar().setTitle("Список узлов (оффлайн)");
+            getActionBar().setTitle(R.string.ActionBarISOffline);
         }else{
-            getActionBar().setTitle("Список узлов (онлайн)");
+            getActionBar().setTitle(R.string.ActionBarIsOnline);
         }
         for(int i = 0; i<10; i++){
             arr.add("Uzel " + i);
@@ -78,9 +78,9 @@ public class MainActivity extends Activity {
         super.onResume();
 
         if(!hasConnection(this)) {
-            getActionBar().setTitle("Список узлов (оффлайн)");
+            getActionBar().setTitle(R.string.ActionBarISOffline);
         }else{
-            getActionBar().setTitle("Список узлов (онлайн)");
+            getActionBar().setTitle(R.string.ActionBarIsOnline);
         }
     }
 

@@ -31,9 +31,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_state);
         if(!hasConnection(this)) {
-            getActionBar().setTitle("Состояние оборудования (оффлайн)");
+            getActionBar().setTitle(R.string.ActionBarISOffline);
         }else{
-            getActionBar().setTitle("Состояние оборудования (онлайн)");
+            getActionBar().setTitle(R.string.ActionBarIsOnline);
         }
 
         button1 = (Button) findViewById(R.id.buttonInEquipmentState);
@@ -48,7 +48,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.forSpinner, android.R.layout.simple_spinner_item);
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
        // spinner.setAdapter(adapter);
-        spinner.setItems(ar,"Выбрать причину",this);
+        spinner.setItems(ar,getString(R.string.ChooseTheReason),this);
         switch1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +59,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         switch2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
 
@@ -80,7 +80,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         //Log.e("getSelected", s);
                         if(spinner.getSelectedItem().toString().equals("") ||
                                 spinner.getSelectedItem().toString().equals("Выбрать причину")){
-                            Toast toast = Toast.makeText(EquipmentStateActivity.this,"Вы ничего не выбрали",Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(EquipmentStateActivity.this, R.string.ToastYouDoNotChosenAnything,Toast.LENGTH_SHORT);
                             toast.show();
                             return;
 
@@ -101,9 +101,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     protected void onResume() {
         super.onResume();
         if(!hasConnection(this)) {
-            getActionBar().setTitle("Список узлов (оффлайн)");
+            getActionBar().setTitle(R.string.ActionBarISOffline);
         }else{
-            getActionBar().setTitle("Список узлов (онлайн)");
+            getActionBar().setTitle(R.string.ActionBarIsOnline);
         }
     }
 
