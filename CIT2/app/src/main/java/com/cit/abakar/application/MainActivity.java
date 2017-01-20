@@ -44,9 +44,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         ActiveAndroid.initialize(this);
         if(!hasConnection(this)) {
-            getActionBar().setTitle(R.string.ActionBarISOffline);
+            getActionBar().setTitle(R.string.ActionBarISOfflineMainActivity);
         }else{
-            getActionBar().setTitle(R.string.ActionBarIsOnline);
+            getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
         }
         for(int i = 0; i<10; i++){
             arr.add("Uzel " + i);
@@ -78,9 +78,9 @@ public class MainActivity extends Activity {
         super.onResume();
 
         if(!hasConnection(this)) {
-            getActionBar().setTitle(R.string.ActionBarISOffline);
+            getActionBar().setTitle(R.string.ActionBarISOfflineMainActivity);
         }else{
-            getActionBar().setTitle(R.string.ActionBarIsOnline);
+            getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
         }
     }
 

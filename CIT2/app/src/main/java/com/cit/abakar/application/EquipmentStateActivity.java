@@ -31,9 +31,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_state);
         if(!hasConnection(this)) {
-            getActionBar().setTitle(R.string.ActionBarISOffline);
+            getActionBar().setTitle(R.string.ActionBarISOfflineEquipmentStateActivity);
         }else{
-            getActionBar().setTitle(R.string.ActionBarIsOnline);
+            getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentStateActivity);
         }
 
         button1 = (Button) findViewById(R.id.buttonInEquipmentState);
@@ -101,9 +101,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     protected void onResume() {
         super.onResume();
         if(!hasConnection(this)) {
-            getActionBar().setTitle(R.string.ActionBarISOffline);
+            getActionBar().setTitle(R.string.ActionBarISOfflineEquipmentActivity);
         }else{
-            getActionBar().setTitle(R.string.ActionBarIsOnline);
+            getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
         }
     }
 

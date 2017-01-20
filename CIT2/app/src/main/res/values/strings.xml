@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">Application</string>
-    <string name="ActionBarISOffline">Состояние оборудования (оффлайн)</string>
-    <string name="ActionBarIsOnline">Состояние оборудования (онлайн)</string>
+    <string name="ActionBarISOfflineEquipmentStateActivity">Состояние оборудования(оффлайн)</string>
+    <string name="ActionBarIsOnlineEquipmentStateActivity">Состояние оборудования(онлайн)</string>
+    <string name="ActionBarISOfflineEquipmentActivity">Список оборудования(оффлайн)</string>
+    <string name="ActionBarIsOnlineEquipmentActivity">Список оборудования(онлайн)</string>
+    <string name="ActionBarISOfflineMainActivity">Список узлов(оффлайн)</string>
+    <string name="ActionBarIsOnlineMainActivity">Список узлов(онлайн)</string>
     <string name="ChooseTheReason">Выбрать причину</string>
     <string name="ToastYouDoNotChosenAnything">Вы ничего не выбрали</string>
     <string name="DoesNotWork">Неисправно</string>
