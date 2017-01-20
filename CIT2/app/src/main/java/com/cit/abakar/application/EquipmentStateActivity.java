@@ -75,7 +75,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         });
 
     }
-    //gfdgfd
+    //gfdgfdff
 
     @Override
     protected void onResume() {
