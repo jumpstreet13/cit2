@@ -25,20 +25,24 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.activeandroid.ActiveAndroid;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends Activity {
 
-    ListView listView;
-    ArrayList<String> arr = new ArrayList<String>();
-    YourAdapter adapter;
+    private ListView listView;
+    private ArrayList<String> arr = new ArrayList<String>();
+    private YourAdapter adapter;
+    private MyMediaPlayer myMediaPlayer;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActiveAndroid.initialize(this);
         if(!hasConnection(this)) {
             getActionBar().setTitle("Список узлов (оффлайн)");
         }else{
@@ -55,8 +59,9 @@ public class MainActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
+                myMediaPlayer = new MyMediaPlayer(MainActivity.this, R.raw.button_sound);
+                myMediaPlayer.start();
+                myMediaPlayer.setFree();
                 Intent intent = new Intent(MainActivity.this, EquipmentActivity.class);
                 startActivity(intent);
             }

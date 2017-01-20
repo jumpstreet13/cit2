@@ -47,14 +47,32 @@
         android:layout_below="@+id/switch1InEquipmentState"
         android:layout_alignParentEnd="true" />
 
+    <TextView
+        android:text="Исправно"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/switch1InEquipmentState" />
+
     <Button
         android:text="Отправить"
         android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button2InEquipmentState"
+        android:layout_marginTop="102dp"
         android:layout_below="@+id/spinnerInEquipmentActivity"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp" />
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="В наличии"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/spinnerInEquipmentActivity"
+        android:layout_alignStart="@+id/switch2InEquipmentState"
+        android:layout_marginBottom="14dp"
+        android:id="@+id/textView2" />
 
 </RelativeLayout>

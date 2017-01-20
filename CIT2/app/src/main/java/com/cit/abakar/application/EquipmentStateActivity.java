@@ -20,10 +20,11 @@ import static com.cit.abakar.application.MainActivity.hasConnection;
 
 public class EquipmentStateActivity extends Activity implements MultiSelectionSpinner.MultiSpinnerListener {
 
-    Button button1, button2;
-    Switch switch1, switch2;
-    MultiSelectionSpinner spinner;
-    ArrayList<String> ar = new ArrayList<String>();
+   private Button button1, button2;
+   private Switch switch1, switch2;
+   private MultiSelectionSpinner spinner;
+   private ArrayList<String> ar = new ArrayList<String>();
+   private MyMediaPlayer myMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +53,17 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, R.raw.button_sound);
+                myMediaPlayer.start();
+                myMediaPlayer.setFree();
                 button2.setVisibility(View.VISIBLE);
                 spinner.setVisibility(View.VISIBLE);
                 button2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                       MyMediaPlayer myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, R.raw.button_sound);
+                        myMediaPlayer.start();
+                        myMediaPlayer.setFree();
                         //Log.e("getSelected", s);
                         if(spinner.getSelectedItem().toString().equals("") ||
                                 spinner.getSelectedItem().toString().equals("Выбрать причину")){

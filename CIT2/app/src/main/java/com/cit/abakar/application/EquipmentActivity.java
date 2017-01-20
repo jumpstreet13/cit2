@@ -17,8 +17,9 @@ import static com.cit.abakar.application.MainActivity.hasConnection;
 
 public class EquipmentActivity extends Activity {
 
-    ListView listView;
-    ArrayList<String> arr = new ArrayList<String>();
+   private ListView listView;
+   private ArrayList<String> arr = new ArrayList<String>();
+   private MyMediaPlayer myMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,9 @@ public class EquipmentActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
+                myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, R.raw.button_sound);
+                myMediaPlayer.start();
+                myMediaPlayer.setFree();
                 Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);
                 startActivity(intent);
             }
