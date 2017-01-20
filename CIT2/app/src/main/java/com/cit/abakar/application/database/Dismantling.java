@@ -8,7 +8,7 @@ import com.activeandroid.annotation.Table;
 @Table(name = "Dismantling")
 public class Dismantling extends Model {
 
-    @Column(name = "akt_number")
+    @Column(name = "akt_number", index = true)
     public String akt_number;
 
     @Column(name = "user")

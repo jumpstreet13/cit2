@@ -13,10 +13,10 @@ public class Equipment extends Model {
     @Column(name = "center_id")
     public String center_id;
 
-    @Column(name = "serial_number")
+    @Column(name = "serial_number", index = true)
     public String serial_number;
 
-    @Column(name = "inventory_number")
+    @Column(name = "inventory_number", index = true)
     public String inventory_number;
 
     @Column(name = "name")

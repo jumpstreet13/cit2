@@ -49,6 +49,19 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
        // spinner.setAdapter(adapter);
         spinner.setItems(ar,"Выбрать причину",this);
+        switch1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        switch2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override

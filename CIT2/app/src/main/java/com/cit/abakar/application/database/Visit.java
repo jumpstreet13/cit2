@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "Visit")
 public class Visit extends Model {
 
-    @Column(name = "center_id")
+    @Column(name = "center_id", index = true)
     public String center_id;
 
     @Column(name = "date_visit")
