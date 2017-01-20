@@ -20,16 +20,25 @@ public class Dismantling extends Model {
     @Column(name = "equipment_id")
     public String equipment_id;
 
+    @Column(name = "Visit")
+    public Visit visit;
+
+    @Column(name = "Equipment")
+    public Equipment equipment;
+
+
     public Dismantling(){
         super();
 
     }
 
-    public Dismantling(String akt_number, String user, String visit_id, String equipment_id) {
-        super();
+    public Dismantling(String akt_number, String user, String visit_id, String equipment_id,
+                       Visit visit, Equipment equipment) {
         this.akt_number = akt_number;
         this.user = user;
         this.visit_id = visit_id;
         this.equipment_id = equipment_id;
+        this.visit = visit;
+        this.equipment = equipment;
     }
 }

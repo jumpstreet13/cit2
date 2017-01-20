@@ -4,6 +4,8 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.util.List;
+
 
 @Table(name = "Equipment")
 public class Equipment extends Model {
@@ -25,6 +27,18 @@ public class Equipment extends Model {
 
     @Column(name = "fg_not_install")
     public String fg_not_install;
+
+    public List<Dismantling> dismantlings(){
+        return  getMany(Dismantling.class, "Equipment");
+    }
+
+    public List<Installation> installations(){
+        return  getMany(Installation.class, "Equipment");
+    }
+
+    public List<Inspection> inspections(){
+        return  getMany(Inspection.class, "Equipment");
+    }
 
     public Equipment(){
         super();

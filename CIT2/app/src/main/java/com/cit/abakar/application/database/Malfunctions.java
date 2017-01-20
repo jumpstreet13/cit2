@@ -14,13 +14,22 @@ public class Malfunctions extends Model {
     @Column(name = "description")
     public String description;
 
+    @Column(name = "Directory_Equipment_Condition")
+    public  Directory_Equipment_Condition directory_equipment_condition;
+
+    @Column(name = "Inspection")
+    public Inspection inspection;
+
     public Malfunctions(){
         super();
     }
 
-    public Malfunctions(String inspection_id, String description) {
-        super();
+    public Malfunctions(String inspection_id, String description,
+                        Directory_Equipment_Condition directory_equipment_condition,
+                        Inspection inspection) {
         this.inspection_id = inspection_id;
         this.description = description;
+        this.directory_equipment_condition = directory_equipment_condition;
+        this.inspection = inspection;
     }
 }

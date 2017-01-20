@@ -16,15 +16,23 @@ public class Installation extends Model {
     @Column(name = "visit_id")
     public String visit_id;
 
+    @Column(name = "Visit")
+    public Visit visit;
+
+    @Column(name = "Equipment")
+    public Equipment equipment;
+
     public Installation(){
         super();
 
     }
 
-    public Installation(String akt_number, String equipment_id, String visit_id) {
-        super();
+    public Installation(String akt_number, String equipment_id, String visit_id,
+                        Visit visit, Equipment equipment) {
         this.akt_number = akt_number;
         this.equipment_id = equipment_id;
         this.visit_id = visit_id;
+        this.visit = visit;
+        this.equipment = equipment;
     }
 }
