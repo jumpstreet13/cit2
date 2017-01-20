@@ -36,8 +36,7 @@ public class MainActivity extends Activity {
     private ArrayList<String> arr = new ArrayList<String>();
     private YourAdapter adapter;
     private MyMediaPlayer myMediaPlayer;
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -210,7 +209,6 @@ public class MainActivity extends Activity {
 
 
     }
-
 
     public static boolean hasConnection(final Context context)
     {
