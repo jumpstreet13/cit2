@@ -39,7 +39,8 @@ public class EquipmentActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, R.raw.button_sound);
+                myMediaPlayer.reset();
+                myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
                 Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);

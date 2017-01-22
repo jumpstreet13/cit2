@@ -2,14 +2,22 @@ package com.cit.abakar.application;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Switch;
 
 
 public class MyMediaPlayer {
 
     MediaPlayer mediaPlayer;
 
-    public MyMediaPlayer(Context context, int r) {
-        mediaPlayer = MediaPlayer.create(context, r);
+    public MyMediaPlayer(Context context, String v) {
+        if(v.equals("Button")){
+            mediaPlayer = MediaPlayer.create(context, R.raw.button_sound);
+        }
+        if(v.equals("Switch")){
+            mediaPlayer = MediaPlayer.create(context, R.raw.switch_sound);
+        }
         mediaPlayer.setLooping(false);
     }
 

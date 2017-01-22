@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -58,7 +59,7 @@ public class MainActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                myMediaPlayer = new MyMediaPlayer(MainActivity.this, R.raw.button_sound);
+                myMediaPlayer = new MyMediaPlayer(MainActivity.this, "Button");
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
                 Intent intent = new Intent(MainActivity.this, EquipmentActivity.class);

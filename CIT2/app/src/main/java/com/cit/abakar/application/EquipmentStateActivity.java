@@ -52,21 +52,28 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         switch1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                myMediaPlayer.reset();
+                myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Switch");
+                myMediaPlayer.start();
+                myMediaPlayer.setFree();
             }
         });
 
         switch2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                myMediaPlayer.reset();
+                myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Switch");
+                myMediaPlayer.start();
+                myMediaPlayer.setFree();
             }
         });
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, R.raw.button_sound);
+                myMediaPlayer.reset();
+                myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
                 button2.setVisibility(View.VISIBLE);
@@ -74,7 +81,8 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 button2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       MyMediaPlayer myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, R.raw.button_sound);
+                        myMediaPlayer.reset();
+                        myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this,"Button");
                         myMediaPlayer.start();
                         myMediaPlayer.setFree();
                         //Log.e("getSelected", s);
