@@ -24,7 +24,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
    private Switch switch1, switch2;
    private MultiSelectionSpinner spinner;
    private ArrayList<String> ar = new ArrayList<String>();
-   private MyMediaPlayer myMediaPlayer;
+   private MyMediaPlayer myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

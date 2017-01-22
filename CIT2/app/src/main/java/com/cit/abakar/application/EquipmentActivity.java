@@ -19,7 +19,7 @@ public class EquipmentActivity extends Activity {
 
    private ListView listView;
    private ArrayList<String> arr = new ArrayList<String>();
-   private MyMediaPlayer myMediaPlayer;
+   private MyMediaPlayer myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
