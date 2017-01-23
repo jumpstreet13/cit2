@@ -28,7 +28,7 @@ public class Center extends Model {
     }
 
     public static List<Center> getAll(){
-        return  new Select().from(Center.class).orderBy("Name ASC").execute();
+        return  new Select().from(Center.class).execute();
     }
 
     public Center(String name) {

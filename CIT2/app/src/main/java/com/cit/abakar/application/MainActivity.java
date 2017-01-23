@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
@@ -40,6 +41,32 @@ public class MainActivity extends Activity {
     private YourAdapter adapter;
     private MyMediaPlayer myMediaPlayer;
     private MenuItem connection;
+    public ProgressBar progressBar;
+
+    class MyTask extends AsyncTask<Void ,Void, Void>{
+        Activity activity;
+
+        public MyTask(Activity activity){
+            this.activity = activity;
+        }
+        @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressBar.setVisibility(View.GONE);
+            // ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.exampleForList));
+        }
+    }
 
     public ArrayList<String> getArrString(ArrayList<Center> cr){
         ArrayList<String> arr = new ArrayList<String>();
@@ -58,7 +85,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         ActiveAndroid.initialize(this);
         getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
-
+        progressBar = (ProgressBar) findViewById(R.id.progressBarInActivityMain);
         ActiveAndroid.beginTransaction();
         try {
             for (int i = 0; i < 100; i++) {
@@ -70,13 +97,11 @@ public class MainActivity extends Activity {
         } finally {
             ActiveAndroid.endTransaction();
         }
-
-
-        listView = (ListView) findViewById(R.id.listViewMain);
-       // ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.exampleForList));
         arr.addAll(Center.getAll());
-        adapter = new YourAdapter(this,getArrString(arr));
+        listView = (ListView) findViewById(R.id.listViewMain);
+        adapter = new YourAdapter(MainActivity.this,getArrString(arr));
         listView.setAdapter(adapter);
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
