@@ -7,7 +7,7 @@ import com.activeandroid.annotation.Table;
 
 import java.util.List;
 
-@Table(name = "Inspection")
+@Table(name = "Inspection", id="_id")
 public class Inspection extends Model {
 
     @Column(name = "equipment_id")

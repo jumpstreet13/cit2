@@ -6,7 +6,7 @@ import com.activeandroid.annotation.Table;
 
 import java.util.List;
 
-@Table(name = "Directory_Equipment_Condition")
+@Table(name = "Directory_Equipment_Condition", id="_id")
 public class Directory_Equipment_Condition extends Model {
 
     @Column(name = "name")

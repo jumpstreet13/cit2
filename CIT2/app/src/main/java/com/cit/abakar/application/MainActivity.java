@@ -23,10 +23,12 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.activeandroid.ActiveAndroid;
+import com.cit.abakar.application.database.Center;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -34,24 +36,46 @@ import java.util.Locale;
 public class MainActivity extends Activity {
 
     private ListView listView;
-    private ArrayList<String> arr = new ArrayList<String>();
+    private ArrayList<Center> arr = new ArrayList<Center>();
     private YourAdapter adapter;
     private MyMediaPlayer myMediaPlayer;
     private MenuItem connection;
+
+    public ArrayList<String> getArrString(ArrayList<Center> cr){
+        ArrayList<String> arr = new ArrayList<String>();
+        for(Center cc : cr){
+            arr.add(cc.name);
+            Log.e("NAME", cc.name);
+        }
+        return arr;
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ActiveAndroid.initialize(this);
-            getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
+        getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
 
-        for(int i = 0; i<10; i++){
-            arr.add("Uzel " + i);
+        ActiveAndroid.beginTransaction();
+        try {
+            for (int i = 0; i < 100; i++) {
+                Center center = new Center();
+                center.name = "Узел " + i;
+                center.save();
+            }
+            ActiveAndroid.setTransactionSuccessful();
+        } finally {
+            ActiveAndroid.endTransaction();
         }
+
+
         listView = (ListView) findViewById(R.id.listViewMain);
        // ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.exampleForList));
-        adapter = new YourAdapter(this,arr);
+        arr.addAll(Center.getAll());
+        adapter = new YourAdapter(this,getArrString(arr));
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -71,7 +95,7 @@ public class MainActivity extends Activity {
     }
 
     public ArrayList<String> getBaseList(){
-        return this.arr;
+        return getArrString(arr);
     }
 
     @Override
@@ -130,9 +154,16 @@ public class MainActivity extends Activity {
 
         int id = item.getItemId();
 
-        if(id == R.id.search_settings){
-            return true;
+        switch (id){
+            case R.id.search_settings:
+                return true;
+            case R.id.synchronize:
+               // ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBarInMainActivity);
+               // progressBar.setVisibility(View.VISIBLE);
+                Log.e("Sync", "syncronize is going on");
+                return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

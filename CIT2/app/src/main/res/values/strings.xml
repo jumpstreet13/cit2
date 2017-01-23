@@ -15,6 +15,8 @@
     <string name="SendNuberOfAkt">Отправить</string>
     <string name="NumberOfAkt">Номер акта...</string>
     <string name="Search">Поиск</string>
+    <string name="connection">соединение</string>
+    <string name="syncronization">синхронизация</string>
     <string-array name="exampleForList">
         <item>Узел1</item>
         <item>Узел2</item>

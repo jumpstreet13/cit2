@@ -4,7 +4,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
-@Table(name = "Installation")
+@Table(name = "Installation", id="_id")
 public class Installation extends Model {
 
     @Column(name = "akt_number", index = true)

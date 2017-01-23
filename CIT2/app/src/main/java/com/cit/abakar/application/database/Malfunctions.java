@@ -5,7 +5,7 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
 
-@Table(name = "Malfunctions")
+@Table(name = "Malfunctions", id="_id")
 public class Malfunctions extends Model {
 
    @Column(name = "visit_id")

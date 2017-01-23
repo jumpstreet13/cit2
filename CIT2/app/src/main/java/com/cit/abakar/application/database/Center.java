@@ -6,6 +6,7 @@ import android.widget.ListView;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
 import java.util.List;
 
@@ -26,6 +27,9 @@ public class Center extends Model {
         return getMany(Equipment.class, "Center");
     }
 
+    public static List<Center> getAll(){
+        return  new Select().from(Center.class).orderBy("Name ASC").execute();
+    }
 
     public Center(String name) {
         super();

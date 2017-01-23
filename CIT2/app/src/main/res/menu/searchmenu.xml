@@ -2,6 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:com.cit.app.abakar.application="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/conntection_settings"
+        android:orderInCategory="100"
+        android:title="@string/connection"
+        android:enabled="false"
+        android:showAsAction="always">
+    </item>
+
+    <item
+        android:id="@+id/synchronize"
+        android:orderInCategory="100"
+        android:title="@string/syncronization"
+        android:icon="@drawable/ic_update_white_24dp"
+        android:showAsAction="always">
+
+    </item>
+
     <item
         android:id="@+id/search_settings"
         android:orderInCategory="100"
@@ -13,13 +31,6 @@
         android:showAsAction="always">
     </item>
 
-    <item
-        android:id="@+id/conntection_settings"
-        android:orderInCategory="100"
-        android:title="соединение"
-        android:enabled="false"
-        android:showAsAction="always">
 
-    </item>
 
 </menu>

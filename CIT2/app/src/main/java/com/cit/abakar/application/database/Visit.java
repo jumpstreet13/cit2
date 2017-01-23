@@ -9,7 +9,7 @@ import com.activeandroid.annotation.Table;
 
 import java.util.List;
 
-@Table(name = "Visit")
+@Table(name = "Visit", id="_id")
 public class Visit extends Model {
 
     @Column(name = "center_id", index = true)

@@ -74,6 +74,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
                 button1.setEnabled(false);
+                switch1.setChecked(false);
                 switch1.setEnabled(false);
                 switch2.setEnabled(false);
                 button2.setVisibility(View.VISIBLE);
