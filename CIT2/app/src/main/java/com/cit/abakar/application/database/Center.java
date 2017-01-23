@@ -1,6 +1,7 @@
 package com.cit.abakar.application.database;
 
 
+import android.nfc.cardemulation.CardEmulation;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ListView;
@@ -35,6 +36,10 @@ public class Center extends Model  {
 
     public static List<Center> getAll(){
         return  new Select().from(Center.class).execute();
+    }
+
+    public static Center getById(int id){
+        return  new Select().from(Center.class).where("id = ?", id).executeSingle();
     }
 
     public Center(String name) {

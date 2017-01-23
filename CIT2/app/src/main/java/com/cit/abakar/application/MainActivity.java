@@ -113,8 +113,7 @@ public class MainActivity extends Activity {
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
                 Intent intent = new Intent(MainActivity.this, EquipmentActivity.class);
-                intent.putExtra("center", arr.get(position));
-                intent.putExtra("list", arr.get(position).getId().toString());
+                intent.putExtra("id", arr.get(position).getId());
                 startActivity(intent);
             }
         });
