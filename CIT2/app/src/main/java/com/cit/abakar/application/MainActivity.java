@@ -77,11 +77,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(hasConnection(this)){
-            connection.setIcon(R.drawable.ic_network_cell_white_24dp);
-        }else{
-            connection.setIcon(R.drawable.ic_signal_cellular_off_white_24dp);
-        }
+        invalidateOptionsMenu();
     }
 
     @Override
