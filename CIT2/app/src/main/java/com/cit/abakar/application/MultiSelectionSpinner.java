@@ -3,6 +3,7 @@ package com.cit.abakar.application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.app.AlertDialog;
+import android.media.MediaPlayer;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -18,9 +19,12 @@ public class MultiSelectionSpinner extends Spinner implements DialogInterface.On
     private boolean[] selected;
     private String defaultText;
     private MultiSpinnerListener listener;
+    private Context context;
+    private MyMediaPlayer myMediaPlayer;
 
     public MultiSelectionSpinner(Context context) {
         super(context);
+        this.context = context;
     }
 
     public MultiSelectionSpinner(Context arg0, AttributeSet arg1) {

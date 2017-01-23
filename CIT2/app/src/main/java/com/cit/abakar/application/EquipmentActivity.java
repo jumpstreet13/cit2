@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cit.abakar.application.database.Directory_Equipment_Condition;
 
@@ -33,16 +34,14 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
    private ArrayList<String> arr = new ArrayList<String>();
    private MyMediaPlayer myMediaPlayer;
    private MultiSelectionSpinner spinner;
+   private MenuItem connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment);
-        if(!hasConnection(this)) {
-            getActionBar().setTitle(R.string.ActionBarISOfflineEquipmentActivity);
-        }else{
-            getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
-        }
+        getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
+
         for(int i = 0; i<10; i++){
             arr.add("Оборудование "+i+"");
         }
@@ -67,12 +66,27 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.searchmenu, menu);
+        connection = menu.findItem(R.id.conntection_settings);
+        MenuItem searchItem = menu.findItem(R.id.search_settings);
+        searchItem.setVisible(false);
+        if(hasConnection(this)){
+            connection.setIcon(R.drawable.ic_network_cell_white_24dp);
+        }else{
+            connection.setIcon(R.drawable.ic_signal_cellular_off_white_24dp);
+        }
+        return true;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-        if(!hasConnection(this)) {
-            getActionBar().setTitle(R.string.ActionBarISOfflineEquipmentActivity);
+        if(hasConnection(this)){
+            connection.setIcon(R.drawable.ic_network_cell_white_24dp);
         }else{
-            getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
+            connection.setIcon(R.drawable.ic_signal_cellular_off_white_24dp);
         }
     }
 
@@ -117,7 +131,15 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
                 EditText ed = (EditText) dialog.findViewById(R.id.editTextInInstallationDialog);
+                if(ed.getText().toString().equals("")){
+                    Toast toast = Toast.makeText(EquipmentActivity.this,"Вы не ввели номер акта", Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 dialog.dismiss();
+
             }
         });
 
@@ -150,6 +172,13 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
                 EditText ed = (EditText) dialog.findViewById(R.id.editTextinEquipmentDeinstallation);
+                if(ed.getText().toString().equals("")){
+                    Toast toast = Toast.makeText(EquipmentActivity.this,"Вы не ввели номер акта", Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 dialog.dismiss();
             }
         });

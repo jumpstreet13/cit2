@@ -37,17 +37,15 @@ public class MainActivity extends Activity {
     private ArrayList<String> arr = new ArrayList<String>();
     private YourAdapter adapter;
     private MyMediaPlayer myMediaPlayer;
+    private MenuItem connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ActiveAndroid.initialize(this);
-        if(!hasConnection(this)) {
-            getActionBar().setTitle(R.string.ActionBarISOfflineMainActivity);
-        }else{
             getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
-        }
+
         for(int i = 0; i<10; i++){
             arr.add("Uzel " + i);
         }
@@ -79,11 +77,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        if(!hasConnection(this)) {
-            getActionBar().setTitle(R.string.ActionBarISOfflineMainActivity);
+        if(hasConnection(this)){
+            connection.setIcon(R.drawable.ic_network_cell_white_24dp);
         }else{
-            getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
+            connection.setIcon(R.drawable.ic_signal_cellular_off_white_24dp);
         }
     }
 
@@ -91,10 +88,16 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.searchmenu, menu);
+        connection = menu.findItem(R.id.conntection_settings);
         MenuItem searchItem = menu.findItem(R.id.search_settings);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search_settings).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        if(hasConnection(this)){
+            connection.setIcon(R.drawable.ic_network_cell_white_24dp);
+        }else{
+            connection.setIcon(R.drawable.ic_signal_cellular_off_white_24dp);
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

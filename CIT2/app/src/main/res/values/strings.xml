@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Application</string>
-    <string name="ActionBarISOfflineEquipmentStateActivity">Состояние оборудования(оффлайн)</string>
-    <string name="ActionBarIsOnlineEquipmentStateActivity">Состояние оборудования(онлайн)</string>
-    <string name="ActionBarISOfflineEquipmentActivity">Список оборудования(оффлайн)</string>
-    <string name="ActionBarIsOnlineEquipmentActivity">Список оборудования(онлайн)</string>
-    <string name="ActionBarISOfflineMainActivity">Список узлов(оффлайн)</string>
-    <string name="ActionBarIsOnlineMainActivity">Список узлов(онлайн)</string>
+    <string name="ActionBarISOfflineEquipmentStateActivity">Состояние оборудования</string>
+    <string name="ActionBarIsOnlineEquipmentStateActivity">Состояние оборудования</string>
+    <string name="ActionBarISOfflineEquipmentActivity">Список оборудования</string>
+    <string name="ActionBarIsOnlineEquipmentActivity">Список оборудования</string>
+    <string name="ActionBarISOfflineMainActivity">Список узлов</string>
+    <string name="ActionBarIsOnlineMainActivity">Список узлов</string>
     <string name="ChooseTheReason">Выбрать причину</string>
     <string name="ToastYouDoNotChosenAnything">Вы ничего не выбрали</string>
     <string name="DoesNotWork">Неисправно</string>
@@ -14,6 +14,7 @@
     <string name="DeInstall">Демонтировать</string>
     <string name="SendNuberOfAkt">Отправить</string>
     <string name="NumberOfAkt">Номер акта...</string>
+    <string name="Search">Поиск</string>
     <string-array name="exampleForList">
         <item>Узел1</item>
         <item>Узел2</item>

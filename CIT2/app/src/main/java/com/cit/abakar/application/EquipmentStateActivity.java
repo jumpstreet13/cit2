@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,16 +28,13 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
    private MultiSelectionSpinner spinner;
    private ArrayList<String> ar = new ArrayList<String>();
    private MyMediaPlayer myMediaPlayer;
+   private MenuItem connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_state);
-        if(!hasConnection(this)) {
             getActionBar().setTitle(R.string.ActionBarISOfflineEquipmentStateActivity);
-        }else{
-            getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentStateActivity);
-        }
 
         button1 = (Button) findViewById(R.id.buttonInEquipmentState);
         button2 = (Button) findViewById(R.id.button2InEquipmentState);
@@ -70,12 +70,12 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(myMediaPlayer != null) {
-                    myMediaPlayer.reset();
-                }
                 myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
+                button1.setEnabled(false);
+                switch1.setEnabled(false);
+                switch2.setEnabled(false);
                 button2.setVisibility(View.VISIBLE);
                 spinner.setVisibility(View.VISIBLE);
                 button2.setOnClickListener(new View.OnClickListener() {
@@ -102,15 +102,30 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         });
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.searchmenu, menu);
+        connection = menu.findItem(R.id.conntection_settings);
+        MenuItem searchItem = menu.findItem(R.id.search_settings);
+        searchItem.setVisible(false);
+        if(hasConnection(this)){
+            connection.setIcon(R.drawable.ic_network_cell_white_24dp);
+        }else{
+            connection.setIcon(R.drawable.ic_signal_cellular_off_white_24dp);
+        }
+        return true;
+    }
     //gfdgfdff
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(!hasConnection(this)) {
-            getActionBar().setTitle(R.string.ActionBarISOfflineEquipmentActivity);
+        if(hasConnection(this)){
+            connection.setIcon(R.drawable.ic_network_cell_white_24dp);
         }else{
-            getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
+            connection.setIcon(R.drawable.ic_signal_cellular_off_white_24dp);
         }
     }
 
@@ -125,6 +140,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
     @Override
     public void onItemsSelected(boolean[] selected) {
+        myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
+        myMediaPlayer.start();
+        myMediaPlayer.setFree();
         Log.e("WTF", selected[0] + "");
     }
 }
