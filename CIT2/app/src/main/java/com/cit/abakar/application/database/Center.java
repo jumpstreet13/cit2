@@ -38,7 +38,7 @@ public class Center extends Model  {
         return  new Select().from(Center.class).execute();
     }
 
-    public static Center getById(int id){
+    public static Center getById(String id){
         return  new Select().from(Center.class).where("id = ?", id).executeSingle();
     }
 

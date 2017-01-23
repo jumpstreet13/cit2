@@ -45,8 +45,8 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         setContentView(R.layout.activity_equipment);
         getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
         Intent intent = getIntent();
-        Log.e("EXTRA", intent.getIntExtra("id", 1) + "");
-        Center center = Center.getById(intent.getIntExtra("id", 1));
+        Log.e("EXTRA", intent.getStringExtra("id") + "");
+        Center center = Center.getById(intent.getStringExtra("id"));
         Log.e("CENTER", center.name);
        // Log.e("CENTER", center.getId().toString());
 

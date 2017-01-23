@@ -114,7 +114,7 @@ public class MainActivity extends Activity {
                 myMediaPlayer.setFree();
                 Intent intent = new Intent(MainActivity.this, EquipmentActivity.class);
                 Log.e("PZD", arr.get(position).getId().toString());
-                intent.putExtra("id", arr.get(position).getId());
+                intent.putExtra("id", arr.get(position).getId().toString());
                 startActivity(intent);
             }
         });
