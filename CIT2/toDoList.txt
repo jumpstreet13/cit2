@@ -4,3 +4,4 @@ https://vimeo.com/135623377 , добавить звуки для свичей и для нажатия кнопок, ho
 http://www.activeandroid.com/ another useful link
 http://stackoverflow.com/questions/4755871/how-to-set-image-button-backgroundimage-for-different-state  - изменяемые состояния
 кнопки
+http://java-help.ru/activeandroid-orm-review/   - active android
