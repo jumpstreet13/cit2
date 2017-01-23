@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cit.abakar.application">
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <supports-screens android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        android:anyDensity="true" />
+
     <application
         android:name="com.activeandroid.app.Application"
         android:allowBackup="true"

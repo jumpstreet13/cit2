@@ -84,6 +84,7 @@ public class MyAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Log.e("CLICK", "button de]installation has clicked");
+                adapterInterface.deinstallationButtonClicked();
 
             }
         });

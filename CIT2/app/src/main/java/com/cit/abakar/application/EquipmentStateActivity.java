@@ -52,9 +52,6 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         switch1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(myMediaPlayer != null) {
-                    myMediaPlayer.reset();
-                }
                 myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Switch");
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
@@ -64,9 +61,6 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         switch2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(myMediaPlayer !=null) {
-                    myMediaPlayer.reset();
-                }
                 myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Switch");
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
@@ -122,6 +116,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
     @Override
     public void onBackPressed() {
+        myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
+        myMediaPlayer.start();
+        myMediaPlayer.setFree();
         Intent intent = new Intent(this, EquipmentActivity.class);
         startActivity(intent);
     }

@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.cit.abakar.application.database.Directory_Equipment_Condition;
 
@@ -44,7 +47,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             arr.add("Оборудование "+i+"");
         }
         listView = (ListView) findViewById(R.id.listViewEquipment);
-        spinner = (MultiSelectionSpinner) findViewById(R.id.spinnerInEquipmentActivity);
         MyAdapter adapter = new MyAdapter(this, arr);
         adapter.setActivity(this);
         listView.setAdapter(adapter);
@@ -76,15 +78,15 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     @Override
     public void onBackPressed() {
+        myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
+        myMediaPlayer.start();
+        myMediaPlayer.setFree();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
     @Override
     public void textViewClicked() {
-        if(myMediaPlayer != null) {
-            myMediaPlayer.reset();
-        }
         myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
         myMediaPlayer.start();
         myMediaPlayer.setFree();
@@ -95,14 +97,11 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     @Override
     public void installationButtonClicked() {
-        if(myMediaPlayer != null) {
-            myMediaPlayer.reset();
-        }
         myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
         myMediaPlayer.start();
         myMediaPlayer.setFree();
 
-        final Dialog dialog = new Dialog(EquipmentActivity.this);
+        final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
         dialog.setContentView(R.layout.equipment_dialog);
         dialog.setTitle("Введите номер акта");
         dialog.show();
@@ -114,6 +113,9 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
+                myMediaPlayer.start();
+                myMediaPlayer.setFree();
                 EditText ed = (EditText) dialog.findViewById(R.id.editTextInInstallationDialog);
                 dialog.dismiss();
             }
@@ -124,12 +126,33 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     @Override
     public void deinstallationButtonClicked() {
-        if(myMediaPlayer != null) {
-            myMediaPlayer.reset();
-        }
         myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
         myMediaPlayer.start();
         myMediaPlayer.setFree();
+        final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
+        dialog.setContentView(R.layout.equipment_deinstallation_dialog);
+        dialog.setTitle("Введите номер акта");
+        dialog.show();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        TelephonyManager tMgr = (TelephonyManager)EquipmentActivity.this.getSystemService(Context.TELEPHONY_SERVICE);
+        String mPhoneNumber = tMgr.getLine1Number();
+        TextView tx = (TextView) dialog.findViewById(R.id.textViewinEquipmentDeinstallation);
+        tx.setText(mPhoneNumber);
+        Log.e("NUMBER", mPhoneNumber);
+
+        Button sendButton = (Button) dialog.findViewById(R.id.buttoninEqupmentDeinstallation);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
+                myMediaPlayer.start();
+                myMediaPlayer.setFree();
+                EditText ed = (EditText) dialog.findViewById(R.id.editTextinEquipmentDeinstallation);
+                dialog.dismiss();
+            }
+        });
 
     }
 

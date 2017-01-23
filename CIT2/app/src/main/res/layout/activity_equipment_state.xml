@@ -63,14 +63,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/button2InEquipmentState"
         android:layout_marginTop="102dp"
-        android:layout_below="@+id/spinnerInEquipmentActivity"
+        android:layout_below="@+id/spinnerInEquipmentStateActivity"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:text="В наличии"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/spinnerInEquipmentActivity"
+        android:layout_above="@+id/spinnerInEquipmentStateActivity"
         android:layout_alignStart="@+id/switch2InEquipmentState"
         android:layout_marginBottom="14dp"
         android:id="@+id/textView2" />
