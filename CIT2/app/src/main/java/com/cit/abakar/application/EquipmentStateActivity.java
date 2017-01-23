@@ -24,7 +24,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
    private Switch switch1, switch2;
    private MultiSelectionSpinner spinner;
    private ArrayList<String> ar = new ArrayList<String>();
-   private MyMediaPlayer myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
+   private MyMediaPlayer myMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         button2 = (Button) findViewById(R.id.button2InEquipmentState);
         switch1 = (Switch) findViewById(R.id.switch1InEquipmentState);
         switch2 = (Switch) findViewById(R.id.switch2InEquipmentState);
-        spinner = (MultiSelectionSpinner) findViewById(R.id.spinnerInEquipmentActivity);
+        spinner = (MultiSelectionSpinner) findViewById(R.id.spinnerInEquipmentStateActivity);
         ar.add("Сломан кулер");
         ar.add("Не работает автофокус");
         ar.add("Перегрев процессора");
@@ -52,7 +52,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         switch1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myMediaPlayer.reset();
+                if(myMediaPlayer != null) {
+                    myMediaPlayer.reset();
+                }
                 myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Switch");
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
@@ -62,7 +64,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         switch2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myMediaPlayer.reset();
+                if(myMediaPlayer !=null) {
+                    myMediaPlayer.reset();
+                }
                 myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Switch");
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
@@ -72,7 +76,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myMediaPlayer.reset();
+                if(myMediaPlayer != null) {
+                    myMediaPlayer.reset();
+                }
                 myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
@@ -81,7 +87,6 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 button2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myMediaPlayer.reset();
                         myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this,"Button");
                         myMediaPlayer.start();
                         myMediaPlayer.setFree();
