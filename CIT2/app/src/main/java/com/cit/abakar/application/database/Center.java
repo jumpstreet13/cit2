@@ -1,6 +1,8 @@
 package com.cit.abakar.application.database;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.ListView;
 
 import com.activeandroid.Model;
@@ -11,12 +13,16 @@ import com.activeandroid.query.Select;
 import java.util.List;
 
 @Table(name = "Center")
-public class Center extends Model {
+public class Center extends Model  {
     @Column(name = "name")
     public String name;
 
     public Center(){
         super();
+    }
+
+    public Center(Parcel in){
+        name = in.readString();
     }
 
     public List<Visit> visits(){
@@ -35,4 +41,5 @@ public class Center extends Model {
         super();
         this.name = name;
     }
+
 }

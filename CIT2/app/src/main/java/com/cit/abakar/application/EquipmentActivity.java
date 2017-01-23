@@ -21,7 +21,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.activeandroid.ActiveAndroid;
+import com.cit.abakar.application.database.Center;
 import com.cit.abakar.application.database.Directory_Equipment_Condition;
+import com.cit.abakar.application.database.Equipment;
 
 import java.util.ArrayList;
 import java.util.zip.Inflater;
@@ -31,7 +34,7 @@ import static com.cit.abakar.application.MainActivity.hasConnection;
 public class EquipmentActivity extends Activity implements AdapterInterface, MultiSelectionSpinner.MultiSpinnerListener {
 
    private ListView listView;
-   private ArrayList<String> arr = new ArrayList<String>();
+   private ArrayList<Equipment> arr = new ArrayList<Equipment>();
    private MyMediaPlayer myMediaPlayer;
    private MultiSelectionSpinner spinner;
    private MenuItem connection;
@@ -41,12 +44,30 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment);
         getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
+        Intent intent = getIntent();
+        Center center = intent.getParcelableExtra("center");
+        Log.e("CENTER", center.name);
+       // Log.e("CENTER", center.getId().toString());
 
-        for(int i = 0; i<10; i++){
-            arr.add("Оборудование "+i+"");
-        }
+                Equipment equipment = new Equipment();
+                equipment.center = center;
+                equipment.center_id = intent.getStringExtra("list");
+                Log.e("CENTER", equipment.center_id);
+                equipment.serial_number = "332";
+                equipment.inventory_number = "3213";
+                equipment.name = "good equipment";
+                equipment.fg_dismantled = "true";
+                equipment.fg_not_install = "false";
+                equipment.save();
+
+        arr.add(equipment);
+
+
+
         listView = (ListView) findViewById(R.id.listViewEquipment);
-        MyAdapter adapter = new MyAdapter(this, arr);
+        ArrayList<String> ar = new ArrayList<String>();
+        ar.add(arr.get(0).name);
+        MyAdapter adapter = new MyAdapter(this,ar);
         adapter.setActivity(this);
         listView.setAdapter(adapter);
         /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

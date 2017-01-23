@@ -5,3 +5,5 @@ http://www.activeandroid.com/ another useful link
 http://stackoverflow.com/questions/4755871/how-to-set-image-button-backgroundimage-for-different-state  - измен€емые состо€ни€
 кнопки
 http://java-help.ru/activeandroid-orm-review/   - active android
+
+ѕ≈–≈ƒј¬ј“№ ID элемента по этому айди вытаскивать элемент из базы и брать нужные значени€
