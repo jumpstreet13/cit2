@@ -2,3 +2,5 @@
 диалоговое окно с вводом номера акта и номера юзера(при деинсталл€ции), при инсталл€ции только номер акта.
 https://vimeo.com/135623377 , добавить звуки дл€ свичей и дл€ нажати€ кнопок, hold on we are going home,
 http://www.activeandroid.com/ another useful link
+http://stackoverflow.com/questions/4755871/how-to-set-image-button-backgroundimage-for-different-state  - измен€емые состо€ни€
+кнопки
