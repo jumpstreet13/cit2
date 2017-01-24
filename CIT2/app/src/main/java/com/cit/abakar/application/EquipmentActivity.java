@@ -39,6 +39,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
    private MultiSelectionSpinner spinner;
    private MenuItem connection;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,11 +119,13 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     }
 
     @Override
-    public void textViewClicked() {
+    public void textViewClicked(int position) {
         myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
         myMediaPlayer.start();
         myMediaPlayer.setFree();
         Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);
+        intent.putExtra("id", getIntent().getStringExtra("id"));
+        intent.putExtra("idOfEquipment", arr.get(position).getId());
         startActivity(intent);
 
     }

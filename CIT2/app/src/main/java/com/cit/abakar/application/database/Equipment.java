@@ -48,6 +48,10 @@ public class Equipment extends Model {
         return new Select().from(Equipment.class).execute();
     }
 
+    public static Equipment getById(String id){
+        return  new Select().from(Equipment.class).where("id = ?", id).executeSingle();
+    }
+
     public Equipment(){
         super();
 

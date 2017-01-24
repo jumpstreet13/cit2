@@ -3,7 +3,7 @@ package com.cit.abakar.application;
 
 public interface AdapterInterface {
 
-    public void textViewClicked();
+    public void textViewClicked(int id);
 
     public void installationButtonClicked();
 

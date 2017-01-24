@@ -54,7 +54,7 @@ public class MyAdapter extends BaseAdapter {
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
 
         if(convertView == null){
@@ -69,7 +69,7 @@ public class MyAdapter extends BaseAdapter {
         main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapterInterface.textViewClicked();
+                adapterInterface.textViewClicked(position);
             }
         });
 

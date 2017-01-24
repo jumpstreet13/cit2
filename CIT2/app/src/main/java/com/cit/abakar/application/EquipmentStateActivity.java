@@ -16,6 +16,8 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.cit.abakar.application.database.Equipment;
+
 import java.util.ArrayList;
 
 import static com.cit.abakar.application.MainActivity.hasConnection;
@@ -29,18 +31,26 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
    private ArrayList<String> ar = new ArrayList<String>();
    private MyMediaPlayer myMediaPlayer;
    private MenuItem connection;
+   private Equipment equipment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_state);
-            getActionBar().setTitle(R.string.ActionBarISOfflineEquipmentStateActivity);
+        getActionBar().setTitle(R.string.ActionBarISOfflineEquipmentStateActivity);
+        equipment = Equipment.getById(getIntent().getStringExtra("idOfEquipment"));
 
         button1 = (Button) findViewById(R.id.buttonInEquipmentState);
         button2 = (Button) findViewById(R.id.button2InEquipmentState);
         switch1 = (Switch) findViewById(R.id.switch1InEquipmentState);
         switch2 = (Switch) findViewById(R.id.switch2InEquipmentState);
         spinner = (MultiSelectionSpinner) findViewById(R.id.spinnerInEquipmentStateActivity);
+        if(equipment.fg_dismantled.equals("true")){
+            switch2.setChecked(false);
+        }
+        if(equipment.fg_not_install.equals("true")){
+            switch1.setChecked(false);
+        }
         ar.add("Сломан кулер");
         ar.add("Не работает автофокус");
         ar.add("Перегрев процессора");
