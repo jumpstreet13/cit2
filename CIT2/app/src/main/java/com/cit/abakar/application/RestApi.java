@@ -2,8 +2,10 @@ package com.cit.abakar.application;
 
 
 import com.cit.abakar.application.database.Center;
+import com.cit.abakar.application.database.Dismantling;
 import com.cit.abakar.application.database.Equipment;
 import com.cit.abakar.application.database.Inspection;
+import com.cit.abakar.application.database.Installation;
 import com.cit.abakar.application.database.Malfunctions;
 import com.cit.abakar.application.database.Visit;
 
@@ -33,6 +35,10 @@ public interface RestApi {
     @GET("visit/")
     Call<Response<List<Visit>>> getVisits();
 
+    @GET("visit/")
+    Call<Response<List<Visit>>> getVisitsByDate(String id, String date);
+
+
     @POST("visit/")
     Call<Response<ResponseBody>> addVisit(Visit visit);
 
@@ -42,8 +48,11 @@ public interface RestApi {
     @POST("malfunction/")
     Call<Response<ResponseBody>> addMalfunction(Malfunctions malfunctions);
 
-    
+    @POST("installation/")
+    Call<Response<ResponseBody>> addInstallation(Installation installation);
 
+    @POST("dismantling/")
+    Call<Response<ResponseBody>> addDismantling(Dismantling dismantling);
 
 
 }
