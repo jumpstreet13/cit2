@@ -11,7 +11,7 @@ public class App extends Application {
     private static RestApi restApi;
     private Retrofit retrofit;
 
-
+   //Кек
     @Override
     public void onCreate(){
         super.onCreate();
