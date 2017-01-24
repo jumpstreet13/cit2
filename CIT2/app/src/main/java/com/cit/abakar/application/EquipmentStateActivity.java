@@ -98,6 +98,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 button1.setEnabled(false);
                 switch1.setEnabled(false);
                 switch2.setEnabled(false);
+                switch1.setChecked(false);
                 switch2.setChecked(true);
                 button2.setVisibility(View.VISIBLE);
                 spinner.setVisibility(View.VISIBLE);

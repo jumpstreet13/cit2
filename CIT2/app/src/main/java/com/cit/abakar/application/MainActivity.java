@@ -32,6 +32,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
 import com.cit.abakar.application.database.Center;
@@ -226,8 +227,9 @@ public class MainActivity extends Activity {
                 return true;
 
             case R.id.conntection_settings:
-
-                break;
+                Toast toast = Toast.makeText(MainActivity.this,"Подключение к сети",Toast.LENGTH_SHORT);
+                toast.show();
+                return true;
 
         }
 

@@ -8,7 +8,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
-public class RestApi {
+public interface RestApi {
 
     //@GET(.../centers/)
     //Call<List<Center>> getAllCenters();
