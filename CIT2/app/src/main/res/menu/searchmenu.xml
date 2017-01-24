@@ -12,11 +12,20 @@
     </item>
 
     <item
+        android:id="@+id/htttp_settings"
+        android:orderInCategory="100"
+        android:title="@string/ChooseAdressOfServer"
+        android:icon="@drawable/ic_http_white_24dp"
+        android:showAsAction="never">
+    </item>
+
+
+    <item
         android:id="@+id/synchronize"
         android:orderInCategory="100"
         android:title="@string/syncronization"
         android:icon="@drawable/ic_update_white_24dp"
-        android:showAsAction="always">
+        android:showAsAction="never">
 
     </item>
 

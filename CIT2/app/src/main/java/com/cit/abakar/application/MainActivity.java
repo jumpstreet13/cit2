@@ -2,9 +2,11 @@ package com.cit.abakar.application;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -19,10 +21,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
@@ -31,6 +36,7 @@ import android.widget.TextView;
 import com.activeandroid.ActiveAndroid;
 import com.cit.abakar.application.database.Center;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -42,6 +48,7 @@ public class MainActivity extends Activity {
     private MyMediaPlayer myMediaPlayer;
     private MenuItem connection;
     public ProgressBar progressBar;
+    public final static String URLSETTINS = "urlSettings";
 
     class MyTask extends AsyncTask<Void ,Void, Void>{
         Activity activity;
@@ -189,6 +196,39 @@ public class MainActivity extends Activity {
                // progressBar.setVisibility(View.VISIBLE);
                 Log.e("Sync", "syncronize is going on");
                 return true;
+            case R.id.htttp_settings:
+                final Dialog dialog = new Dialog(MainActivity.this, R.style.DialogTheme);
+                dialog.setContentView(R.layout.urldialog);
+                dialog.setTitle("Введите новый URL");
+                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                TextView textView = (TextView) dialog.findViewById(R.id.textViewinMainActivityDialog);
+                textView.setText(sharedPref.getString(URLSETTINS, getString(R.string.Adress_is_not_set_yet)));
+                dialog.show();
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+                Button sendButton = (Button) dialog.findViewById(R.id.buttoninMainActivityDialog);
+                sendButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myMediaPlayer = new MyMediaPlayer(MainActivity.this, "Button");
+                        myMediaPlayer.start();
+                        myMediaPlayer.setFree();
+                        EditText editText = (EditText) dialog.findViewById(R.id.editTextinMainActivityDialog);
+                        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString(URLSETTINS, editText.getText().toString());
+                        editor.commit();
+                        dialog.dismiss();
+                    }
+                });
+                return true;
+
+            case R.id.conntection_settings:
+
+                break;
+
         }
 
         return super.onOptionsItemSelected(item);

@@ -1,19 +1,25 @@
 package com.cit.abakar.application;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cit.abakar.application.database.Equipment;
@@ -38,7 +44,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_state);
         getActionBar().setTitle(R.string.ActionBarISOfflineEquipmentStateActivity);
+        Log.e("ZZ",getIntent().getStringExtra("idOfEquipment"));
         equipment = Equipment.getById(getIntent().getStringExtra("idOfEquipment"));
+        Log.e("ZZ", equipment.fg_dismantled + " " + equipment.fg_not_install+ " ");
 
         button1 = (Button) findViewById(R.id.buttonInEquipmentState);
         button2 = (Button) findViewById(R.id.button2InEquipmentState);
@@ -46,10 +54,14 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         switch2 = (Switch) findViewById(R.id.switch2InEquipmentState);
         spinner = (MultiSelectionSpinner) findViewById(R.id.spinnerInEquipmentStateActivity);
         if(equipment.fg_dismantled.equals("true")){
-            switch2.setChecked(false);
+            switch1.setChecked(false);
+        }else{
+            switch1.setChecked(true);
         }
         if(equipment.fg_not_install.equals("true")){
-            switch1.setChecked(false);
+            switch2.setChecked(false);
+        }else{
+            switch1.setChecked(true);
         }
         ar.add("Сломан кулер");
         ar.add("Не работает автофокус");
@@ -84,9 +96,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
                 button1.setEnabled(false);
-                switch1.setChecked(false);
                 switch1.setEnabled(false);
                 switch2.setEnabled(false);
+                switch2.setChecked(true);
                 button2.setVisibility(View.VISIBLE);
                 spinner.setVisibility(View.VISIBLE);
                 button2.setOnClickListener(new View.OnClickListener() {
@@ -106,12 +118,64 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         Toast toast = Toast.makeText(EquipmentStateActivity.this,spinner.getSelectedItem().toString(),Toast.LENGTH_SHORT);
                         toast.show();
                         Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
+                        intent.putExtra("id", getIntent().getStringExtra("id"));
                         startActivity(intent);
                     }
                 });
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id){
+            case R.id.search_settings:
+                return true;
+            case R.id.synchronize:
+                // ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBarInMainActivity);
+                // progressBar.setVisibility(View.VISIBLE);
+                Log.e("Sync", "syncronize is going on");
+                return true;
+            case R.id.htttp_settings:
+                final Dialog dialog = new Dialog(EquipmentStateActivity.this, R.style.DialogTheme);
+                dialog.setContentView(R.layout.urldialog);
+                dialog.setTitle("Введите новый URL");
+                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                TextView textView = (TextView) dialog.findViewById(R.id.textViewinMainActivityDialog);
+                textView.setText(sharedPref.getString(MainActivity.URLSETTINS, getString(R.string.Adress_is_not_set_yet)));
+                dialog.show();
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+                Button sendButton = (Button) dialog.findViewById(R.id.buttoninMainActivityDialog);
+                sendButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
+                        myMediaPlayer.start();
+                        myMediaPlayer.setFree();
+                        EditText editText = (EditText) dialog.findViewById(R.id.editTextinMainActivityDialog);
+                        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString(MainActivity.URLSETTINS, editText.getText().toString());
+                        editor.commit();
+                        dialog.dismiss();
+                    }
+                });
+                return true;
+
+            case R.id.conntection_settings:
+
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -142,6 +206,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         myMediaPlayer.start();
         myMediaPlayer.setFree();
         Intent intent = new Intent(this, EquipmentActivity.class);
+        intent.putExtra("id", getIntent().getStringExtra("id"));
         startActivity(intent);
     }
 

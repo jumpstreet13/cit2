@@ -16,7 +16,10 @@
     <string name="NumberOfAkt">Номер акта...</string>
     <string name="Search">Поиск</string>
     <string name="connection">соединение</string>
-    <string name="syncronization">синхронизация</string>
+    <string name="syncronization">Синхронизация</string>
+    <string name="ChooseAdressOfServer">Установить адрес сервера</string>
+    <string name="url">Введите новый URL...</string>
+    <string name="Adress_is_not_set_yet">Адрес пока не задан</string>
 
     <string-array name="forSpinner">
         <item>Сломан кулер</item>

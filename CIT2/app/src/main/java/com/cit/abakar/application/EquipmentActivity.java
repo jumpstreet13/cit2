@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -126,7 +127,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);
         intent.putExtra("id", getIntent().getStringExtra("id"));
         Log.e("PING",arr.get(position).getId().toString());
-        intent.putExtra("idOfEquipment", arr.get(position).getId());
+        intent.putExtra("idOfEquipment", arr.get(position).getId().toString());
         startActivity(intent);
 
     }
@@ -164,9 +165,59 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
             }
         });
-
-
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id){
+            case R.id.search_settings:
+                return true;
+            case R.id.synchronize:
+                // ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBarInMainActivity);
+                // progressBar.setVisibility(View.VISIBLE);
+                Log.e("Sync", "syncronize is going on");
+                return true;
+            case R.id.htttp_settings:
+                final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
+                dialog.setContentView(R.layout.urldialog);
+                dialog.setTitle("Введите новый URL");
+                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                TextView textView = (TextView) dialog.findViewById(R.id.textViewinMainActivityDialog);
+                textView.setText(sharedPref.getString(MainActivity.URLSETTINS, getString(R.string.Adress_is_not_set_yet)));
+                dialog.show();
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+                Button sendButton = (Button) dialog.findViewById(R.id.buttoninMainActivityDialog);
+                sendButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
+                        myMediaPlayer.start();
+                        myMediaPlayer.setFree();
+                        EditText editText = (EditText) dialog.findViewById(R.id.editTextinMainActivityDialog);
+                        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString(MainActivity.URLSETTINS, editText.getText().toString());
+                        editor.commit();
+                        dialog.dismiss();
+                    }
+                });
+                return true;
+
+            case R.id.conntection_settings:
+
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     public void deinstallationButtonClicked() {
