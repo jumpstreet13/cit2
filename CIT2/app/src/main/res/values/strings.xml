@@ -20,6 +20,7 @@
     <string name="ChooseAdressOfServer">Установить адрес сервера</string>
     <string name="url">Введите новый URL...</string>
     <string name="Adress_is_not_set_yet">Адрес пока не задан</string>
+    <string name="NumberOfThisPhone">"Номер телефона "</string>
 
     <string-array name="forSpinner">
         <item>Сломан кулер</item>

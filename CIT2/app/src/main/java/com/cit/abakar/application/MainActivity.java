@@ -114,9 +114,6 @@ public class MainActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(myMediaPlayer != null){
-                    myMediaPlayer.reset();
-                }
                 myMediaPlayer = new MyMediaPlayer(MainActivity.this, "Button");
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();

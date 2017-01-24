@@ -132,40 +132,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     }
 
-    @Override
-    public void installationButtonClicked() {
-        myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
-        myMediaPlayer.start();
-        myMediaPlayer.setFree();
-
-        final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
-        dialog.setContentView(R.layout.equipment_dialog);
-        dialog.setTitle("Введите номер акта");
-        dialog.show();
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-
-        Button sendButton = (Button) dialog.findViewById(R.id.buttonSendNumberOfAkt);
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
-                myMediaPlayer.start();
-                myMediaPlayer.setFree();
-                EditText ed = (EditText) dialog.findViewById(R.id.editTextInInstallationDialog);
-                if(ed.getText().toString().equals("")){
-                    Toast toast = Toast.makeText(EquipmentActivity.this,"Вы не ввели номер акта", Toast.LENGTH_SHORT);
-                    toast.show();
-                    return;
-                }
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                dialog.dismiss();
-
-            }
-        });
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -219,6 +185,46 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     }
 
 
+
+
+
+    @Override
+    public void installationButtonClicked() {
+        myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
+        myMediaPlayer.start();
+        myMediaPlayer.setFree();
+
+        final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
+        dialog.setContentView(R.layout.equipment_dialog);
+        dialog.setTitle("Введите номер акта");
+        dialog.show();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+        Button sendButton = (Button) dialog.findViewById(R.id.buttonSendNumberOfAkt);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
+                myMediaPlayer.start();
+                myMediaPlayer.setFree();
+                EditText ed = (EditText) dialog.findViewById(R.id.editTextInInstallationDialog);
+                if(ed.getText().toString().equals("")){
+                    Toast toast = Toast.makeText(EquipmentActivity.this,"Вы не ввели номер акта", Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                dialog.dismiss();
+
+            }
+        });
+    }
+
+
+
     @Override
     public void deinstallationButtonClicked() {
         myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
@@ -234,7 +240,8 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         TelephonyManager tMgr = (TelephonyManager)EquipmentActivity.this.getSystemService(Context.TELEPHONY_SERVICE);
         String mPhoneNumber = tMgr.getLine1Number();
         TextView tx = (TextView) dialog.findViewById(R.id.textViewinEquipmentDeinstallation);
-        tx.setText(mPhoneNumber);
+        String number = getString(R.string.NumberOfThisPhone) + mPhoneNumber;
+        tx.setText(number);
         Log.e("NUMBER", mPhoneNumber);
 
         Button sendButton = (Button) dialog.findViewById(R.id.buttoninEqupmentDeinstallation);

@@ -20,7 +20,9 @@
 
     <TextView
         android:text=""
-        android:textColor="@color/grey"
+        android:textStyle="italic"
+        android:textColorLink="@color/aquamarin"
+        android:textColor="@color/colorPrimary"
         android:layout_marginTop="12dp"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
