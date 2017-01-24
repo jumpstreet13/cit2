@@ -9,3 +9,4 @@ http://java-help.ru/activeandroid-orm-review/   - active android
 ПЕРЕДАВАТЬ ID элемента по этому айди вытаскивать элемент из базы и брать нужные значения
 http://www.fandroid.info/urok-3-sozdanie-spiskov-kartochek-v-android-prilozheniyah-material-design/   - Material Design
 https://developer.android.com/training/material/get-started.html - Material Design official
+Добавить комментарии к коду, сделать рефакторинг.
