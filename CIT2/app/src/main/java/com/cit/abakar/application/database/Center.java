@@ -22,9 +22,6 @@ public class Center extends Model  {
         super();
     }
 
-    public Center(Parcel in){
-        name = in.readString();
-    }
 
     public List<Visit> visits(){
         return getMany(Visit.class, "Center");
