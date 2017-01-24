@@ -125,6 +125,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         myMediaPlayer.setFree();
         Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);
         intent.putExtra("id", getIntent().getStringExtra("id"));
+        Log.e("PING",arr.get(position).getId().toString());
         intent.putExtra("idOfEquipment", arr.get(position).getId());
         startActivity(intent);
 

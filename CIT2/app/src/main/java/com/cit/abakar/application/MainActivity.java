@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
         ActiveAndroid.initialize(this);
         getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInActivityMain);
-        ActiveAndroid.beginTransaction();
+       /* ActiveAndroid.beginTransaction();
         try {
             for (int i = 0; i < 100; i++) {
                 Center center = new Center();
@@ -96,7 +96,7 @@ public class MainActivity extends Activity {
             ActiveAndroid.setTransactionSuccessful();
         } finally {
             ActiveAndroid.endTransaction();
-        }
+        }*/
         arr.addAll(Center.getAll());
         listView = (ListView) findViewById(R.id.listViewMain);
         adapter = new YourAdapter(MainActivity.this,getArrString(arr));
