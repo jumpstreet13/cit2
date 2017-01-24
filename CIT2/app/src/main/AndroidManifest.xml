@@ -23,7 +23,7 @@
                 android:resource="@xml/searchable">
             </meta-data>
             <meta-data android:name="AA_DB_NAME" android:value="CIT.db" />
-            <meta-data android:name="AA_DB_VERSION" android:value="5" />
+            <meta-data android:name="AA_DB_VERSION" android:value="8" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

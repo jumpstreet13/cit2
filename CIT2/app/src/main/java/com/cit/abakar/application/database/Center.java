@@ -22,7 +22,6 @@ public class Center extends Model  {
         super();
     }
 
-
     public List<Visit> visits(){
         return getMany(Visit.class, "Center");
     }
@@ -40,7 +39,6 @@ public class Center extends Model  {
     }
 
     public Center(String name) {
-        super();
         this.name = name;
     }
 

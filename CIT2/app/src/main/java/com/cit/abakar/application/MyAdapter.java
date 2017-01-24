@@ -64,8 +64,8 @@ public class MyAdapter extends BaseAdapter {
         TextView main = (TextView) convertView.findViewById(R.id.textViewForEquipments);
         buttonInstallation = (Button) convertView.findViewById(R.id.button_Installation);
         buttondeinstallation = (Button) convertView.findViewById(R.id.button_Deinstallation);
-       /* buttondeinstallation.setElevation(5);
-        buttonInstallation.setElevation(5);*/
+       // buttondeinstallation.setElevation(5);
+       // buttonInstallation.setElevation(5);
         main.setText(data.get(position));
 
         main.setOnClickListener(new View.OnClickListener() {
