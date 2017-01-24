@@ -55,5 +55,4 @@ public interface RestApi {
     @POST("dismantling/")
     Call<Response<ResponseBody>> addDismantling(@Body Dismantling dismantling);
 
-
 }
