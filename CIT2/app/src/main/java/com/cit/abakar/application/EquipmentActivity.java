@@ -28,17 +28,25 @@ import com.cit.abakar.application.database.Directory_Equipment_Condition;
 import com.cit.abakar.application.database.Equipment;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.Inflater;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import static com.cit.abakar.application.MainActivity.hasConnection;
 
 public class EquipmentActivity extends Activity implements AdapterInterface, MultiSelectionSpinner.MultiSpinnerListener {
 
-   private ListView listView;
-   private ArrayList<Equipment> arr = new ArrayList<Equipment>();
-   private MyMediaPlayer myMediaPlayer;
-   private MultiSelectionSpinner spinner;
-   private MenuItem connection;
+    private ListView listView;
+    private ArrayList<Equipment> arr = new ArrayList<Equipment>();
+    private MyMediaPlayer myMediaPlayer;
+    private MultiSelectionSpinner spinner;
+    private MenuItem connection;
+    private static RestApi restApi;
+    private Retrofit retrofit;
 
 
     @Override
@@ -50,29 +58,25 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         Log.e("EXTRA", intent.getStringExtra("id") + "");
         Center center = Center.getById(intent.getStringExtra("id"));
         Log.e("CENTER", center.name);
-       // Log.e("CENTER", center.getId().toString());
-
-                Equipment equipment = new Equipment();
-                equipment.center = center;
-                equipment.center_id = center.getId().toString();
-                Log.e("CENTER", equipment.center_id);
-                equipment.serial_number = "332";
-                equipment.inventory_number = "3213";
-                equipment.name = "good equipment";
-                equipment.fg_dismantled = "true";
-                equipment.fg_not_install = "false";
-                equipment.save();
-
-        arr.add(equipment);
-
-
-
         listView = (ListView) findViewById(R.id.listViewEquipment);
-        ArrayList<String> ar = new ArrayList<String>();
-        ar.add(arr.get(0).name);
-        MyAdapter adapter = new MyAdapter(this,ar);
-        adapter.setActivity(this);
-        listView.setAdapter(adapter);
+        final MyAdapter adapter = new MyAdapter(this, arr);
+
+        restApi.getEquipment().enqueue(new Callback<List<Equipment>>() {
+            @Override
+            public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
+                arr.addAll(response.body());
+                adapter.notifyDataSetChanged();
+                listView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Equipment>> call, Throwable t) {
+                Toast.makeText(EquipmentActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
         /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -96,9 +100,9 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         connection = menu.findItem(R.id.conntection_settings);
         MenuItem searchItem = menu.findItem(R.id.search_settings);
         searchItem.setVisible(false);
-        if(hasConnection(this)){
+        if (hasConnection(this)) {
             connection.setIcon(R.drawable.ic_network_cell_white_24dp);
-        }else{
+        } else {
             connection.setIcon(R.drawable.ic_signal_cellular_off_white_24dp);
         }
         return true;
@@ -126,7 +130,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         myMediaPlayer.setFree();
         Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);
         intent.putExtra("id", getIntent().getStringExtra("id"));
-        Log.e("PING",arr.get(position).getId().toString());
+        Log.e("PING", arr.get(position).getId().toString());
         intent.putExtra("idOfEquipment", arr.get(position).getId().toString());
         startActivity(intent);
 
@@ -138,7 +142,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
         int id = item.getItemId();
 
-        switch (id){
+        switch (id) {
             case R.id.search_settings:
                 return true;
             case R.id.synchronize:
@@ -185,9 +189,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     }
 
 
-
-
-
     @Override
     public void installationButtonClicked() {
         myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
@@ -210,8 +211,8 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
                 EditText ed = (EditText) dialog.findViewById(R.id.editTextInInstallationDialog);
-                if(ed.getText().toString().equals("")){
-                    Toast toast = Toast.makeText(EquipmentActivity.this,"Вы не ввели номер акта", Toast.LENGTH_SHORT);
+                if (ed.getText().toString().equals("")) {
+                    Toast toast = Toast.makeText(EquipmentActivity.this, "Вы не ввели номер акта", Toast.LENGTH_SHORT);
                     toast.show();
                     return;
                 }
@@ -222,7 +223,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             }
         });
     }
-
 
 
     @Override
@@ -237,7 +237,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-        TelephonyManager tMgr = (TelephonyManager)EquipmentActivity.this.getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tMgr = (TelephonyManager) EquipmentActivity.this.getSystemService(Context.TELEPHONY_SERVICE);
         String mPhoneNumber = tMgr.getLine1Number();
         TextView tx = (TextView) dialog.findViewById(R.id.textViewinEquipmentDeinstallation);
         String number = getString(R.string.NumberOfThisPhone) + mPhoneNumber;
@@ -252,8 +252,8 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
                 EditText ed = (EditText) dialog.findViewById(R.id.editTextinEquipmentDeinstallation);
-                if(ed.getText().toString().equals("")){
-                    Toast toast = Toast.makeText(EquipmentActivity.this,"Вы не ввели номер акта", Toast.LENGTH_SHORT);
+                if (ed.getText().toString().equals("")) {
+                    Toast toast = Toast.makeText(EquipmentActivity.this, "Вы не ввели номер акта", Toast.LENGTH_SHORT);
                     toast.show();
                     return;
                 }

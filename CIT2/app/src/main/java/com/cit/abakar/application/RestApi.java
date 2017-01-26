@@ -25,13 +25,13 @@ import retrofit2.http.Path;
 public interface RestApi {
 
     @GET("centers/")
-    Call<Response<List<Center>>> getAllCenters();
+    Call<List<Center>> getAllCenters();
 
     @GET("condition/")
-    Call<Response<List<String>>> getConditios();
+    Call<List<String>> getConditios();
 
     @GET("equipment/")
-    Call<Response<List<Equipment>>> getEquipment();
+    Call<List<Equipment>> getEquipment();
 
     @GET("visit/")
     Call<Response<List<Visit>>> getVisits();

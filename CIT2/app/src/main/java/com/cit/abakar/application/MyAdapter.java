@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cit.abakar.application.database.Center;
+import com.cit.abakar.application.database.Equipment;
+
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.TooManyListenersException;
@@ -20,20 +23,21 @@ import java.util.TooManyListenersException;
 
 public class MyAdapter extends BaseAdapter {
 
-    private ArrayList<String> data = new ArrayList<String>();
+    private ArrayList<Equipment> data = new ArrayList<Equipment>();
     private Context context;
     private Button buttonInstallation;
     private Button buttondeinstallation;
     private AdapterInterface adapterInterface;
 
-    public void setActivity(AdapterInterface adapterInterface){
+   /* public void setActivity(AdapterInterface adapterInterface){
         this.adapterInterface =  adapterInterface;
-    }
+    }*/
 
 
-    public MyAdapter(Context context, ArrayList<String> data){
+    public MyAdapter(Context context, ArrayList<Equipment> data){
         this.data = data;
         this.context = context;
+        adapterInterface = (AdapterInterface) context;
     }
 
     @Override
@@ -66,7 +70,7 @@ public class MyAdapter extends BaseAdapter {
         buttondeinstallation = (Button) convertView.findViewById(R.id.button_Deinstallation);
        // buttondeinstallation.setElevation(5);
        // buttonInstallation.setElevation(5);
-        main.setText(data.get(position));
+        main.setText(data.get(position).name);
 
         main.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,4 +97,5 @@ public class MyAdapter extends BaseAdapter {
 
         return convertView;
     }
+
 }

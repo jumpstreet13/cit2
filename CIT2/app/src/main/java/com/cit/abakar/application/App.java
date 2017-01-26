@@ -17,7 +17,7 @@ public class App extends Application {
         super.onCreate();
 
 
-      //  retrofit = new Retrofit.Builder().baseUrl().addConverterFactory(GsonConverterFactory.create()).build();
+       retrofit = new Retrofit.Builder().baseUrl("http://10.39.5.76/apiv1/").addConverterFactory(GsonConverterFactory.create()).build();
         restApi = retrofit.create(RestApi.class);
     }
 

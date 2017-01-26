@@ -39,7 +39,14 @@ import com.cit.abakar.application.database.Center;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends Activity {
 
@@ -50,39 +57,18 @@ public class MainActivity extends Activity {
     private MenuItem connection;
     public ProgressBar progressBar;
     public final static String URLSETTINS = "urlSettings";
+    private static RestApi restApi;
+    private Retrofit retrofit;
 
-    class MyTask extends AsyncTask<Void ,Void, Void>{
-        Activity activity;
 
-        public MyTask(Activity activity){
-            this.activity = activity;
-        }
-        @Override
-        protected void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            progressBar.setVisibility(View.GONE);
-            // ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.exampleForList));
-        }
-    }
-
-    public ArrayList<String> getArrString(ArrayList<Center> cr){
+    public ArrayList<String> getArrString(ArrayList<Center> cr) {
         ArrayList<String> arr = new ArrayList<String>();
-        for(Center cc : cr){
+        for (Center cc : cr) {
             arr.add(cc.name);
             Log.e("NAME", cc.name);
         }
         return arr;
     }
-
 
 
     @Override
@@ -92,21 +78,31 @@ public class MainActivity extends Activity {
         ActiveAndroid.initialize(this);
         getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInActivityMain);
-        ActiveAndroid.beginTransaction();
-        try {
-            for (int i = 0; i < 10; i++) {
-                Center center = new Center();
-                center.name = "Узел " + i;
-                center.save();
-            }
-            ActiveAndroid.setTransactionSuccessful();
-        } finally {
-            ActiveAndroid.endTransaction();
-        }
-        arr.addAll(Center.getAll());
         listView = (ListView) findViewById(R.id.listViewMain);
-        adapter = new YourAdapter(MainActivity.this,getArrString(arr));
-        listView.setAdapter(adapter);
+        retrofit = new Retrofit.Builder().baseUrl("http://10.39.5.76/apiv1/").addConverterFactory(GsonConverterFactory.create()).build();
+        restApi = retrofit.create(RestApi.class);
+
+        restApi.getAllCenters().enqueue(new Callback<List<Center>>() {
+            @Override
+            public void onResponse(Call<List<Center>> call, Response<List<Center>> response) {
+                Log.e("REST", response.body().toString());
+                arr.addAll(response.body());
+                for (Center c : arr) {
+                    Log.e("REST", c.name);
+                    c.save();
+                }
+                adapter = new YourAdapter(MainActivity.this, arr);
+                listView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Center>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        //arr.addAll(Center.getAll());
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -117,14 +113,14 @@ public class MainActivity extends Activity {
                 myMediaPlayer.setFree();
                 Intent intent = new Intent(MainActivity.this, EquipmentActivity.class);
                 Log.e("PZD", arr.get(position).getId().toString());
-                intent.putExtra("id", arr.get(position).getId().toString());
+                //intent.putExtra("id", arr.get(position));
                 startActivity(intent);
             }
         });
 
     }
 
-    public ArrayList<String> getBaseList(){
+    public ArrayList<String> getBaseList() {
         return getArrString(arr);
     }
 
@@ -143,9 +139,9 @@ public class MainActivity extends Activity {
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search_settings).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        if(hasConnection(this)){
+        if (hasConnection(this)) {
             connection.setIcon(R.drawable.ic_network_cell_white_24dp);
-        }else{
+        } else {
             connection.setIcon(R.drawable.ic_signal_cellular_off_white_24dp);
         }
 
@@ -157,13 +153,13 @@ public class MainActivity extends Activity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                    adapter.filter(newText.toString().trim());
-                    listView.invalidate();
+                adapter.filter(newText.toString().trim());
+                listView.invalidate();
                 return true;
             }
         });
 
-        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener(){
+        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
 
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
@@ -184,12 +180,12 @@ public class MainActivity extends Activity {
 
         int id = item.getItemId();
 
-        switch (id){
+        switch (id) {
             case R.id.search_settings:
                 return true;
             case R.id.synchronize:
-               // ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBarInMainActivity);
-               // progressBar.setVisibility(View.VISIBLE);
+                // ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBarInMainActivity);
+                // progressBar.setVisibility(View.VISIBLE);
                 Log.e("Sync", "syncronize is going on");
                 return true;
             case R.id.htttp_settings:
@@ -222,7 +218,7 @@ public class MainActivity extends Activity {
                 return true;
 
             case R.id.conntection_settings:
-                Toast toast = Toast.makeText(MainActivity.this,"Подключение к сети",Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(MainActivity.this, "Подключение к сети", Toast.LENGTH_SHORT);
                 toast.show();
                 return true;
 
@@ -246,14 +242,14 @@ public class MainActivity extends Activity {
     }*/
 
 
-    class YourAdapter extends BaseAdapter{
+    class YourAdapter extends BaseAdapter {
 
-       private ArrayList<String> arr;
+        private ArrayList<String> arr;
         private ArrayList<String> arr2;
-       private Context context;
+        private Context context;
 
-        public YourAdapter(Context context, ArrayList<String> arr){
-            this.arr = arr;
+        public YourAdapter(Context context, ArrayList<Center> arr) {
+            this.arr = getArrString(arr);
             arr2 = new ArrayList<String>();
             arr2.addAll(this.arr);
             this.context = context;
@@ -278,7 +274,7 @@ public class MainActivity extends Activity {
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = LayoutInflater.from(context);
 
-            if(convertView == null){
+            if (convertView == null) {
                 convertView = inflater.inflate(R.layout.mylist, parent, false);
             }
             TextView main = (TextView) convertView.findViewById(R.id.myListTextView);
@@ -288,15 +284,15 @@ public class MainActivity extends Activity {
             return convertView;
         }
 
-        public void filter(String charText){
+        public void filter(String charText) {
             Log.e("WTF", "call filter");
             charText = charText.toLowerCase();
             arr.clear();
-            if(charText.length() == 0){
+            if (charText.length() == 0) {
                 arr.addAll(arr2);
-            }else{
-                for(String ss : arr2){
-                    if(charText.length() != 0 && ss.toLowerCase().contains(charText)){
+            } else {
+                for (String ss : arr2) {
+                    if (charText.length() != 0 && ss.toLowerCase().contains(charText)) {
                         arr.add(ss);
                     }
                 }
@@ -308,25 +304,44 @@ public class MainActivity extends Activity {
 
     }
 
-    public static boolean hasConnection(final Context context)
-    {
-        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static boolean hasConnection(final Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (wifiInfo != null && wifiInfo.isConnected())
-        {
+        if (wifiInfo != null && wifiInfo.isConnected()) {
             return true;
         }
         wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        if (wifiInfo != null && wifiInfo.isConnected())
-        {
+        if (wifiInfo != null && wifiInfo.isConnected()) {
             return true;
         }
         wifiInfo = cm.getActiveNetworkInfo();
-        if (wifiInfo != null && wifiInfo.isConnected())
-        {
+        if (wifiInfo != null && wifiInfo.isConnected()) {
             return true;
         }
         return false;
     }
+
+    /*  class MyTask extends AsyncTask<Void ,Void, Void>{
+        Activity activity;
+
+        public MyTask(Activity activity){
+            this.activity = activity;
+        }
+        @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressBar.setVisibility(View.GONE);
+            // ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.exampleForList));
+        }
+    }*/
 
 }
