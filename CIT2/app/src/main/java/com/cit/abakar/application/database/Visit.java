@@ -9,7 +9,7 @@ import com.activeandroid.annotation.Table;
 
 import java.util.List;
 
-@Table(name = "Visit", id="_id")
+@Table(name = "Visit")
 public class Visit extends Model {
 
     @Column(name = "center_id", index = true)
@@ -20,7 +20,7 @@ public class Visit extends Model {
 
     @Column(name = "date_visit")
     public String date_visit;
-    //kk
+
 
     @Column(name = "description")
     public String description;

@@ -32,6 +32,9 @@ public class Equipment extends Model {
     @Column(name = "Center")
     public Center center;
 
+    @Column(name = "id_out")
+    public String id_out;
+
     public List<Dismantling> dismantlings(){
         return  getMany(Dismantling.class, "Equipment");
     }
@@ -59,7 +62,7 @@ public class Equipment extends Model {
 
     public Equipment(String center_id, String serial_number, String inventory_number,
                      String name, String fg_dismantled, String fg_not_install,
-                     Center center) {
+                     Center center, String id_out) {
         this.center_id = center_id;
         this.serial_number = serial_number;
         this.inventory_number = inventory_number;
@@ -67,5 +70,6 @@ public class Equipment extends Model {
         this.fg_dismantled = fg_dismantled;
         this.fg_not_install = fg_not_install;
         this.center = center;
+        this.id_out = id_out;
     }
 }
