@@ -11,15 +11,16 @@ import java.util.List;
 public class Center extends Model  {
 
     public String name;
+    public int id;
 
     public Center(){
 
     }
 
 
-    public Center(String name) {
-
+    public Center(int id, String name) {
         this.name = name;
+        this.id = id;
     }
 
 }

@@ -23,9 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
-import com.cit.abakar.application.database.Center;
-import com.cit.abakar.application.database.Directory_Equipment_Condition;
-import com.cit.abakar.application.database.Equipment;
+import com.cit.abakar.application.ExampleClasses.Equipment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,37 +33,43 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.cit.abakar.application.MainActivity.hasConnection;
 
 public class EquipmentActivity extends Activity implements AdapterInterface, MultiSelectionSpinner.MultiSpinnerListener {
 
     private ListView listView;
-    private ArrayList<Equipment> arr = new ArrayList<Equipment>();
+    private ArrayList<Equipment> arr = new ArrayList<>();
     private MyMediaPlayer myMediaPlayer;
     private MultiSelectionSpinner spinner;
     private MenuItem connection;
     private static RestApi restApi;
     private Retrofit retrofit;
-
+    MyAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment);
         getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
-        Intent intent = getIntent();
-        Log.e("EXTRA", intent.getStringExtra("id") + "");
-        Center center = Center.getById(intent.getStringExtra("id"));
-        Log.e("CENTER", center.name);
         listView = (ListView) findViewById(R.id.listViewEquipment);
-        final MyAdapter adapter = new MyAdapter(this, arr);
+        retrofit = new Retrofit.Builder().baseUrl("http://10.39.5.76/apiv1/").addConverterFactory(GsonConverterFactory.create()).build();
+        restApi = retrofit.create(RestApi.class);
+
 
         restApi.getEquipment().enqueue(new Callback<List<Equipment>>() {
             @Override
             public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
-                arr.addAll(response.body());
-                adapter.notifyDataSetChanged();
+                for(Equipment eq : response.body()){
+                    Log.e("SeanGares", getIntent().getIntExtra("id", -5) + "");
+                    Log.e("SeanGares", eq.centerId + "");
+                    if(eq.centerId == getIntent().getIntExtra("id", -5)){
+                        Log.e("SeanGares", eq.name);
+                        arr.add(eq);
+                    }
+                }
+                adapter = new MyAdapter(EquipmentActivity.this, arr);
                 listView.setAdapter(adapter);
             }
 
@@ -129,9 +133,9 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         myMediaPlayer.start();
         myMediaPlayer.setFree();
         Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);
-        intent.putExtra("id", getIntent().getStringExtra("id"));
-        Log.e("PING", arr.get(position).getId().toString());
-        intent.putExtra("idOfEquipment", arr.get(position).getId().toString());
+        intent.putExtra("id", getIntent().getIntExtra("id", -5));
+        Log.e("PING", arr.get(position).id + "");
+        intent.putExtra("idOfEquipment", arr.get(position).id);
         startActivity(intent);
 
     }

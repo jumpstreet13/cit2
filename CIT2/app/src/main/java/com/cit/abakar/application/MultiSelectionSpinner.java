@@ -57,11 +57,11 @@ public class MultiSelectionSpinner extends Spinner implements DialogInterface.On
             }
         }
         String spinnerText;
-        if (someUnselected) {
+        if (spinnerBuffer.length() != 0) {
             spinnerText = spinnerBuffer.toString();
             if (spinnerText.length() > 2)
                 spinnerText = spinnerText.substring(0, spinnerText.length() - 2);
-        } else {
+        } else{
             spinnerText = defaultText;
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),

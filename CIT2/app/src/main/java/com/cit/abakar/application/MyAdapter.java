@@ -13,8 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cit.abakar.application.database.Center;
-import com.cit.abakar.application.database.Equipment;
+import com.cit.abakar.application.ExampleClasses.Equipment;
 
 import java.util.ArrayList;
 import java.util.BitSet;

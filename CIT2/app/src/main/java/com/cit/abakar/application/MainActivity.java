@@ -35,18 +35,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
-import com.cit.abakar.application.database.Center;
+import com.cit.abakar.application.ExampleClasses.Center;
+import com.cit.abakar.application.ExampleClasses.Visit;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 
 public class MainActivity extends Activity {
 
@@ -59,6 +70,7 @@ public class MainActivity extends Activity {
     public final static String URLSETTINS = "urlSettings";
     private static RestApi restApi;
     private Retrofit retrofit;
+    private Visit visit;
 
     //Version for show
 
@@ -89,10 +101,10 @@ public class MainActivity extends Activity {
             public void onResponse(Call<List<Center>> call, Response<List<Center>> response) {
                 Log.e("REST", response.body().toString());
                 arr.addAll(response.body());
-                for (Center c : arr) {
+               /* for (Center c : arr) {
                     Log.e("REST", c.name);
                     c.save();
-                }
+                }*/
                 adapter = new YourAdapter(MainActivity.this, arr);
                 listView.setAdapter(adapter);
             }
@@ -113,9 +125,27 @@ public class MainActivity extends Activity {
                 myMediaPlayer = new MyMediaPlayer(MainActivity.this, "Button");
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
+                int date = 12;
+                visit = new Visit();
+                visit.centerId = arr.get(position).id;
+                visit.dateVisit = date;
+                visit.description = "some description";
+
+                restApi.addVisit(visit).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        Log.e("TAZ", response.headers().toString());
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e("TAZ", "wtf");
+
+                    }
+                });
                 Intent intent = new Intent(MainActivity.this, EquipmentActivity.class);
-                Log.e("PZD", arr.get(position).getId().toString());
-                //intent.putExtra("id", arr.get(position));
+                //Log.e("PZD", arr.get(position).getId().toString());
+                intent.putExtra("id", arr.get(position).id);
                 startActivity(intent);
             }
         });

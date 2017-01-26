@@ -1,13 +1,14 @@
 package com.cit.abakar.application;
 
 
-import com.cit.abakar.application.database.Center;
-import com.cit.abakar.application.database.Dismantling;
-import com.cit.abakar.application.database.Equipment;
-import com.cit.abakar.application.database.Inspection;
-import com.cit.abakar.application.database.Installation;
-import com.cit.abakar.application.database.Malfunctions;
-import com.cit.abakar.application.database.Visit;
+import com.cit.abakar.application.ExampleClasses.Center;
+import com.cit.abakar.application.ExampleClasses.Condition;
+import com.cit.abakar.application.ExampleClasses.Dismantling;
+import com.cit.abakar.application.ExampleClasses.Equipment;
+import com.cit.abakar.application.ExampleClasses.Inspection;
+import com.cit.abakar.application.ExampleClasses.Installation;
+import com.cit.abakar.application.ExampleClasses.Malfunctions;
+import com.cit.abakar.application.ExampleClasses.Visit;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -28,7 +30,7 @@ public interface RestApi {
     Call<List<Center>> getAllCenters();
 
     @GET("condition/")
-    Call<List<String>> getConditios();
+    Call<List<Condition>> getConditios();
 
     @GET("equipment/")
     Call<List<Equipment>> getEquipment();
@@ -41,7 +43,7 @@ public interface RestApi {
 
 
     @POST("visit/")
-    Call<Response<ResponseBody>> addVisit(@Body Visit visit);
+    Call<Void> addVisit(@Body Visit visit);
 
     @POST("inspection/")
     Call<Response<ResponseBody>> addInspection(@Body Inspection inspection);

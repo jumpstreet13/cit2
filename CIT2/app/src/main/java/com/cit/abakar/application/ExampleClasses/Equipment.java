@@ -11,41 +11,44 @@ import java.util.List;
 public class Equipment extends Model {
 
 
-    public String center_id;
+    public int centerId;
+
+    public int id;
+
+    public String serialNumber;
 
 
-    public String serial_number;
-
-
-    public String inventory_number;
+    public String inventoryNumber;
 
 
     public String name;
 
 
-    public String fg_dismantled;
+    public String fgDismantled;
 
 
-    public String fg_not_install;
+    public String fgNotInstall;
 
 
     public Center center;
 
 
-    public Equipment(){
+    public Equipment() {
         super();
 
     }
 
-    public Equipment(String center_id, String serial_number, String inventory_number,
-                     String name, String fg_dismantled, String fg_not_install,
+    public Equipment(int centerId, int id, String serialNumber, String inventoryNumber,
+                     String name, String fgDismantled, String fgNotInstall,
                      Center center) {
-        this.center_id = center_id;
-        this.serial_number = serial_number;
-        this.inventory_number = inventory_number;
+        this.centerId = centerId;
+        this.id = id;
+        this.serialNumber = serialNumber;
+        this.inventoryNumber = inventoryNumber;
         this.name = name;
-        this.fg_dismantled = fg_dismantled;
-        this.fg_not_install = fg_not_install;
+        this.fgDismantled = fgDismantled;
+        this.fgNotInstall = fgNotInstall;
         this.center = center;
     }
 }
+
