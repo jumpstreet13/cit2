@@ -31,19 +31,19 @@ public class Visit extends Model {
     @Column(name = "date_insert")
     public String date_insert;
 
-    public List<Installation> installations(){
-        return  getMany(Installation.class, "Visit");
+    public List<Installation> installations() {
+        return getMany(Installation.class, "Visit");
     }
 
-    public List<Dismantling> dismantlings(){
-        return  getMany(Dismantling.class, "Visit");
+    public List<Dismantling> dismantlings() {
+        return getMany(Dismantling.class, "Visit");
     }
 
-    public List<Inspection> inspections(){
+    public List<Inspection> inspections() {
         return getMany(Inspection.class, "Visit");
     }
 
-    public Visit(){
+    public Visit() {
         super();
     }
 

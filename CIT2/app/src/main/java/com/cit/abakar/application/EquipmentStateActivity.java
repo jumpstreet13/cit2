@@ -31,36 +31,36 @@ import static com.cit.abakar.application.MainActivity.hasConnection;
 
 public class EquipmentStateActivity extends Activity implements MultiSelectionSpinner.MultiSpinnerListener {
 
-   private Button button1, button2;
-   private Switch switch1, switch2;
-   private MultiSelectionSpinner spinner;
-   private ArrayList<String> ar = new ArrayList<String>();
-   private MyMediaPlayer myMediaPlayer;
-   private MenuItem connection;
-   private Equipment equipment;
+    private Button button1, button2;
+    private Switch switch1, switch2;
+    private MultiSelectionSpinner spinner;
+    private ArrayList<String> ar = new ArrayList<String>();
+    private MyMediaPlayer myMediaPlayer;
+    private MenuItem connection;
+    private Equipment equipment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_state);
         getActionBar().setTitle(R.string.ActionBarISOfflineEquipmentStateActivity);
-        Log.e("ZZ",getIntent().getStringExtra("idOfEquipment"));
+        Log.e("ZZ", getIntent().getStringExtra("idOfEquipment"));
         equipment = Equipment.getById(getIntent().getStringExtra("idOfEquipment"));
-        Log.e("ZZ", equipment.fg_dismantled + " " + equipment.fg_not_install+ " ");
+        Log.e("ZZ", equipment.fg_dismantled + " " + equipment.fg_not_install + " ");
 
         button1 = (Button) findViewById(R.id.buttonInEquipmentState);
         button2 = (Button) findViewById(R.id.button2InEquipmentState);
         switch1 = (Switch) findViewById(R.id.switch1InEquipmentState);
         switch2 = (Switch) findViewById(R.id.switch2InEquipmentState);
         spinner = (MultiSelectionSpinner) findViewById(R.id.spinnerInEquipmentStateActivity);
-        if(equipment.fg_dismantled.equals("true")){
+        if (equipment.fg_dismantled.equals("true")) {
             switch1.setChecked(false);
-        }else{
+        } else {
             switch1.setChecked(true);
         }
-        if(equipment.fg_not_install.equals("true")){
+        if (equipment.fg_not_install.equals("true")) {
             switch2.setChecked(false);
-        }else{
+        } else {
             switch1.setChecked(true);
         }
         ar.add("Сломан кулер");
@@ -69,8 +69,8 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         ar.add("Другое");
         //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.forSpinner, android.R.layout.simple_spinner_item);
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-       //spinner.setAdapter(adapter);
-        spinner.setItems(ar,getString(R.string.ChooseTheReason),this);
+        //spinner.setAdapter(adapter);
+        spinner.setItems(ar, getString(R.string.ChooseTheReason), this);
         switch1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,18 +105,18 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 button2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this,"Button");
+                        myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
                         myMediaPlayer.start();
                         myMediaPlayer.setFree();
                         //Log.e("getSelected", s);
-                        if(spinner.getSelectedItem().toString().equals("") ||
-                                spinner.getSelectedItem().toString().equals("Выбрать причину")){
-                            Toast toast = Toast.makeText(EquipmentStateActivity.this, R.string.ToastYouDoNotChosenAnything,Toast.LENGTH_SHORT);
+                        if (spinner.getSelectedItem().toString().equals("") ||
+                                spinner.getSelectedItem().toString().equals("Выбрать причину")) {
+                            Toast toast = Toast.makeText(EquipmentStateActivity.this, R.string.ToastYouDoNotChosenAnything, Toast.LENGTH_SHORT);
                             toast.show();
                             return;
 
                         }
-                        Toast toast = Toast.makeText(EquipmentStateActivity.this,spinner.getSelectedItem().toString(),Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(EquipmentStateActivity.this, spinner.getSelectedItem().toString(), Toast.LENGTH_SHORT);
                         toast.show();
                         Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
                         intent.putExtra("id", getIntent().getStringExtra("id"));
@@ -133,7 +133,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
         int id = item.getItemId();
 
-        switch (id){
+        switch (id) {
             case R.id.search_settings:
                 return true;
             case R.id.synchronize:
@@ -186,9 +186,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         connection = menu.findItem(R.id.conntection_settings);
         MenuItem searchItem = menu.findItem(R.id.search_settings);
         searchItem.setVisible(false);
-        if(hasConnection(this)){
+        if (hasConnection(this)) {
             connection.setIcon(R.drawable.ic_network_cell_white_24dp);
-        }else{
+        } else {
             connection.setIcon(R.drawable.ic_signal_cellular_off_white_24dp);
         }
         return true;
@@ -198,7 +198,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     @Override
     protected void onResume() {
         super.onResume();
-       invalidateOptionsMenu();
+        invalidateOptionsMenu();
     }
 
     @Override

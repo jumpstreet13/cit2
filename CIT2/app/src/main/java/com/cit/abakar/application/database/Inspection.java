@@ -37,11 +37,11 @@ public class Inspection extends Model {
     @Column(name = "Equipment")
     public Equipment equipment;
 
-    public List<Malfunctions> malfunctionses(){
-        return  getMany(Malfunctions.class, "Inspection");
+    public List<Malfunctions> malfunctionses() {
+        return getMany(Malfunctions.class, "Inspection");
     }
 
-    public Inspection(){
+    public Inspection() {
         super();
     }
 

@@ -36,7 +36,7 @@ public class Dismantling extends Model {
     public String id_out;
 
 
-    public Dismantling(){
+    public Dismantling() {
         super();
 
     }

@@ -35,27 +35,27 @@ public class Equipment extends Model {
     @Column(name = "id_out")
     public String id_out;
 
-    public List<Dismantling> dismantlings(){
-        return  getMany(Dismantling.class, "Equipment");
+    public List<Dismantling> dismantlings() {
+        return getMany(Dismantling.class, "Equipment");
     }
 
-    public List<Installation> installations(){
-        return  getMany(Installation.class, "Equipment");
+    public List<Installation> installations() {
+        return getMany(Installation.class, "Equipment");
     }
 
-    public List<Inspection> inspections(){
-        return  getMany(Inspection.class, "Equipment");
+    public List<Inspection> inspections() {
+        return getMany(Inspection.class, "Equipment");
     }
 
-    public static List<Equipment> getAll(){
+    public static List<Equipment> getAll() {
         return new Select().from(Equipment.class).execute();
     }
 
-    public static Equipment getById(String id){
-        return  new Select().from(Equipment.class).where("id = ?", id).executeSingle();
+    public static Equipment getById(String id) {
+        return new Select().from(Equipment.class).where("id = ?", id).executeSingle();
     }
 
-    public Equipment(){
+    public Equipment() {
         super();
 
     }
