@@ -4,7 +4,7 @@ import com.activeandroid.Model;
 
 
 
-public class Condition extends Model {
+public class Condition  {
 
     public int id;
     public String name;
@@ -14,9 +14,5 @@ public class Condition extends Model {
 
     }
 
-    public Condition(int id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
+
 }

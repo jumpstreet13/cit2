@@ -8,7 +8,7 @@ import com.activeandroid.query.Select;
 
 import java.util.List;
 
-public class Center extends Model  {
+public class Center   {
 
     public String name;
     public int id;
@@ -18,9 +18,5 @@ public class Center extends Model  {
     }
 
 
-    public Center(int id, String name) {
-        this.name = name;
-        this.id = id;
-    }
 
 }

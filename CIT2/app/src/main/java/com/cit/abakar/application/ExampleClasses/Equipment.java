@@ -8,7 +8,7 @@ import com.activeandroid.query.Select;
 import java.util.List;
 
 
-public class Equipment extends Model {
+public class Equipment  {
 
 
     public int centerId;
@@ -34,21 +34,9 @@ public class Equipment extends Model {
 
 
     public Equipment() {
-        super();
 
     }
 
-    public Equipment(int centerId, int id, String serialNumber, String inventoryNumber,
-                     String name, String fgDismantled, String fgNotInstall,
-                     Center center) {
-        this.centerId = centerId;
-        this.id = id;
-        this.serialNumber = serialNumber;
-        this.inventoryNumber = inventoryNumber;
-        this.name = name;
-        this.fgDismantled = fgDismantled;
-        this.fgNotInstall = fgNotInstall;
-        this.center = center;
-    }
+
 }
 

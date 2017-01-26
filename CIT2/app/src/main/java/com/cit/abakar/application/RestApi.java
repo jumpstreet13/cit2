@@ -52,9 +52,9 @@ public interface RestApi {
     Call<Response<ResponseBody>> addMalfunction(@Body Malfunctions malfunctions);
 
     @POST("installation/")
-    Call<Response<ResponseBody>> addInstallation(@Body Installation installation);
+    Call<Void> addInstallation(@Body Installation installation);
 
     @POST("dismantling/")
-    Call<Response<ResponseBody>> addDismantling(@Body Dismantling dismantling);
+    Call<Void> addDismantling(@Body Dismantling dismantling);
 
 }

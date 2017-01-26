@@ -45,8 +45,11 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -89,7 +92,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ActiveAndroid.initialize(this);
         getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInActivityMain);
         listView = (ListView) findViewById(R.id.listViewMain);
@@ -119,22 +121,27 @@ public class MainActivity extends Activity {
         //arr.addAll(Center.getAll());
 
 
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 myMediaPlayer = new MyMediaPlayer(MainActivity.this, "Button");
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
-                int date = 12;
                 visit = new Visit();
                 visit.centerId = arr.get(position).id;
-                visit.dateVisit = date;
-                visit.description = "some description";
+                visit.dateVisit = getCurrentDate();
+                visit.description = null;
+                final Intent intent = new Intent(MainActivity.this, EquipmentActivity.class);
+                //Log.e("PZD", arr.get(position).getId().toString());
+                intent.putExtra("id", arr.get(position).id);
 
                 restApi.addVisit(visit).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         Log.e("TAZ", response.headers().toString());
+                        intent.putExtra("visitId",getVisitId(response.headers().toString()));
+                        startActivity(intent);
                     }
 
                     @Override
@@ -143,13 +150,15 @@ public class MainActivity extends Activity {
 
                     }
                 });
-                Intent intent = new Intent(MainActivity.this, EquipmentActivity.class);
-                //Log.e("PZD", arr.get(position).getId().toString());
-                intent.putExtra("id", arr.get(position).id);
-                startActivity(intent);
             }
         });
 
+    }
+
+    public String getCurrentDate(){
+       Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return  format.format(date);
     }
 
     public ArrayList<String> getBaseList() {
@@ -375,5 +384,13 @@ public class MainActivity extends Activity {
             // ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.exampleForList));
         }
     }*/
+
+    public int getVisitId(String location){
+        Log.e("TAZ", location);
+        String s1 = location.substring(40,42);
+        Log.e("TAZ", s1);
+        Integer res = Integer.parseInt(s1);
+        return res;
+    }
 
 }

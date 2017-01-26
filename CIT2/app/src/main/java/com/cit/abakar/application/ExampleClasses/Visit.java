@@ -11,7 +11,7 @@ import java.util.List;
 public class Visit  {
 
     public int centerId;
-    public int dateVisit;
+    public String dateVisit;
     public String description;
 
 }

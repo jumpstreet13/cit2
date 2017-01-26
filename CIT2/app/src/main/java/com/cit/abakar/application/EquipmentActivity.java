@@ -23,12 +23,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
+import com.cit.abakar.application.ExampleClasses.Dismantling;
 import com.cit.abakar.application.ExampleClasses.Equipment;
+import com.cit.abakar.application.ExampleClasses.Installation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,7 +59,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         listView = (ListView) findViewById(R.id.listViewEquipment);
         retrofit = new Retrofit.Builder().baseUrl("http://10.39.5.76/apiv1/").addConverterFactory(GsonConverterFactory.create()).build();
         restApi = retrofit.create(RestApi.class);
-
 
         restApi.getEquipment().enqueue(new Callback<List<Equipment>>() {
             @Override
@@ -194,7 +196,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
 
     @Override
-    public void installationButtonClicked() {
+    public void installationButtonClicked(final int position) {
         myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
         myMediaPlayer.start();
         myMediaPlayer.setFree();
@@ -220,6 +222,27 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                     toast.show();
                     return;
                 }
+                Installation installation = new Installation();
+                installation.aktNumber = ed.getText().toString();
+                installation.equipmentId = arr.get(position).id;
+                Log.e("NEO", arr.get(position).id + "");
+                installation.visitId = getIntent().getIntExtra("visitId", -5);
+                Log.e("NEO",  getIntent().getIntExtra("visitId", -5) +"");
+                restApi.addInstallation(installation).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        Log.e("ZEUS", "succes");
+                        Log.e("ZEUS", response.isSuccessful() + "");
+                        Log.e("ZEUS", response.code() + "");
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e("ZEUS", "wtf");
+                        Log.e("ZEUS", t.toString());
+
+                    }
+                });
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 dialog.dismiss();
@@ -230,7 +253,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
 
     @Override
-    public void deinstallationButtonClicked() {
+    public void deinstallationButtonClicked(final int position) {
         myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
         myMediaPlayer.start();
         myMediaPlayer.setFree();
@@ -244,7 +267,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         TelephonyManager tMgr = (TelephonyManager) EquipmentActivity.this.getSystemService(Context.TELEPHONY_SERVICE);
         String mPhoneNumber = tMgr.getLine1Number();
         TextView tx = (TextView) dialog.findViewById(R.id.textViewinEquipmentDeinstallation);
-        String number = getString(R.string.NumberOfThisPhone) + mPhoneNumber;
+        String number = mPhoneNumber;
         tx.setText(number);
         Log.e("NUMBER", mPhoneNumber);
 
@@ -261,6 +284,32 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                     toast.show();
                     return;
                 }
+                TextView tx = (TextView) dialog.findViewById(R.id.textViewinEquipmentDeinstallation);
+
+                Dismantling dismantling = new Dismantling();
+                dismantling.aktNumber = ed.getText().toString();
+                Log.e("Shox", ed.getText().toString());
+                dismantling.user = tx.getText().toString();
+                Log.e("Shox", tx.getText().toString());
+                dismantling.visitId = getIntent().getIntExtra("visitId", -5);
+                Log.e("Shox", getIntent().getIntExtra("visitId", -5) +"");
+                dismantling.equipmentId = arr.get(position).id;
+                Log.e("Shox", arr.get(position).id + "");
+
+                restApi.addDismantling(dismantling).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        Log.e("Shox", "succes");
+                        Log.e("Shox", response.isSuccessful() +"");
+                        Log.e("Shox", response.code() + "");
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e("Shox", "wtf");
+
+                    }
+                });
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 dialog.dismiss();

@@ -82,14 +82,14 @@ public class MyAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Log.e("CLICK", "button installation has clicked");
-                adapterInterface.installationButtonClicked();
+                adapterInterface.installationButtonClicked(position);
             }
         });
         buttondeinstallation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("CLICK", "button de]installation has clicked");
-                adapterInterface.deinstallationButtonClicked();
+                adapterInterface.deinstallationButtonClicked(position);
 
             }
         });
