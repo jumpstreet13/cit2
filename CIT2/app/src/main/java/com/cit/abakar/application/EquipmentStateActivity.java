@@ -153,7 +153,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         Inspection inspection = new Inspection();
                         inspection.equipmentId = getIntent().getIntExtra("idOfEquipment", -5);
                         inspection.visitId = getIntent().getIntExtra("visitId", -5);
-                        inspection.fgAvailability = 
+                        inspection.fgAvailability =
 
                         restApi.addInspection()
 
