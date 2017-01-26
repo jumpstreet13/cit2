@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.cit.abakar.application.ExampleClasses.Condition;
 import com.cit.abakar.application.ExampleClasses.Equipment;
+import com.cit.abakar.application.ExampleClasses.Inspection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,12 +150,18 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         myMediaPlayer.start();
                         myMediaPlayer.setFree();
                         //Log.e("getSelected", s);
+                        Inspection inspection = new Inspection();
+                        inspection.equipmentId = getIntent().getIntExtra("idOfEquipment", -5);
+                        inspection.visitId = getIntent().getIntExtra("visitId", -5);
+                        inspection.fgAvailability = 
+
+                        restApi.addInspection()
+
                         if (spinner.getSelectedItem().toString().equals("") ||
                                 spinner.getSelectedItem().toString().equals("Выбрать причину")) {
                             Toast toast = Toast.makeText(EquipmentStateActivity.this, R.string.ToastYouDoNotChosenAnything, Toast.LENGTH_SHORT);
                             toast.show();
                             return;
-
                         }
                         Toast toast = Toast.makeText(EquipmentStateActivity.this, spinner.getSelectedItem().toString(), Toast.LENGTH_SHORT);
                         toast.show();

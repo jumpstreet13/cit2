@@ -129,18 +129,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         startActivity(intent);
     }
 
-    @Override
-    public void textViewClicked(int position) {
-        myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
-        myMediaPlayer.start();
-        myMediaPlayer.setFree();
-        Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);
-        intent.putExtra("id", getIntent().getIntExtra("id", -5));
-        Log.e("PING", arr.get(position).id + "");
-        intent.putExtra("idOfEquipment", arr.get(position).id);
-        startActivity(intent);
 
-    }
 
 
     @Override
@@ -192,6 +181,20 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void textViewClicked(int position) {
+        myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
+        myMediaPlayer.start();
+        myMediaPlayer.setFree();
+        Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);
+        intent.putExtra("id", getIntent().getIntExtra("id", -5));
+        Log.e("PING", arr.get(position).id + "");
+        intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
+        intent.putExtra("idOfEquipment", arr.get(position).id);
+        startActivity(intent);
+
     }
 
 

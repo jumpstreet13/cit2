@@ -11,26 +11,19 @@ import java.util.List;
 public class Inspection  {
 
 
-    public String equipment_id;
+    public int equipmentId;
 
 
-    public String visit_id;
+    public int visitId;
 
 
-    public String fg_availability;
+    public String fgAvailability;
 
 
-    public String fg_usings;
+    public String fgUsings;
 
 
     public String note;
-
-
-    public Visit visit;
-
-
-    public Equipment equipment;
-
 
 
     public Inspection(){
