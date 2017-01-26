@@ -60,6 +60,7 @@ public class MainActivity extends Activity {
     private static RestApi restApi;
     private Retrofit retrofit;
 
+    //zz
 
     public ArrayList<String> getArrString(ArrayList<Center> cr) {
         ArrayList<String> arr = new ArrayList<String>();
