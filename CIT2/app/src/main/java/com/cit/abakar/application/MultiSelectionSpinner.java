@@ -1,17 +1,13 @@
 package com.cit.abakar.application;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.app.AlertDialog;
-import android.media.MediaPlayer;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 

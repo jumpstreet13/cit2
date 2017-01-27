@@ -2,9 +2,6 @@ package com.cit.abakar.application;
 
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Switch;
 
 
 public class MyMediaPlayer {

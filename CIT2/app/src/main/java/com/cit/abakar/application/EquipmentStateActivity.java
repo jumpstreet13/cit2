@@ -13,16 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.cit.abakar.application.ExampleClasses.Condition;
 import com.cit.abakar.application.ExampleClasses.Equipment;
@@ -32,13 +27,14 @@ import com.cit.abakar.application.ExampleClasses.Malfunction;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.cit.abakar.application.MainActivity.MYURL;
+import static com.cit.abakar.application.MainActivity.SHAREDNAME;
 import static com.cit.abakar.application.MainActivity.USERNAME;
 import static com.cit.abakar.application.MainActivity.hasConnection;
 
@@ -58,11 +54,11 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     private ArrayList<Boolean> selectedItem = new ArrayList<Boolean>();
     private String location;
 
-    public void sendIsSuccesful(){
+    public void sendIsSuccesful() {
         Toast.makeText(this, R.string.SendIsSuccesful, Toast.LENGTH_SHORT).show();
     }
 
-    public void sendIsNotSucces(){
+    public void sendIsNotSucces() {
         Toast.makeText(this, R.string.SendIsNotSucces, Toast.LENGTH_SHORT).show();
     }
 
@@ -78,7 +74,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         buttonIsWorking = (Button) findViewById(R.id.buttonWhenIsWorking);
         editTextIsWorking = (EditText) findViewById(R.id.editTextWhenIsWorking);
         spinner = (MultiSelectionSpinner) findViewById(R.id.spinnerInEquipmentStateActivity);
-        retrofit = new Retrofit.Builder().baseUrl("http://10.39.5.76/apiv1/").
+        retrofit = new Retrofit.Builder().baseUrl(MYURL).
                 addConverterFactory(GsonConverterFactory.create()).build();
         restApi = retrofit.create(RestApi.class);
         restApi.getEquipment().enqueue(new Callback<List<Equipment>>() {
@@ -221,7 +217,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
-                if(editTextIsWorking.getText().toString().equals("")){
+                if (editTextIsWorking.getText().toString().equals("")) {
                     Toast.makeText(EquipmentStateActivity.this, "Вы не оставили записи", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -290,7 +286,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 final Dialog dialogUser = new Dialog(EquipmentStateActivity.this, R.style.DialogTheme);
                 dialogUser.setContentView(R.layout.urldialog);
                 dialogUser.setTitle(R.string.WriteNameOfUser);
-                SharedPreferences sharedPrefUser = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences sharedPrefUser = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                 TextView textViewUser = (TextView) dialogUser.findViewById(R.id.textViewinMainActivityDialog);
                 textViewUser.setText(sharedPrefUser.getString(USERNAME, getString(R.string.UserIsNotInstalledYet)));
                 dialogUser.show();
@@ -319,7 +315,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 final Dialog dialog = new Dialog(EquipmentStateActivity.this, R.style.DialogTheme);
                 dialog.setContentView(R.layout.urldialog);
                 dialog.setTitle(R.string.WriteNewUrl);
-                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                 TextView textView = (TextView) dialog.findViewById(R.id.textViewinMainActivityDialog);
                 textView.setText(sharedPref.getString(MainActivity.URLSETTINS, getString(R.string.Adress_is_not_set_yet)));
                 dialog.show();

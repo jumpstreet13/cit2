@@ -14,30 +14,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.activeandroid.ActiveAndroid;
 import com.cit.abakar.application.ExampleClasses.Dismantling;
 import com.cit.abakar.application.ExampleClasses.Equipment;
 import com.cit.abakar.application.ExampleClasses.Installation;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.cit.abakar.application.MainActivity.MYURL;
+import static com.cit.abakar.application.MainActivity.SHAREDNAME;
 import static com.cit.abakar.application.MainActivity.USERNAME;
 import static com.cit.abakar.application.MainActivity.hasConnection;
 
@@ -58,7 +55,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         setContentView(R.layout.activity_equipment);
         getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
         listView = (ListView) findViewById(R.id.listViewEquipment);
-        retrofit = new Retrofit.Builder().baseUrl("http://10.39.5.76/apiv1/").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl(MYURL).addConverterFactory(GsonConverterFactory.create()).build();
         restApi = retrofit.create(RestApi.class);
 
         restApi.getEquipment().enqueue(new Callback<List<Equipment>>() {
@@ -144,7 +141,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 final Dialog dialogUser = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
                 dialogUser.setContentView(R.layout.urldialog);
                 dialogUser.setTitle(R.string.WriteNameOfUser);
-                SharedPreferences sharedPrefUser = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences sharedPrefUser = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                 TextView textViewUser = (TextView) dialogUser.findViewById(R.id.textViewinMainActivityDialog);
                 textViewUser.setText(sharedPrefUser.getString(USERNAME, getString(R.string.UserIsNotInstalledYet)));
                 dialogUser.show();
@@ -159,10 +156,10 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                         myMediaPlayer.start();
                         myMediaPlayer.setFree();
                         EditText editText = (EditText) dialogUser.findViewById(R.id.editTextinMainActivityDialog);
-                        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(USERNAME, editText.getText().toString());
-                        editor.commit();
+                        editor.apply();
                         dialogUser.dismiss();
                     }
                 });
@@ -173,7 +170,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
                 dialog.setContentView(R.layout.urldialog);
                 dialog.setTitle(R.string.WriteNewUrl);
-                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                 TextView textView = (TextView) dialog.findViewById(R.id.textViewinMainActivityDialog);
                 textView.setText(sharedPref.getString(MainActivity.URLSETTINS, getString(R.string.Adress_is_not_set_yet)));
                 dialog.show();
@@ -189,10 +186,10 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                         myMediaPlayer.start();
                         myMediaPlayer.setFree();
                         EditText editText = (EditText) dialog.findViewById(R.id.editTextinMainActivityDialog);
-                        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(MainActivity.URLSETTINS, editText.getText().toString());
-                        editor.commit();
+                        editor.apply();
                         dialog.dismiss();
                     }
                 });
@@ -293,7 +290,8 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
         TelephonyManager tMgr = (TelephonyManager) EquipmentActivity.this.getSystemService(Context.TELEPHONY_SERVICE);
-        String mPhoneNumber = tMgr.getLine1Number();
+        SharedPreferences sharedPrefUser = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
+        String mPhoneNumber = sharedPrefUser.getString(USERNAME, getString(R.string.UserIsNotInstalledYet)) + "/" + tMgr.getLine1Number();
         TextView tx = (TextView) dialog.findViewById(R.id.textViewinEquipmentDeinstallation);
         String number = mPhoneNumber;
         tx.setText(number);
@@ -347,11 +345,11 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     }
 
-    public void sendIsSucces(){
+    public void sendIsSucces() {
         Toast.makeText(this, R.string.SendIsSuccesful, Toast.LENGTH_SHORT).show();
     }
 
-    public void sendIsNotSucces(){
+    public void sendIsNotSucces() {
         Toast.makeText(this, R.string.SendIsNotSucces, Toast.LENGTH_SHORT).show();
     }
 

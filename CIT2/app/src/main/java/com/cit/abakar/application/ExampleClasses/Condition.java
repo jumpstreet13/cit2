@@ -1,9 +1,5 @@
 package com.cit.abakar.application.ExampleClasses;
 
-import com.activeandroid.Model;
-
-
-
 public class Condition  {
 
     public int id;

@@ -1,6 +1,5 @@
 package com.cit.abakar.application;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.SearchManager;
@@ -9,11 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,7 +20,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,38 +29,26 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.activeandroid.ActiveAndroid;
 import com.cit.abakar.application.ExampleClasses.Center;
 import com.cit.abakar.application.ExampleClasses.Visit;
-import com.google.gson.Gson;
-import com.google.gson.TypeAdapter;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Header;
-import retrofit2.http.Headers;
 
 public class MainActivity extends Activity {
 
 
+    public static String MYURL = "";
     public final static String URLSETTINS = "urlSettings";
+    public final static String SHAREDNAME = "Preference";
     public final static String USERNAME = "user";
     private ListView listView;
     private ArrayList<Center> arr = new ArrayList<Center>();
@@ -90,15 +73,15 @@ public class MainActivity extends Activity {
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MYURL = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE).getString("url", "http://10.39.5.76/apiv1/");
         getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInActivityMain);
         listView = (ListView) findViewById(R.id.listViewMain);
-        retrofit = new Retrofit.Builder().baseUrl("http://10.39.5.76/apiv1/").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl(MYURL).addConverterFactory(GsonConverterFactory.create()).build();
         restApi = retrofit.create(RestApi.class);
 
         restApi.getAllCenters().enqueue(new Callback<List<Center>>() {
@@ -231,7 +214,7 @@ public class MainActivity extends Activity {
                 final Dialog dialogUser = new Dialog(MainActivity.this, R.style.DialogTheme);
                 dialogUser.setContentView(R.layout.urldialog);
                 dialogUser.setTitle("Введите Имя пользователя");
-                SharedPreferences sharedPrefUser = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences sharedPrefUser = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                 TextView textViewUser = (TextView) dialogUser.findViewById(R.id.textViewinMainActivityDialog);
                 textViewUser.setText(sharedPrefUser.getString(USERNAME, getString(R.string.UserIsNotInstalledYet)));
                 dialogUser.show();
@@ -246,12 +229,11 @@ public class MainActivity extends Activity {
                         myMediaPlayer.start();
                         myMediaPlayer.setFree();
                         EditText editText = (EditText) dialogUser.findViewById(R.id.editTextinMainActivityDialog);
-                        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(USERNAME, editText.getText().toString());
-                        editor.commit();
+                        editor.apply();
                         dialogUser.dismiss();
-
                     }
                 });
 
@@ -261,7 +243,7 @@ public class MainActivity extends Activity {
                 final Dialog dialog = new Dialog(MainActivity.this, R.style.DialogTheme);
                 dialog.setContentView(R.layout.urldialog);
                 dialog.setTitle(R.string.WriteNewUrl);
-                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                 TextView textView = (TextView) dialog.findViewById(R.id.textViewinMainActivityDialog);
                 textView.setText(sharedPref.getString(URLSETTINS, getString(R.string.Adress_is_not_set_yet)));
                 dialog.show();
@@ -277,10 +259,10 @@ public class MainActivity extends Activity {
                         myMediaPlayer.start();
                         myMediaPlayer.setFree();
                         EditText editText = (EditText) dialog.findViewById(R.id.editTextinMainActivityDialog);
-                        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(URLSETTINS, editText.getText().toString());
-                        editor.commit();
+                        editor.apply();
                         dialog.dismiss();
                     }
                 });
