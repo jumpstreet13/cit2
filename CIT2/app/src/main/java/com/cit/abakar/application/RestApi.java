@@ -48,7 +48,7 @@ public interface RestApi {
     @POST("inspection/")
     Call<Void> addInspection(@Body Inspection inspection);
 
-    @POST("malfunctions/")
+    @POST("malfunction/")
     Call<Void> addMalfunction(@Body Malfunction malfunctions);
 
     @POST("installation/")
