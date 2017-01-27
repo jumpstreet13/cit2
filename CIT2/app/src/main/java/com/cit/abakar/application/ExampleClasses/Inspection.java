@@ -17,10 +17,10 @@ public class Inspection  {
     public int visitId;
 
 
-    public String fgAvailability;
+    public boolean fgAvailability;
 
 
-    public String fgUsings;
+    public boolean fgUsings;
 
 
     public String note;

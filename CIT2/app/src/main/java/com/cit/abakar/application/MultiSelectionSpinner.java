@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,6 +42,14 @@ public class MultiSelectionSpinner extends Spinner implements DialogInterface.On
             selected[which] = true;
         else
             selected[which] = false;
+    }
+
+    public ArrayList<Boolean> getSelected(){
+        ArrayList<Boolean> items = new ArrayList<Boolean>();
+        for(int i = 0; i<selected.length; i++){
+            items.add(selected[i]);
+        }
+        return items;
     }
 
     @Override

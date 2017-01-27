@@ -7,7 +7,7 @@ import com.cit.abakar.application.ExampleClasses.Dismantling;
 import com.cit.abakar.application.ExampleClasses.Equipment;
 import com.cit.abakar.application.ExampleClasses.Inspection;
 import com.cit.abakar.application.ExampleClasses.Installation;
-import com.cit.abakar.application.ExampleClasses.Malfunctions;
+import com.cit.abakar.application.ExampleClasses.Malfunction;
 import com.cit.abakar.application.ExampleClasses.Visit;
 
 import java.sql.ResultSet;
@@ -46,10 +46,10 @@ public interface RestApi {
     Call<Void> addVisit(@Body Visit visit);
 
     @POST("inspection/")
-    Call<Response<ResponseBody>> addInspection(@Body Inspection inspection);
+    Call<Void> addInspection(@Body Inspection inspection);
 
-    @POST("malfunction/")
-    Call<Response<ResponseBody>> addMalfunction(@Body Malfunctions malfunctions);
+    @POST("malfunctions/")
+    Call<Void> addMalfunction(@Body Malfunction malfunctions);
 
     @POST("installation/")
     Call<Void> addInstallation(@Body Installation installation);

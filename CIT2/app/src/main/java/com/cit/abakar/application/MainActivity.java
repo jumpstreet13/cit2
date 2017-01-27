@@ -140,7 +140,7 @@ public class MainActivity extends Activity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         Log.e("TAZ", response.headers().toString());
-                        intent.putExtra("visitId",getVisitId(response.headers().toString()));
+                        intent.putExtra("visitId",getVisitId(response.headers().get("Location")));
                         startActivity(intent);
                     }
 
@@ -387,10 +387,9 @@ public class MainActivity extends Activity {
 
     public int getVisitId(String location){
         Log.e("TAZ", location);
-        String s1 = location.substring(40,42);
-        Log.e("TAZ", s1);
-        Integer res = Integer.parseInt(s1);
-        return res;
+        String[] s1 = location.split("/");
+        Log.e("TAZ", s1[s1.length-1]);
+        return Integer.parseInt(s1[s1.length-1]);
     }
 
 }

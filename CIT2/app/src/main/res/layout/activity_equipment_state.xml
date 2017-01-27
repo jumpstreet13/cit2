@@ -43,6 +43,7 @@
 
     <Button
         android:text="@string/DoesNotWork"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonInEquipmentState"
@@ -50,7 +51,7 @@
         android:layout_alignParentEnd="true" />
 
     <TextView
-        android:text="Исправно"
+        android:text="@string/fg_availability"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
@@ -70,12 +71,30 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:text="В наличии"
+        android:text="@string/fg_usings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/spinnerInEquipmentStateActivity"
         android:layout_alignStart="@+id/switch2InEquipmentState"
         android:layout_marginBottom="14dp"
         android:id="@+id/textView2" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:layout_alignTop="@+id/spinnerInEquipmentStateActivity"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/editTextWhenIsWorking" />
+
+    <Button
+        android:text="@string/Send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/button2InEquipmentState"
+        android:layout_alignStart="@+id/button2InEquipmentState"
+        android:id="@+id/buttonWhenIsWorking"
+        android:layout_alignEnd="@+id/button2InEquipmentState" />
 
 </RelativeLayout>

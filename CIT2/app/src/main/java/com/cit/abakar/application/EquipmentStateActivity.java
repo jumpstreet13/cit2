@@ -27,10 +27,12 @@ import android.widget.Toast;
 import com.cit.abakar.application.ExampleClasses.Condition;
 import com.cit.abakar.application.ExampleClasses.Equipment;
 import com.cit.abakar.application.ExampleClasses.Inspection;
+import com.cit.abakar.application.ExampleClasses.Malfunction;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,7 +44,8 @@ import static com.cit.abakar.application.MainActivity.hasConnection;
 
 public class EquipmentStateActivity extends Activity implements MultiSelectionSpinner.MultiSpinnerListener {
 
-    private Button button1, button2;
+    private Button button1, button2, buttonIsWorking;
+    private EditText editTextIsWorking;
     private Switch switch1, switch2;
     private MultiSelectionSpinner spinner;
     private ArrayList<Condition> ar = new ArrayList<Condition>();
@@ -51,6 +54,8 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     private Equipment equipment;
     private static RestApi restApi;
     private Retrofit retrofit;
+    private ArrayList<Boolean> selectedItem = new ArrayList<Boolean>();
+    private String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,8 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         button2 = (Button) findViewById(R.id.button2InEquipmentState);
         switch1 = (Switch) findViewById(R.id.switch1InEquipmentState);
         switch2 = (Switch) findViewById(R.id.switch2InEquipmentState);
+        buttonIsWorking = (Button) findViewById(R.id.buttonWhenIsWorking);
+        editTextIsWorking = (EditText) findViewById(R.id.editTextWhenIsWorking);
         spinner = (MultiSelectionSpinner) findViewById(R.id.spinnerInEquipmentStateActivity);
         retrofit = new Retrofit.Builder().baseUrl("http://10.39.5.76/apiv1/").
                 addConverterFactory(GsonConverterFactory.create()).build();
@@ -71,7 +78,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 for (Equipment eq : response.body()) {
                     Log.e("FOX", eq.id + "");
                     Log.e("FOX", eq.fgDismantled);
-                    Log.e("FOX",getIntent().getIntExtra("idOfEquipment", -5) + "");
+                    Log.e("FOX", getIntent().getIntExtra("idOfEquipment", -5) + "");
                     if (eq.id == getIntent().getIntExtra("idOfEquipment", -5)) {
                         equipment = eq;
                         if (equipment.fgDismantled.equals("true")) {
@@ -94,7 +101,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
             }
         });
         //Log.e("ZZ", getIntent().getIntExtra("idOfEquipment", -5) + "");
-       // Log.e("ZZ", equipment.fg_dismantled + " " + equipment.fg_not_install + " ");
+        // Log.e("ZZ", equipment.fg_dismantled + " " + equipment.fg_not_install + " ");
 
 
         restApi.getConditios().enqueue(new Callback<List<Condition>>() {
@@ -137,10 +144,10 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
                 button1.setEnabled(false);
-                switch1.setEnabled(false);
-                switch2.setEnabled(false);
-                switch1.setChecked(false);
-                switch2.setChecked(true);
+                buttonIsWorking.setVisibility(View.INVISIBLE);
+                buttonIsWorking.setEnabled(false);
+                editTextIsWorking.setVisibility(View.INVISIBLE);
+                editTextIsWorking.setEnabled(false);
                 button2.setVisibility(View.VISIBLE);
                 spinner.setVisibility(View.VISIBLE);
                 button2.setOnClickListener(new View.OnClickListener() {
@@ -150,20 +157,44 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         myMediaPlayer.start();
                         myMediaPlayer.setFree();
                         //Log.e("getSelected", s);
-                        Inspection inspection = new Inspection();
-                        inspection.equipmentId = getIntent().getIntExtra("idOfEquipment", -5);
-                        inspection.visitId = getIntent().getIntExtra("visitId", -5);
-                        inspection.fgAvailability =
-
-                        restApi.addInspection()
-
+                        //inspection.fgAvailability =
+                        //restApi.addInspection()
                         if (spinner.getSelectedItem().toString().equals("") ||
                                 spinner.getSelectedItem().toString().equals("Выбрать причину")) {
                             Toast toast = Toast.makeText(EquipmentStateActivity.this, R.string.ToastYouDoNotChosenAnything, Toast.LENGTH_SHORT);
                             toast.show();
                             return;
                         }
-                        Toast toast = Toast.makeText(EquipmentStateActivity.this, spinner.getSelectedItem().toString(), Toast.LENGTH_SHORT);
+
+                        final String[] reasons = spinner.getSelectedItem().toString().split(",");
+                        ArrayList<Condition> result = new ArrayList<Condition>();
+                        result.addAll(compare(reasons, ar));
+
+                        for (Condition cc : result) {
+                            Malfunction malfunctions = new Malfunction();
+                            malfunctions.inspectionId = setInspectionId(location);
+                            Log.e("Device malfunc", malfunctions.inspectionId + "");
+                            malfunctions.conditionId = cc.id;
+                            Log.e("Device condi", malfunctions.conditionId + "");
+                            restApi.addMalfunction(malfunctions).enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                    Log.e("Device", "succes");
+                                    Log.e("Device", response.isSuccessful() + "");
+                                    Log.e("Device", response.code()+"");
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) {
+                                    Log.e("Device", "wtf");
+                                }
+                            });
+                        }
+
+
+                        Toast toast = Toast.makeText(EquipmentStateActivity.this, spinner.getSelectedItem().toString(),
+                                Toast.LENGTH_SHORT);
                         toast.show();
                         Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
                         intent.putExtra("id", getIntent().getIntExtra("id", -5));
@@ -173,6 +204,57 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
             }
         });
 
+
+        buttonIsWorking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
+                myMediaPlayer.start();
+                myMediaPlayer.setFree();
+                Inspection inspection = new Inspection();
+                inspection.equipmentId = getIntent().getIntExtra("idOfEquipment", -5);
+                inspection.visitId = getIntent().getIntExtra("visitId", -5);
+                inspection.fgAvailability = switch1.isChecked();
+                inspection.fgUsings = switch2.isChecked();
+                inspection.note = editTextIsWorking.getText().toString();
+
+                restApi.addInspection(inspection).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        Log.e("Device", response.headers().get("Location"));
+                        Log.e("Device", "success");
+                        Log.e("Device", response.isSuccessful() + "");
+                        Log.e("Device", response.code() + "");
+                        location = response.headers().get("Location");
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e("Device", "wtf");
+                    }
+                });
+                button1.setVisibility(View.VISIBLE);
+                editTextIsWorking.setVisibility(View.INVISIBLE);
+                editTextIsWorking.setEnabled(false);
+                buttonIsWorking.setEnabled(false);
+                buttonIsWorking.setVisibility(View.INVISIBLE);
+            }
+        });
+
+    }
+
+    public ArrayList<Condition> compare(String[] reasons, List<Condition> conditions) {
+
+        ArrayList<Condition> result = new ArrayList<Condition>();
+        for (int i = 0; i < conditions.size(); i++) {
+            for (int j = 0; j < reasons.length; j++) {
+                if (conditions.get(i).name.equals(reasons[j])) {
+                    result.add(conditions.get(i));
+                }
+            }
+        }
+        return result;
     }
 
     @Override
@@ -255,6 +337,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         myMediaPlayer.setFree();
         Intent intent = new Intent(this, EquipmentActivity.class);
         intent.putExtra("id", getIntent().getIntExtra("id", -5));
+        intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
         startActivity(intent);
     }
 
@@ -266,11 +349,18 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         Log.e("WTF", selected[0] + "");
     }
 
-    public ArrayList<String> getConditionsTitle(List<Condition> list){
+    public ArrayList<String> getConditionsTitle(List<Condition> list) {
         ArrayList<String> arr = new ArrayList<String>();
-        for(Condition condition : list){
+        for (Condition condition : list) {
             arr.add(condition.name);
         }
         return arr;
+    }
+
+    public int setInspectionId(String location) {
+        Log.e("Device", location);
+        String[] s1 = location.split("/");
+        Log.e("Device", s1[s1.length-1]);
+        return Integer.parseInt(s1[s1.length-1]);
     }
 }
