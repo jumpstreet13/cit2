@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +48,8 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     private MenuItem connection;
     private static RestApi restApi;
     private Retrofit retrofit;
-    MyAdapter adapter;
+    private MyAdapter adapter;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +57,11 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         setContentView(R.layout.activity_equipment);
         getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
         listView = (ListView) findViewById(R.id.listViewEquipment);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarInEquipmentActivity);
         retrofit = new Retrofit.Builder().baseUrl(MYURL).addConverterFactory(GsonConverterFactory.create()).build();
         restApi = retrofit.create(RestApi.class);
 
+        progressBar.setVisibility(View.VISIBLE);
         restApi.getEquipment().enqueue(new Callback<List<Equipment>>() {
             @Override
             public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
@@ -71,11 +75,13 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 }
                 adapter = new MyAdapter(EquipmentActivity.this, arr);
                 listView.setAdapter(adapter);
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<List<Equipment>> call, Throwable t) {
                 Toast.makeText(EquipmentActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
 
             }
         });

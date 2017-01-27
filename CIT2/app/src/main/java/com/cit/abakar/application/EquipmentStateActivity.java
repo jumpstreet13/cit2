@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +54,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     private Retrofit retrofit;
     private ArrayList<Boolean> selectedItem = new ArrayList<Boolean>();
     private String location;
+    private ProgressBar progressBar;
 
     public void sendIsSuccesful() {
         Toast.makeText(this, R.string.SendIsSuccesful, Toast.LENGTH_SHORT).show();
@@ -74,9 +76,11 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         buttonIsWorking = (Button) findViewById(R.id.buttonWhenIsWorking);
         editTextIsWorking = (EditText) findViewById(R.id.editTextWhenIsWorking);
         spinner = (MultiSelectionSpinner) findViewById(R.id.spinnerInEquipmentStateActivity);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarInEquipmentStateActivity);
         retrofit = new Retrofit.Builder().baseUrl(MYURL).
                 addConverterFactory(GsonConverterFactory.create()).build();
         restApi = retrofit.create(RestApi.class);
+        progressBar.setVisibility(View.VISIBLE);
         restApi.getEquipment().enqueue(new Callback<List<Equipment>>() {
             @Override
             public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
@@ -98,11 +102,13 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         }
                     }
                 }
+                  progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<List<Equipment>> call, Throwable t) {
-
+                Toast.makeText(EquipmentStateActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
             }
         });
         //Log.e("ZZ", getIntent().getIntExtra("idOfEquipment", -5) + "");

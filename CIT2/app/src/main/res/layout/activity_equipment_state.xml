@@ -97,4 +97,13 @@
         android:id="@+id/buttonWhenIsWorking"
         android:layout_alignEnd="@+id/button2InEquipmentState" />
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/buttonInEquipmentState"
+        android:id="@+id/progressBarInEquipmentStateActivity"
+        android:visibility="gone"
+        android:layout_alignTop="@+id/spinnerInEquipmentStateActivity" />
+
 </RelativeLayout>

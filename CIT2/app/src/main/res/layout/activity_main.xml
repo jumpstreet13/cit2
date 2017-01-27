@@ -13,14 +13,14 @@
 
 
     <ProgressBar
-        style="@style/ProgressBarStyle"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="179dp"
+        android:id="@+id/progressBarInMainActivity"
         android:visibility="gone"
-        android:id="@+id/progressBarInActivityMain" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <ListView
         android:id="@+id/listViewMain"

@@ -79,11 +79,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         MYURL = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE).getString("url", "http://10.39.5.76/apiv1/");
         getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
-        progressBar = (ProgressBar) findViewById(R.id.progressBarInActivityMain);
+        progressBar = (ProgressBar) findViewById(R.id.progressBarInMainActivity);
         listView = (ListView) findViewById(R.id.listViewMain);
         retrofit = new Retrofit.Builder().baseUrl(MYURL).addConverterFactory(GsonConverterFactory.create()).build();
         restApi = retrofit.create(RestApi.class);
-
+        progressBar.setVisibility(View.VISIBLE);
         restApi.getAllCenters().enqueue(new Callback<List<Center>>() {
             @Override
             public void onResponse(Call<List<Center>> call, Response<List<Center>> response) {
@@ -95,11 +95,13 @@ public class MainActivity extends Activity {
                 }*/
                 adapter = new YourAdapter(MainActivity.this, arr);
                 listView.setAdapter(adapter);
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<List<Center>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                //progressBar.setVisibility(View.GONE);
 
             }
         });
