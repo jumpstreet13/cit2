@@ -90,6 +90,7 @@ public class MainActivity extends Activity {
     }
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -250,6 +251,7 @@ public class MainActivity extends Activity {
                         editor.putString(USERNAME, editText.getText().toString());
                         editor.commit();
                         dialogUser.dismiss();
+
                     }
                 });
 
@@ -258,7 +260,7 @@ public class MainActivity extends Activity {
             case R.id.htttp_settings:
                 final Dialog dialog = new Dialog(MainActivity.this, R.style.DialogTheme);
                 dialog.setContentView(R.layout.urldialog);
-                dialog.setTitle("Введите новый URL");
+                dialog.setTitle(R.string.WriteNewUrl);
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                 TextView textView = (TextView) dialog.findViewById(R.id.textViewinMainActivityDialog);
                 textView.setText(sharedPref.getString(URLSETTINS, getString(R.string.Adress_is_not_set_yet)));
@@ -285,7 +287,7 @@ public class MainActivity extends Activity {
                 return true;
 
             case R.id.conntection_settings:
-                Toast toast = Toast.makeText(MainActivity.this, "Подключение к сети", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(MainActivity.this, R.string.NeworkConnection, Toast.LENGTH_SHORT);
                 toast.show();
                 return true;
 

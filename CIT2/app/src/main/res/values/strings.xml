@@ -25,6 +25,13 @@
     <string name="fg_usings">Используется</string>
     <string name="User_Name">Установить имя пользователя</string>
     <string name="UserIsNotInstalledYet">Пользователь не задан</string>
+    <string name="WriteNewUrl">Введите новый URL</string>
+    <string name="NeworkConnection">Состояние сети</string>
+    <string name="WriteNameOfUser">Введите Имя пользователя</string>
+    <string name="WriteNumberOfAkt">Введите номер акта</string>
+    <string name="YouDidNotWriteNumberOfAkt">Вы не ввели номер акта</string>
+    <string name="SendIsSuccesful">Отправка выполнена успешно</string>
+    <string name="SendIsNotSucces">Отправка не выполнена</string>
 
     <string-array name="forSpinner">
         <item>Сломан кулер</item>

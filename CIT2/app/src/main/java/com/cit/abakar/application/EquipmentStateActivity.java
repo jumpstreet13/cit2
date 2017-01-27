@@ -58,6 +58,14 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     private ArrayList<Boolean> selectedItem = new ArrayList<Boolean>();
     private String location;
 
+    public void sendIsSuccesful(){
+        Toast.makeText(this, R.string.SendIsSuccesful, Toast.LENGTH_SHORT).show();
+    }
+
+    public void sendIsNotSucces(){
+        Toast.makeText(this, R.string.SendIsNotSucces, Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -184,12 +192,12 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                                     Log.e("Device", "succes");
                                     Log.e("Device", response.isSuccessful() + "");
                                     Log.e("Device", response.code() + "");
-
                                 }
 
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
                                     Log.e("Device", "wtf");
+                                    sendIsNotSucces();
                                 }
                             });
                         }
@@ -228,12 +236,13 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         Log.e("Device", response.isSuccessful() + "");
                         Log.e("Device", response.code() + "");
                         location = response.headers().get("Location");
-
+                        sendIsSuccesful();
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         Log.e("Device", "wtf");
+                        sendIsNotSucces();
                     }
                 });
                 button1.setVisibility(View.VISIBLE);
@@ -276,7 +285,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
             case R.id.user:
                 final Dialog dialogUser = new Dialog(EquipmentStateActivity.this, R.style.DialogTheme);
                 dialogUser.setContentView(R.layout.urldialog);
-                dialogUser.setTitle("Введите Имя пользователя");
+                dialogUser.setTitle(R.string.WriteNameOfUser);
                 SharedPreferences sharedPrefUser = getPreferences(Context.MODE_PRIVATE);
                 TextView textViewUser = (TextView) dialogUser.findViewById(R.id.textViewinMainActivityDialog);
                 textViewUser.setText(sharedPrefUser.getString(USERNAME, getString(R.string.UserIsNotInstalledYet)));
@@ -305,7 +314,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
             case R.id.htttp_settings:
                 final Dialog dialog = new Dialog(EquipmentStateActivity.this, R.style.DialogTheme);
                 dialog.setContentView(R.layout.urldialog);
-                dialog.setTitle("Введите новый URL");
+                dialog.setTitle(R.string.WriteNewUrl);
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                 TextView textView = (TextView) dialog.findViewById(R.id.textViewinMainActivityDialog);
                 textView.setText(sharedPref.getString(MainActivity.URLSETTINS, getString(R.string.Adress_is_not_set_yet)));

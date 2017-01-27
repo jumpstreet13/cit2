@@ -143,7 +143,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             case R.id.user:
                 final Dialog dialogUser = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
                 dialogUser.setContentView(R.layout.urldialog);
-                dialogUser.setTitle("Введите Имя пользователя");
+                dialogUser.setTitle(R.string.WriteNameOfUser);
                 SharedPreferences sharedPrefUser = getPreferences(Context.MODE_PRIVATE);
                 TextView textViewUser = (TextView) dialogUser.findViewById(R.id.textViewinMainActivityDialog);
                 textViewUser.setText(sharedPrefUser.getString(USERNAME, getString(R.string.UserIsNotInstalledYet)));
@@ -172,7 +172,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             case R.id.htttp_settings:
                 final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
                 dialog.setContentView(R.layout.urldialog);
-                dialog.setTitle("Введите новый URL");
+                dialog.setTitle(R.string.WriteNewUrl);
                 SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                 TextView textView = (TextView) dialog.findViewById(R.id.textViewinMainActivityDialog);
                 textView.setText(sharedPref.getString(MainActivity.URLSETTINS, getString(R.string.Adress_is_not_set_yet)));
@@ -230,7 +230,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
         final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
         dialog.setContentView(R.layout.equipment_dialog);
-        dialog.setTitle("Введите номер акта");
+        dialog.setTitle(R.string.WriteNumberOfAkt);
         dialog.show();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -245,7 +245,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 myMediaPlayer.setFree();
                 EditText ed = (EditText) dialog.findViewById(R.id.editTextInInstallationDialog);
                 if (ed.getText().toString().equals("")) {
-                    Toast toast = Toast.makeText(EquipmentActivity.this, "Вы не ввели номер акта", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(EquipmentActivity.this, R.string.YouDidNotWriteNumberOfAkt, Toast.LENGTH_SHORT);
                     toast.show();
                     return;
                 }
@@ -261,13 +261,14 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                         Log.e("ZEUS", "succes");
                         Log.e("ZEUS", response.isSuccessful() + "");
                         Log.e("ZEUS", response.code() + "");
+                        sendIsSucces();
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         Log.e("ZEUS", "wtf");
                         Log.e("ZEUS", t.toString());
-
+                        sendIsNotSucces();
                     }
                 });
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -286,7 +287,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         myMediaPlayer.setFree();
         final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
         dialog.setContentView(R.layout.equipment_deinstallation_dialog);
-        dialog.setTitle("Введите номер акта");
+        dialog.setTitle(R.string.WriteNumberOfAkt);
         dialog.show();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -307,7 +308,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 myMediaPlayer.setFree();
                 EditText ed = (EditText) dialog.findViewById(R.id.editTextinEquipmentDeinstallation);
                 if (ed.getText().toString().equals("")) {
-                    Toast toast = Toast.makeText(EquipmentActivity.this, "Вы не ввели номер акта", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(EquipmentActivity.this, R.string.YouDidNotWriteNumberOfAkt, Toast.LENGTH_SHORT);
                     toast.show();
                     return;
                 }
@@ -329,12 +330,13 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                         Log.e("Shox", "succes");
                         Log.e("Shox", response.isSuccessful() + "");
                         Log.e("Shox", response.code() + "");
+                        sendIsSucces();
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         Log.e("Shox", "wtf");
-
+                        sendIsNotSucces();
                     }
                 });
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -343,6 +345,14 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             }
         });
 
+    }
+
+    public void sendIsSucces(){
+        Toast.makeText(this, R.string.SendIsSuccesful, Toast.LENGTH_SHORT).show();
+    }
+
+    public void sendIsNotSucces(){
+        Toast.makeText(this, R.string.SendIsNotSucces, Toast.LENGTH_SHORT).show();
     }
 
     @Override
