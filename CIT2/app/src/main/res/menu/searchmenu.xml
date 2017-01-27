@@ -7,9 +7,18 @@
         android:id="@+id/conntection_settings"
         android:orderInCategory="100"
         android:title="@string/connection"
-        android:enabled="false"
         android:showAsAction="always">
     </item>
+
+
+    <item
+        android:id="@+id/user"
+        android:orderInCategory="100"
+        android:title="@string/User_Name"
+        android:icon="@drawable/ic_http_white_24dp"
+        android:showAsAction="never">
+    </item>
+
 
     <item
         android:id="@+id/htttp_settings"
@@ -20,14 +29,6 @@
     </item>
 
 
-    <item
-        android:id="@+id/synchronize"
-        android:orderInCategory="100"
-        android:title="@string/syncronization"
-        android:icon="@drawable/ic_update_white_24dp"
-        android:showAsAction="never">
-
-    </item>
 
     <item
         android:id="@+id/search_settings"

@@ -64,13 +64,15 @@ import retrofit2.http.Headers;
 
 public class MainActivity extends Activity {
 
+
+    public final static String URLSETTINS = "urlSettings";
+    public final static String USERNAME = "user";
     private ListView listView;
     private ArrayList<Center> arr = new ArrayList<Center>();
     private YourAdapter adapter;
     private MyMediaPlayer myMediaPlayer;
     private MenuItem connection;
     public ProgressBar progressBar;
-    public final static String URLSETTINS = "urlSettings";
     private static RestApi restApi;
     private Retrofit retrofit;
     private Visit visit;
@@ -121,7 +123,6 @@ public class MainActivity extends Activity {
         //arr.addAll(Center.getAll());
 
 
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -140,7 +141,7 @@ public class MainActivity extends Activity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         Log.e("TAZ", response.headers().toString());
-                        intent.putExtra("visitId",getVisitId(response.headers().get("Location")));
+                        intent.putExtra("visitId", getVisitId(response.headers().get("Location")));
                         startActivity(intent);
                     }
 
@@ -155,10 +156,10 @@ public class MainActivity extends Activity {
 
     }
 
-    public String getCurrentDate(){
-       Date date = new Date();
+    public String getCurrentDate() {
+        Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        return  format.format(date);
+        return format.format(date);
     }
 
     public ArrayList<String> getBaseList() {
@@ -224,11 +225,36 @@ public class MainActivity extends Activity {
         switch (id) {
             case R.id.search_settings:
                 return true;
-            case R.id.synchronize:
-                // ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBarInMainActivity);
-                // progressBar.setVisibility(View.VISIBLE);
-                Log.e("Sync", "syncronize is going on");
+
+            case R.id.user:
+                final Dialog dialogUser = new Dialog(MainActivity.this, R.style.DialogTheme);
+                dialogUser.setContentView(R.layout.urldialog);
+                dialogUser.setTitle("Введите Имя пользователя");
+                SharedPreferences sharedPrefUser = getPreferences(Context.MODE_PRIVATE);
+                TextView textViewUser = (TextView) dialogUser.findViewById(R.id.textViewinMainActivityDialog);
+                textViewUser.setText(sharedPrefUser.getString(USERNAME, getString(R.string.UserIsNotInstalledYet)));
+                dialogUser.show();
+                dialogUser.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                immUser.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                Button userButton = (Button) dialogUser.findViewById(R.id.buttoninMainActivityDialog);
+                userButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myMediaPlayer = new MyMediaPlayer(MainActivity.this, "Button");
+                        myMediaPlayer.start();
+                        myMediaPlayer.setFree();
+                        EditText editText = (EditText) dialogUser.findViewById(R.id.editTextinMainActivityDialog);
+                        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString(USERNAME, editText.getText().toString());
+                        editor.commit();
+                        dialogUser.dismiss();
+                    }
+                });
+
                 return true;
+
             case R.id.htttp_settings:
                 final Dialog dialog = new Dialog(MainActivity.this, R.style.DialogTheme);
                 dialog.setContentView(R.layout.urldialog);
@@ -385,11 +411,11 @@ public class MainActivity extends Activity {
         }
     }*/
 
-    public int getVisitId(String location){
+    public int getVisitId(String location) {
         Log.e("TAZ", location);
         String[] s1 = location.split("/");
-        Log.e("TAZ", s1[s1.length-1]);
-        return Integer.parseInt(s1[s1.length-1]);
+        Log.e("TAZ", s1[s1.length - 1]);
+        return Integer.parseInt(s1[s1.length - 1]);
     }
 
 }

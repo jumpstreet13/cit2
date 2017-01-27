@@ -23,6 +23,8 @@
     <string name="NumberOfThisPhone">"Номер телефона "</string>
     <string name="fg_availability">В наличии</string>
     <string name="fg_usings">Используется</string>
+    <string name="User_Name">Установить имя пользователя</string>
+    <string name="UserIsNotInstalledYet">Пользователь не задан</string>
 
     <string-array name="forSpinner">
         <item>Сломан кулер</item>
