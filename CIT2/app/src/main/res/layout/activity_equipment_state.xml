@@ -93,7 +93,8 @@
         android:id="@+id/buttonWhenIsWorking"
         android:layout_alignBaseline="@+id/buttonInEquipmentState"
         android:layout_alignBottom="@+id/buttonInEquipmentState"
-        android:layout_alignStart="@+id/buttonInEquipmentState" />
+        android:layout_alignStart="@+id/buttonInEquipmentState"
+        style = "@style/ButtonSP"/>
 
     <Button
         android:text="@string/Send"

@@ -204,6 +204,8 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 return true;
 
             case R.id.conntection_settings:
+                Toast toast = Toast.makeText(EquipmentActivity.this, R.string.NeworkConnection, Toast.LENGTH_SHORT);
+                toast.show();
 
                 break;
 

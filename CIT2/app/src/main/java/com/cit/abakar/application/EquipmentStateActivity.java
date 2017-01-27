@@ -354,7 +354,8 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 return true;
 
             case R.id.conntection_settings:
-
+                Toast toast = Toast.makeText(EquipmentStateActivity.this, R.string.NeworkConnection, Toast.LENGTH_SHORT);
+                toast.show();
                 break;
 
         }
