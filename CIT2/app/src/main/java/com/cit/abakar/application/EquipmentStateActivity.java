@@ -75,6 +75,8 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         switch2 = (Switch) findViewById(R.id.switch2InEquipmentState);
         buttonIsWorking = (Button) findViewById(R.id.buttonWhenIsWorking);
         editTextIsWorking = (EditText) findViewById(R.id.editTextWhenIsWorking);
+        InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        immUser.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
         spinner = (MultiSelectionSpinner) findViewById(R.id.spinnerInEquipmentStateActivity);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInEquipmentStateActivity);
         retrofit = new Retrofit.Builder().baseUrl(MYURL).
@@ -124,7 +126,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
             @Override
             public void onFailure(Call<List<Condition>> call, Throwable t) {
-
+                Toast.makeText(EquipmentStateActivity.this, "Не удалось загрузить список ошибок", Toast.LENGTH_SHORT).show();
             }
         });
         //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.forSpinner, android.R.layout.simple_spinner_item);
@@ -221,6 +223,8 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         buttonIsWorking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
@@ -298,7 +302,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 textViewUser.setText(sharedPrefUser.getString(USERNAME, getString(R.string.UserIsNotInstalledYet)));
                 dialogUser.show();
                 dialogUser.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                final InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 immUser.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                 Button userButton = (Button) dialogUser.findViewById(R.id.buttoninMainActivityDialog);
                 userButton.setOnClickListener(new View.OnClickListener() {
@@ -311,7 +315,8 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(USERNAME, editText.getText().toString());
-                        editor.commit();
+                        editor.apply();
+                        immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                         dialogUser.dismiss();
                     }
                 });
@@ -327,7 +332,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 textView.setText(sharedPref.getString(MainActivity.URLSETTINS, getString(R.string.Adress_is_not_set_yet)));
                 dialog.show();
                 dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
                 Button sendButton = (Button) dialog.findViewById(R.id.buttoninMainActivityDialog);
@@ -341,7 +346,8 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(MainActivity.URLSETTINS, editText.getText().toString());
-                        editor.commit();
+                        editor.apply();
+                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
                         dialog.dismiss();
                     }
                 });

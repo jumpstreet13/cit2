@@ -152,7 +152,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 textViewUser.setText(sharedPrefUser.getString(USERNAME, getString(R.string.UserIsNotInstalledYet)));
                 dialogUser.show();
                 dialogUser.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                final InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 immUser.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                 Button userButton = (Button) dialogUser.findViewById(R.id.buttoninMainActivityDialog);
                 userButton.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +166,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(USERNAME, editText.getText().toString());
                         editor.apply();
+                        immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                         dialogUser.dismiss();
                     }
                 });
@@ -181,7 +182,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 textView.setText(sharedPref.getString(MainActivity.URLSETTINS, getString(R.string.Adress_is_not_set_yet)));
                 dialog.show();
                 dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
                 Button sendButton = (Button) dialog.findViewById(R.id.buttoninMainActivityDialog);
@@ -196,6 +197,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(MainActivity.URLSETTINS, editText.getText().toString());
                         editor.apply();
+                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                         dialog.dismiss();
                     }
                 });

@@ -59,17 +59,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/switch1InEquipmentState" />
 
-    <Button
-        android:text="@string/Send"
-        android:elevation="5dp"
-        android:visibility="invisible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button2InEquipmentState"
-        android:layout_marginTop="102dp"
-        android:layout_below="@+id/spinnerInEquipmentStateActivity"
-        android:layout_centerHorizontal="true" />
-
     <TextView
         android:text="@string/fg_usings"
         android:layout_width="wrap_content"
@@ -88,15 +77,6 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/editTextWhenIsWorking" />
 
-    <Button
-        android:text="@string/Send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button2InEquipmentState"
-        android:layout_alignStart="@+id/button2InEquipmentState"
-        android:id="@+id/buttonWhenIsWorking"
-        android:layout_alignEnd="@+id/button2InEquipmentState" />
-
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
@@ -105,5 +85,24 @@
         android:id="@+id/progressBarInEquipmentStateActivity"
         android:visibility="gone"
         android:layout_alignTop="@+id/spinnerInEquipmentStateActivity" />
+
+    <Button
+        android:text="@string/Send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonWhenIsWorking"
+        android:layout_alignBaseline="@+id/buttonInEquipmentState"
+        android:layout_alignBottom="@+id/buttonInEquipmentState"
+        android:layout_alignStart="@+id/buttonInEquipmentState" />
+
+    <Button
+        android:text="@string/Send"
+        android:elevation="5dp"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2InEquipmentState"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
