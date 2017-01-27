@@ -192,6 +192,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                                 }
                             });
                         }
+                        //Refactor
                         
                         Toast toast = Toast.makeText(EquipmentStateActivity.this, spinner.getSelectedItem().toString(),
                                 Toast.LENGTH_SHORT);
