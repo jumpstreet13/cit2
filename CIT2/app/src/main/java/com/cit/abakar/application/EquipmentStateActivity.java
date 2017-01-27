@@ -211,6 +211,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         intent.putExtra("id", getIntent().getIntExtra("id", -5));
                         intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
                         startActivity(intent);
+                        //edit
                     }
                 });
             }
