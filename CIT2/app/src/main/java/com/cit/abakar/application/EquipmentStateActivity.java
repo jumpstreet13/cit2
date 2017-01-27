@@ -169,6 +169,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         final String[] reasons = spinner.getSelectedItem().toString().split(",");
                         ArrayList<Condition> result = new ArrayList<Condition>();
                         result.addAll(compare(reasons, ar));
+                        Log.e("NBA", result.size() + "");
 
                         for (Condition cc : result) {
                             Malfunction malfunctions = new Malfunction();
@@ -198,6 +199,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         toast.show();
                         Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
                         intent.putExtra("id", getIntent().getIntExtra("id", -5));
+                        intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
                         startActivity(intent);
                     }
                 });
@@ -249,11 +251,16 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         ArrayList<Condition> result = new ArrayList<Condition>();
         for (int i = 0; i < conditions.size(); i++) {
             for (int j = 0; j < reasons.length; j++) {
-                if (conditions.get(i).name.equals(reasons[j])) {
+                Log.e("Condition name", conditions.get(i).name);
+                Log.e("Reason name" , reasons[j]);
+                if (conditions.get(i).name.trim().toLowerCase().equals(reasons[j].trim().toLowerCase())) {
+                    Log.e("Added", "added");
                     result.add(conditions.get(i));
+                    break;
                 }
             }
         }
+        Log.e("Result size", result.size() + "");
         return result;
     }
 
