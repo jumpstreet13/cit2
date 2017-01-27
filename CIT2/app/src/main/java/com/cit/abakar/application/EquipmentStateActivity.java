@@ -221,6 +221,10 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
+                if(editTextIsWorking.getText().toString().equals("")){
+                    Toast.makeText(EquipmentStateActivity.this, "Вы не оставили записи", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Inspection inspection = new Inspection();
                 inspection.equipmentId = getIntent().getIntExtra("idOfEquipment", -5);
                 inspection.visitId = getIntent().getIntExtra("visitId", -5);
