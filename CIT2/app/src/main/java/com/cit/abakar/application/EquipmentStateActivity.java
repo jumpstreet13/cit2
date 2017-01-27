@@ -182,7 +182,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                                 public void onResponse(Call<Void> call, Response<Void> response) {
                                     Log.e("Device", "succes");
                                     Log.e("Device", response.isSuccessful() + "");
-                                    Log.e("Device", response.code()+"");
+                                    Log.e("Device", response.code() + "");
 
                                 }
 
@@ -192,8 +192,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                                 }
                             });
                         }
-
-
+                        
                         Toast toast = Toast.makeText(EquipmentStateActivity.this, spinner.getSelectedItem().toString(),
                                 Toast.LENGTH_SHORT);
                         toast.show();
@@ -252,7 +251,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         for (int i = 0; i < conditions.size(); i++) {
             for (int j = 0; j < reasons.length; j++) {
                 Log.e("Condition name", conditions.get(i).name);
-                Log.e("Reason name" , reasons[j]);
+                Log.e("Reason name", reasons[j]);
                 if (conditions.get(i).name.trim().toLowerCase().equals(reasons[j].trim().toLowerCase())) {
                     Log.e("Added", "added");
                     result.add(conditions.get(i));
@@ -367,7 +366,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     public int setInspectionId(String location) {
         Log.e("Device", location);
         String[] s1 = location.split("/");
-        Log.e("Device", s1[s1.length-1]);
-        return Integer.parseInt(s1[s1.length-1]);
+        Log.e("Device", s1[s1.length - 1]);
+        return Integer.parseInt(s1[s1.length - 1]);
     }
 }
