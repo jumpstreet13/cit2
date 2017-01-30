@@ -11,113 +11,84 @@
     android:background="@drawable/background"
     tools:context="com.cit.abakar.application.EquipmentStateActivity">
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarInEquipmentStateActivity"
+        android:visibility="gone"
+        android:layout_alignTop="@+id/spinnerInEquipmentStateActivity" />
+
     <Switch
-        android:text=""
+        android:text="В наличии"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/switch1InEquipmentState"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
         android:elevation="25dp"
         android:layout_marginStart="13dp"
-        android:layout_marginTop="37dp" />
+        android:layout_marginTop="16dp"
+        android:fontFamily="monospace"
+        android:typeface="serif"
+        android:textSize="18sp"
+        android:textStyle="normal|bold|italic"
+        android:textAllCaps="false"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:switchPadding="@dimen/default_gap" />
 
     <Switch
-        android:text=""
+        android:text="Используется"
         android:elevation="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="39dp"
+        android:layout_marginTop="22dp"
         android:id="@+id/switch2InEquipmentState"
+        android:fontFamily="monospace"
+        android:typeface="serif"
+        android:textStyle="normal|bold|italic"
+        android:textAllCaps="false"
+        android:textSize="18sp"
         android:layout_below="@+id/switch1InEquipmentState"
-        android:layout_alignStart="@+id/switch1InEquipmentState" />
+        android:layout_alignStart="@+id/switch1InEquipmentState"
+        android:switchPadding="@dimen/default_gap" />
+
+    <Switch
+        android:text="Неисправно"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/switchMalfunc"
+        android:layout_marginTop="24dp"
+        android:textSize="18sp"
+        android:typeface="sans"
+        android:textStyle="normal|bold|italic"
+        android:textAllCaps="false"
+        android:fontFamily="monospace"
+        android:layout_below="@+id/switch2InEquipmentState"
+        android:layout_alignStart="@+id/switch2InEquipmentState"
+        android:switchPadding="@dimen/default_gap" />
 
     <com.cit.abakar.application.MultiSelectionSpinner
         android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
         android:id="@+id/spinnerInEquipmentStateActivity"
-        android:layout_below="@+id/buttonInEquipmentState"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/switchMalfunc"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="56dp" />
 
     <Button
-        android:text="@string/DoesNotWork"
-        android:visibility="invisible"
+        android:text="@string/Send"
+        style="@style/ButtonSP"
+        android:elevation="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonInEquipmentState"
-        android:layout_below="@+id/switch1InEquipmentState"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:text="@string/fg_usings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/spinnerInEquipmentStateActivity"
-        android:layout_alignStart="@+id/switch2InEquipmentState"
-        android:layout_marginBottom="14dp"
-        android:id="@+id/textView2"
-        android:fontFamily="monospace"
-        android:typeface="serif"
-        android:textSize="18sp"
-        android:textStyle="normal|bold|italic"
-        android:textAllCaps="false" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:layout_alignTop="@+id/spinnerInEquipmentStateActivity"
+        android:layout_marginTop="76dp"
+        android:layout_below="@+id/spinnerInEquipmentStateActivity"
         android:layout_centerHorizontal="true"
-        android:id="@+id/editTextWhenIsWorking" />
-
-    <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toStartOf="@+id/buttonInEquipmentState"
-        android:id="@+id/progressBarInEquipmentStateActivity"
-        android:visibility="gone"
-        android:layout_alignTop="@+id/spinnerInEquipmentStateActivity" />
-
-    <Button
-        android:text="@string/Send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonWhenIsWorking"
-        android:layout_alignBaseline="@+id/buttonInEquipmentState"
-        android:layout_alignBottom="@+id/buttonInEquipmentState"
-        android:layout_alignStart="@+id/buttonInEquipmentState"
-        style = "@style/ButtonSP"
+        android:textSize="18sp"
         android:fontFamily="monospace"
         android:typeface="serif"
-        android:textSize="18sp"
-        android:textStyle="bold|italic"
-        android:textAlignment="center" />
-
-    <Button
-        android:text="@string/Send"
-        android:elevation="5dp"
-        android:visibility="invisible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button2InEquipmentState"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="@string/fg_availability"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:id="@+id/textView"
-        android:typeface="serif"
-        android:textSize="18sp"
-        android:textStyle="normal|bold|italic"
-        android:textAlignment="textStart"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/switch1InEquipmentState" />
+        android:textStyle="bold|italic" />
 
 </RelativeLayout>

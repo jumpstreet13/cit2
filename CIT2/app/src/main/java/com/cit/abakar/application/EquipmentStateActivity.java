@@ -42,9 +42,9 @@ import static com.cit.abakar.application.MainActivity.hasConnection;
 
 public class EquipmentStateActivity extends Activity implements MultiSelectionSpinner.MultiSpinnerListener {
 
-    private Button button1, button2, buttonIsWorking;
+    private Button button;
     private EditText editTextIsWorking;
-    private Switch switch1, switch2;
+    private Switch switch1, switch2, switch3;
     private MultiSelectionSpinner spinner;
     private ArrayList<Condition> ar = new ArrayList<Condition>();
     private MyMediaPlayer myMediaPlayer;
@@ -55,6 +55,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     private ArrayList<Boolean> selectedItem = new ArrayList<Boolean>();
     private String location;
     private ProgressBar progressBar;
+    private String note = "";
+    private Boolean succes;
+
 
     public void sendIsSuccesful() {
         Toast.makeText(this, R.string.SendIsSuccesful, Toast.LENGTH_SHORT).show();
@@ -69,16 +72,16 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_state);
         getActionBar().setTitle(R.string.ActionBarISOfflineEquipmentStateActivity);
-        button1 = (Button) findViewById(R.id.buttonInEquipmentState);
-        button2 = (Button) findViewById(R.id.button2InEquipmentState);
+
+        button = (Button) findViewById(R.id.buttonInEquipmentState);
         switch1 = (Switch) findViewById(R.id.switch1InEquipmentState);
         switch2 = (Switch) findViewById(R.id.switch2InEquipmentState);
-        buttonIsWorking = (Button) findViewById(R.id.buttonWhenIsWorking);
-        editTextIsWorking = (EditText) findViewById(R.id.editTextWhenIsWorking);
-        InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        immUser.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        switch3 = (Switch) findViewById(R.id.switchMalfunc);
         spinner = (MultiSelectionSpinner) findViewById(R.id.spinnerInEquipmentStateActivity);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInEquipmentStateActivity);
+
+        /*InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        immUser.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);*/
         retrofit = new Retrofit.Builder().baseUrl(MYURL).
                 addConverterFactory(GsonConverterFactory.create()).build();
         restApi = retrofit.create(RestApi.class);
@@ -104,7 +107,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         }
                     }
                 }
-                  progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -150,94 +153,53 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
             }
         });
 
-        button1.setOnClickListener(new View.OnClickListener() {
+        switch3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
-                myMediaPlayer.start();
-                myMediaPlayer.setFree();
-                button1.setEnabled(false);
-                buttonIsWorking.setVisibility(View.INVISIBLE);
-                buttonIsWorking.setEnabled(false);
-                editTextIsWorking.setVisibility(View.INVISIBLE);
-                editTextIsWorking.setEnabled(false);
-                button2.setVisibility(View.VISIBLE);
                 spinner.setVisibility(View.VISIBLE);
-                button2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
-                        myMediaPlayer.start();
-                        myMediaPlayer.setFree();
-                        //Log.e("getSelected", s);
-                        //inspection.fgAvailability =
-                        //restApi.addInspection()
-                        if (spinner.getSelectedItem().toString().equals("") ||
-                                spinner.getSelectedItem().toString().equals("Выбрать причину")) {
-                            Toast toast = Toast.makeText(EquipmentStateActivity.this, R.string.ToastYouDoNotChosenAnything, Toast.LENGTH_SHORT);
-                            toast.show();
-                            return;
-                        }
 
-                        final String[] reasons = spinner.getSelectedItem().toString().split(",");
-                        ArrayList<Condition> result = new ArrayList<Condition>();
-                        result.addAll(compare(reasons, ar));
-                        Log.e("NBA", result.size() + "");
-
-                        for (Condition cc : result) {
-                            Malfunction malfunctions = new Malfunction();
-                            malfunctions.inspectionId = setInspectionId(location);
-                            Log.e("Device malfunc", malfunctions.inspectionId + "");
-                            malfunctions.conditionId = cc.id;
-                            Log.e("Device condi", malfunctions.conditionId + "");
-                            restApi.addMalfunction(malfunctions).enqueue(new Callback<Void>() {
-                                @Override
-                                public void onResponse(Call<Void> call, Response<Void> response) {
-                                    Log.e("Device", "succes");
-                                    Log.e("Device", response.isSuccessful() + "");
-                                    Log.e("Device", response.code() + "");
-                                }
-
-                                @Override
-                                public void onFailure(Call<Void> call, Throwable t) {
-                                    Log.e("Device", "wtf");
-                                    sendIsNotSucces();
-                                }
-                            });
-                        }
-
-                        Toast toast = Toast.makeText(EquipmentStateActivity.this, spinner.getSelectedItem().toString(),
-                                Toast.LENGTH_SHORT);
-                        toast.show();
-                        Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
-                        intent.putExtra("id", getIntent().getIntExtra("id", -5));
-                        intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
-                        startActivity(intent);
-                        //edit
-                    }
-                });
             }
         });
 
-
-        buttonIsWorking.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
                 myMediaPlayer.start();
                 myMediaPlayer.setFree();
-                if (editTextIsWorking.getText().toString().equals("")) {
-                    Toast.makeText(EquipmentStateActivity.this, "Вы не оставили записи", Toast.LENGTH_SHORT).show();
-                    return;
+                if (switch3.isChecked()) {
+                    sendReport("YES");
+                } else {
+                    sendReport("");
                 }
+
+            }
+        });
+    }
+
+
+        public void sendReport(final String key){
+        final Dialog dialogUser = new Dialog(EquipmentStateActivity.this, R.style.DialogTheme);
+        dialogUser.setContentView(R.layout.urldialog);
+        dialogUser.setTitle(R.string.Note);
+        dialogUser.show();
+        dialogUser.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        final InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        immUser.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        Button button = (Button) dialogUser.findViewById(R.id.buttoninMainActivityDialog);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText editText = (EditText) dialogUser.findViewById(R.id.editTextinMainActivityDialog);
+                note = editText.getText().toString();
+                immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
+                dialogUser.dismiss();
                 Inspection inspection = new Inspection();
                 inspection.equipmentId = getIntent().getIntExtra("idOfEquipment", -5);
                 inspection.visitId = getIntent().getIntExtra("visitId", -5);
                 inspection.fgAvailability = switch1.isChecked();
                 inspection.fgUsings = switch2.isChecked();
-                inspection.note = editTextIsWorking.getText().toString();
+                inspection.note = note;
 
                 restApi.addInspection(inspection).enqueue(new Callback<Void>() {
                     @Override
@@ -247,7 +209,44 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         Log.e("Device", response.isSuccessful() + "");
                         Log.e("Device", response.code() + "");
                         location = response.headers().get("Location");
-                        sendIsSuccesful();
+                        if(key.equals("YES")){
+                            Log.e("Coldzera", "You shall not pass");
+                            final String[] reasons = spinner.getSelectedItem().toString().split(",");
+                            ArrayList<Condition> result = new ArrayList<Condition>();
+                            result.addAll(compare(reasons, ar));
+                            Log.e("NBA", result.size() + "");
+
+                            for (Condition cc : result) {
+                                Malfunction malfunctions = new Malfunction();
+                                malfunctions.inspectionId = setInspectionId(location);
+                                Log.e("Device malfunc", malfunctions.inspectionId + "");
+                                malfunctions.conditionId = cc.id;
+                                Log.e("Device condi", malfunctions.conditionId + "");
+                                restApi.addMalfunction(malfunctions).enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                        Log.e("Device", "succes");
+                                        Log.e("Device", response.isSuccessful() + "");
+                                        Log.e("Device", response.code() + "");
+                                        Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
+                                        intent.putExtra("id", getIntent().getIntExtra("id", -5));
+                                        intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
+                                        startActivity(intent);
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
+                                        Log.e("Device", "wtf");
+                                        Toast.makeText(EquipmentStateActivity.this, "Не удалось отправить неисправности", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }else{
+                            Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
+                            intent.putExtra("id", getIntent().getIntExtra("id", -5));
+                            intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
+                            startActivity(intent);
+                        }
                     }
 
                     @Override
@@ -256,15 +255,14 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         sendIsNotSucces();
                     }
                 });
-                button1.setVisibility(View.VISIBLE);
-                editTextIsWorking.setVisibility(View.INVISIBLE);
-                editTextIsWorking.setEnabled(false);
-                buttonIsWorking.setEnabled(false);
-                buttonIsWorking.setVisibility(View.INVISIBLE);
             }
         });
 
     }
+
+
+
+
 
     public ArrayList<Condition> compare(String[] reasons, List<Condition> conditions) {
 
