@@ -83,7 +83,7 @@ public class MainActivity extends Activity {
         listView = (ListView) findViewById(R.id.listViewMain);
         try {
             retrofit = new Retrofit.Builder().baseUrl(MYURL.trim()).addConverterFactory(GsonConverterFactory.create()).build();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             Toast.makeText(this, "Неккоректный адрес сервера", Toast.LENGTH_SHORT).show();
         }
         restApi = retrofit.create(RestApi.class);
@@ -235,7 +235,7 @@ public class MainActivity extends Activity {
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(USERNAME, editText.getText().toString());
                         editor.apply();
-                        immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
+                        immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                         dialogUser.dismiss();
                     }
                 });
@@ -264,10 +264,11 @@ public class MainActivity extends Activity {
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(URLSETTINS, editText.getText().toString());
                         editor.apply();
-                        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
-                        dialog.dismiss();
+                        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
                         Intent intent = getIntent();
+                        finish();
                         startActivity(intent);
+                        dialog.dismiss();
                     }
                 });
                 return true;

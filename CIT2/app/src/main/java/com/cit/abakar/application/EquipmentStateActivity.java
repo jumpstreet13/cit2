@@ -171,7 +171,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     }
 
 
-        public void sendReport(final String key){
+    public void sendReport(final String key) {
         final Dialog dialogUser = new Dialog(EquipmentStateActivity.this, R.style.DialogTheme);
         dialogUser.setContentView(R.layout.urldialog);
         dialogUser.setTitle(R.string.Note);
@@ -185,7 +185,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
             public void onClick(View v) {
                 EditText editText = (EditText) dialogUser.findViewById(R.id.editTextinMainActivityDialog);
                 note = editText.getText().toString();
-                immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
+                immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 dialogUser.dismiss();
                 Inspection inspection = new Inspection();
                 inspection.equipmentId = getIntent().getIntExtra("idOfEquipment", -5);
@@ -202,7 +202,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         Log.e("Device", response.isSuccessful() + "");
                         Log.e("Device", response.code() + "");
                         location = response.headers().get("Location");
-                        if(key.equals("YES")){
+                        if (key.equals("YES")) {
                             Log.e("Coldzera", "You shall not pass");
                             final String[] reasons = spinner.getSelectedItem().toString().split(",");
                             ArrayList<Condition> result = new ArrayList<Condition>();
@@ -234,7 +234,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                                     }
                                 });
                             }
-                        }else{
+                        } else {
                             Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
                             intent.putExtra("id", getIntent().getIntExtra("id", -5));
                             intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
@@ -252,9 +252,6 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         });
 
     }
-
-
-
 
 
     public ArrayList<Condition> compare(String[] reasons, List<Condition> conditions) {
@@ -300,7 +297,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                     @Override
                     public void onClick(View v) {
                         EditText editText = (EditText) dialogUser.findViewById(R.id.editTextinMainActivityDialog);
-                        SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME,Context.MODE_PRIVATE);
+                        SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(USERNAME, editText.getText().toString());
                         editor.apply();
@@ -328,11 +325,11 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                     @Override
                     public void onClick(View v) {
                         EditText editText = (EditText) dialog.findViewById(R.id.editTextinMainActivityDialog);
-                        SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME,Context.MODE_PRIVATE);
+                        SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(MainActivity.URLSETTINS, editText.getText().toString());
                         editor.apply();
-                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
+                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                         dialog.dismiss();
                     }
                 });
@@ -354,6 +351,10 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         menuInflater.inflate(R.menu.searchmenu, menu);
         connection = menu.findItem(R.id.conntection_settings);
         MenuItem searchItem = menu.findItem(R.id.search_settings);
+        MenuItem http = menu.findItem(R.id.htttp_settings);
+        http.setVisible(false);
+        MenuItem user = menu.findItem(R.id.user);
+        user.setVisible(false);
         searchItem.setVisible(false);
         if (hasConnection(this)) {
             connection.setIcon(R.drawable.ic_network_cell_white_24dp);

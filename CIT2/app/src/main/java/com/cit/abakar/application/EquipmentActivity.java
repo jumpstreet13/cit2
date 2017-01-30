@@ -108,6 +108,10 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         menuInflater.inflate(R.menu.searchmenu, menu);
         connection = menu.findItem(R.id.conntection_settings);
         MenuItem searchItem = menu.findItem(R.id.search_settings);
+        MenuItem http = menu.findItem(R.id.htttp_settings);
+        MenuItem user = menu.findItem(R.id.user);
+        user.setVisible(false);
+        http.setVisible(false);
         searchItem.setVisible(false);
         if (hasConnection(this)) {
             connection.setIcon(R.drawable.ic_network_cell_white_24dp);
