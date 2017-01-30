@@ -19,23 +19,6 @@
         android:layout_alignTop="@+id/spinnerInEquipmentStateActivity" />
 
     <Switch
-        android:text="В наличии"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/switch1InEquipmentState"
-        android:elevation="25dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="monospace"
-        android:typeface="serif"
-        android:textSize="18sp"
-        android:textStyle="normal|bold|italic"
-        android:textAllCaps="false"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:switchPadding="@dimen/default_gap" />
-
-    <Switch
         android:text="Используется"
         android:elevation="25dp"
         android:layout_width="wrap_content"
@@ -49,7 +32,7 @@
         android:textSize="18sp"
         android:layout_below="@+id/switch1InEquipmentState"
         android:layout_alignStart="@+id/switch1InEquipmentState"
-        android:switchPadding="@dimen/default_gap" />
+        android:switchPadding="14dip" />
 
     <Switch
         android:text="Неисправно"
@@ -64,7 +47,7 @@
         android:fontFamily="monospace"
         android:layout_below="@+id/switch2InEquipmentState"
         android:layout_alignStart="@+id/switch2InEquipmentState"
-        android:switchPadding="@dimen/default_gap" />
+        android:switchPadding="35dip" />
 
     <com.cit.abakar.application.MultiSelectionSpinner
         android:visibility="invisible"
@@ -89,5 +72,22 @@
         android:layout_below="@+id/spinnerInEquipmentStateActivity"
         android:layout_centerHorizontal="true"
         android:layout_width="150dp" />
+
+    <Switch
+        android:text="В наличии"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/switch1InEquipmentState"
+        android:elevation="25dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="13dp"
+        android:fontFamily="monospace"
+        android:typeface="serif"
+        android:textSize="18sp"
+        android:textStyle="normal|bold|italic"
+        android:textAllCaps="false"
+        android:switchPadding="45dip"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

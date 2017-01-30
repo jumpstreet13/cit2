@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cit.abakar.application.ExampleClasses.Equipment;
@@ -18,8 +19,8 @@ public class MyAdapter extends BaseAdapter {
 
     private ArrayList<Equipment> data = new ArrayList<Equipment>();
     private Context context;
-    private Button buttonInstallation;
-    private Button buttondeinstallation;
+    private ImageButton buttonInstallation;
+    private ImageButton buttondeinstallation;
     private AdapterInterface adapterInterface;
 
    /* public void setActivity(AdapterInterface adapterInterface){
@@ -59,8 +60,8 @@ public class MyAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.mylist_forequipments, parent, false);
         }
         TextView main = (TextView) convertView.findViewById(R.id.textViewForEquipments);
-        buttonInstallation = (Button) convertView.findViewById(R.id.button_Installation);
-        buttondeinstallation = (Button) convertView.findViewById(R.id.button_Deinstallation);
+        buttonInstallation = (ImageButton) convertView.findViewById(R.id.button_Installation);
+        buttondeinstallation = (ImageButton) convertView.findViewById(R.id.button_Deinstallation);
        // buttondeinstallation.setElevation(5);
        // buttonInstallation.setElevation(5);
         main.setText(data.get(position).name);
