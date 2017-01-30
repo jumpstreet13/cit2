@@ -121,16 +121,19 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         // Log.e("ZZ", equipment.fg_dismantled + " " + equipment.fg_not_install + " ");
 
 
+        progressBar.setVisibility(View.VISIBLE);
         restApi.getConditios().enqueue(new Callback<List<Condition>>() {
             @Override
             public void onResponse(Call<List<Condition>> call, Response<List<Condition>> response) {
                 ar.addAll(response.body());
                 spinner.setItems(getConditionsTitle(ar), getString(R.string.ChooseTheReason), EquipmentStateActivity.this);
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<List<Condition>> call, Throwable t) {
                 Toast.makeText(EquipmentStateActivity.this, "Не удалось загрузить список ошибок", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
             }
         });
         //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.forSpinner, android.R.layout.simple_spinner_item);
@@ -211,6 +214,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 inspection.fgUsings = switch2.isChecked();
                 inspection.note = note;
 
+                progressBar.setVisibility(View.VISIBLE);
                 restApi.addInspection(inspection).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -238,6 +242,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                                         Log.e("Device", "succes");
                                         Log.e("Device", response.isSuccessful() + "");
                                         Log.e("Device", response.code() + "");
+                                        progressBar.setVisibility(View.GONE);
                                         Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
                                         intent.putExtra("id", getIntent().getIntExtra("id", -5));
                                         intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
@@ -248,6 +253,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                                     public void onFailure(Call<Void> call, Throwable t) {
                                         Log.e("Device", "wtf");
                                         Toast.makeText(EquipmentStateActivity.this, "Не удалось отправить неисправности", Toast.LENGTH_SHORT).show();
+                                        progressBar.setVisibility(View.GONE);
                                     }
                                 });
                             }

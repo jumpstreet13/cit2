@@ -162,6 +162,7 @@ public class MainActivity extends Activity {
         invalidateOptionsMenu();
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -185,7 +186,7 @@ public class MainActivity extends Activity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.filter(newText.toString().trim());
+                adapter.filter(newText.trim());
                 listView.invalidate();
                 return true;
             }
@@ -203,6 +204,12 @@ public class MainActivity extends Activity {
                 return true;
             }
         });
+
+        searchView.setFocusableInTouchMode(true);
+        searchView.setFocusable(true);
+        searchView.setIconified(false);
+        searchView.requestFocus();
+        searchView.requestFocusFromTouch();
 
         return true;
     }

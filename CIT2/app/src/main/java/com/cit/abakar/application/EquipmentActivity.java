@@ -264,12 +264,14 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 Log.e("NEO", arr.get(position).id + "");
                 installation.visitId = getIntent().getIntExtra("visitId", -5);
                 Log.e("NEO", getIntent().getIntExtra("visitId", -5) + "");
+                progressBar.setVisibility(View.VISIBLE);
                 restApi.addInstallation(installation).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         Log.e("ZEUS", "succes");
                         Log.e("ZEUS", response.isSuccessful() + "");
                         Log.e("ZEUS", response.code() + "");
+                        progressBar.setVisibility(View.GONE);
                         sendIsSucces();
                     }
 
@@ -277,6 +279,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                     public void onFailure(Call<Void> call, Throwable t) {
                         Log.e("ZEUS", "wtf");
                         Log.e("ZEUS", t.toString());
+                        progressBar.setVisibility(View.GONE);
                         sendIsNotSucces();
                     }
                 });
@@ -340,18 +343,21 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 dismantling.equipmentId = arr.get(position).id;
                 Log.e("Shox", arr.get(position).id + "");
 
+                progressBar.setVisibility(View.VISIBLE);
                 restApi.addDismantling(dismantling).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         Log.e("Shox", "succes");
                         Log.e("Shox", response.isSuccessful() + "");
                         Log.e("Shox", response.code() + "");
+                        progressBar.setVisibility(View.GONE);
                         sendIsSucces();
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         Log.e("Shox", "wtf");
+                        progressBar.setVisibility(View.GONE);
                         sendIsNotSucces();
                     }
                 });

@@ -9,9 +9,10 @@
         android:id="@+id/myListTextView"
         android:textSize="20sp"
         android:padding="5sp"
+        android:maxLines="1"
         android:paddingBottom="10sp"
         android:layout_marginBottom="10sp"
-        android:maxLines="1"
+
         android:gravity="center"
         style="@style/ButtonSP"/>
 
