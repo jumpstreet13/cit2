@@ -12,7 +12,7 @@
     tools:context="com.cit.abakar.application.EquipmentStateActivity">
 
     <Switch
-        android:text="Используется"
+        android:text="@string/Using"
         android:elevation="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         android:switchPadding="14dip" />
 
     <Switch
-        android:text="Неисправно"
+        android:text="@string/Malfunc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/switchMalfunc"
@@ -67,7 +67,7 @@
         android:layout_width="150dp" />
 
     <Switch
-        android:text="В наличии"
+        android:text="@string/WeHaveIt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/switch1InEquipmentState"

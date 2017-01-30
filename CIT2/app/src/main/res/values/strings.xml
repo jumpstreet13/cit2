@@ -33,6 +33,9 @@
     <string name="SendIsSuccesful">Отправка выполнена успешно</string>
     <string name="SendIsNotSucces">Отправка не выполнена</string>
     <string name="Note">Напишите отчет</string>
+    <string name="Malfunc">Неисправно</string>
+    <string name="WeHaveIt">В наличии</string>
+    <string name="Using">Используется</string>
 
     <string-array name="forSpinner">
         <item>Сломан кулер</item>
