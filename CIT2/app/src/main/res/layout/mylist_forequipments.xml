@@ -5,10 +5,16 @@
 
     <TextView
         android:text=""
+        style = "@style/ButtonSP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textViewForEquipments"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:fontFamily="monospace"
+        android:typeface="serif"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        android:textAlignment="center" />
 
     <Button
         android:background="@drawable/ic_add_circle_white_24dp"

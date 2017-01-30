@@ -51,22 +51,18 @@
         android:layout_alignParentEnd="true" />
 
     <TextView
-        android:text="@string/fg_availability"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/switch1InEquipmentState" />
-
-    <TextView
         android:text="@string/fg_usings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/spinnerInEquipmentStateActivity"
         android:layout_alignStart="@+id/switch2InEquipmentState"
         android:layout_marginBottom="14dp"
-        android:id="@+id/textView2" />
+        android:id="@+id/textView2"
+        android:fontFamily="monospace"
+        android:typeface="serif"
+        android:textSize="18sp"
+        android:textStyle="normal|bold|italic"
+        android:textAllCaps="false" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -94,7 +90,12 @@
         android:layout_alignBaseline="@+id/buttonInEquipmentState"
         android:layout_alignBottom="@+id/buttonInEquipmentState"
         android:layout_alignStart="@+id/buttonInEquipmentState"
-        style = "@style/ButtonSP"/>
+        style = "@style/ButtonSP"
+        android:fontFamily="monospace"
+        android:typeface="serif"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        android:textAlignment="center" />
 
     <Button
         android:text="@string/Send"
@@ -105,5 +106,18 @@
         android:id="@+id/button2InEquipmentState"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="@string/fg_availability"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:id="@+id/textView"
+        android:typeface="serif"
+        android:textSize="18sp"
+        android:textStyle="normal|bold|italic"
+        android:textAlignment="textStart"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/switch1InEquipmentState" />
 
 </RelativeLayout>
