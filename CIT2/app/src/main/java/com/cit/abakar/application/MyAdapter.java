@@ -89,6 +89,17 @@ public class MyAdapter extends BaseAdapter {
             }
         });
 
+        if(data.get(position).fgNotInstall.equals("true")){
+            buttondeinstallation.setEnabled(false);
+            main.setEnabled(false);
+        }
+
+        if(data.get(position).fgDismantled.equals("true")){
+            main.setEnabled(false);
+            buttondeinstallation.setEnabled(false);
+            buttonInstallation.setEnabled(false);
+        }
+
         return convertView;
     }
 

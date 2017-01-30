@@ -238,7 +238,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 dialog.dismiss();
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 return true;
             }
         });
@@ -305,7 +305,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 dialog.dismiss();
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 return true;
             }
         });

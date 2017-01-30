@@ -16,3 +16,5 @@ http://www.askdev.ru/java/4547/%D0%BF%D0%BE%D1%87%D0%B5%D0%BC%D1%83-%D0%B2-Java-
 http://developer.alexanderklimov.ru/android/tips-studio.php
 
 http://developer.alexanderklimov.ru/android/tips-studio.php
+
+http://stackoverflow.com/questions/1521640/standard-android-button-with-a-different-color/1726352#1726352

@@ -234,7 +234,7 @@ public class MainActivity extends Activity {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         dialogUser.dismiss();
-                        immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
+                        immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                         return true;
                     }
                 });
@@ -273,7 +273,7 @@ public class MainActivity extends Activity {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         dialog.dismiss();
-                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
+                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                         return true;
                     }
                 });

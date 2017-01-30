@@ -86,7 +86,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         retrofit = new Retrofit.Builder().baseUrl(MYURL).
                 addConverterFactory(GsonConverterFactory.create()).build();
         restApi = retrofit.create(RestApi.class);
-        progressBar.setVisibility(View.VISIBLE);
+       /* progressBar.setVisibility(View.VISIBLE);
         restApi.getEquipment().enqueue(new Callback<List<Equipment>>() {
             @Override
             public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
@@ -116,7 +116,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 Toast.makeText(EquipmentStateActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
             }
-        });
+        });*/
         //Log.e("ZZ", getIntent().getIntExtra("idOfEquipment", -5) + "");
         // Log.e("ZZ", equipment.fg_dismantled + " " + equipment.fg_not_install + " ");
 
@@ -156,8 +156,10 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         switch3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (switch3.isChecked())
+                if (switch3.isChecked()) {
                     spinner.setVisibility(View.VISIBLE);
+                    switch2.setChecked(false);
+                }
                 else
                     spinner.setVisibility(View.INVISIBLE);
 
