@@ -47,7 +47,6 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     private Switch switch1, switch2, switch3;
     private MultiSelectionSpinner spinner;
     private ArrayList<Condition> ar = new ArrayList<Condition>();
-    private MyMediaPlayer myMediaPlayer;
     private MenuItem connection;
     private Equipment equipment;
     private static RestApi restApi;
@@ -138,18 +137,14 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         switch1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Switch");
-                myMediaPlayer.start();
-                myMediaPlayer.setFree();
+
             }
         });
 
         switch2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Switch");
-                myMediaPlayer.start();
-                myMediaPlayer.setFree();
+
             }
         });
 
@@ -164,9 +159,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
-                myMediaPlayer.start();
-                myMediaPlayer.setFree();
+
                 if (switch3.isChecked()) {
                     sendReport("YES");
                 } else {
@@ -306,11 +299,8 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 userButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
-                        myMediaPlayer.start();
-                        myMediaPlayer.setFree();
                         EditText editText = (EditText) dialogUser.findViewById(R.id.editTextinMainActivityDialog);
-                        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME,Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(USERNAME, editText.getText().toString());
                         editor.apply();
@@ -337,11 +327,8 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 sendButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
-                        myMediaPlayer.start();
-                        myMediaPlayer.setFree();
                         EditText editText = (EditText) dialog.findViewById(R.id.editTextinMainActivityDialog);
-                        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME,Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString(MainActivity.URLSETTINS, editText.getText().toString());
                         editor.apply();
@@ -385,9 +372,6 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
     @Override
     public void onBackPressed() {
-        myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
-        myMediaPlayer.start();
-        myMediaPlayer.setFree();
         Intent intent = new Intent(this, EquipmentActivity.class);
         intent.putExtra("id", getIntent().getIntExtra("id", -5));
         intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
@@ -396,9 +380,6 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
     @Override
     public void onItemsSelected(boolean[] selected) {
-        myMediaPlayer = new MyMediaPlayer(EquipmentStateActivity.this, "Button");
-        myMediaPlayer.start();
-        myMediaPlayer.setFree();
         Log.e("WTF", selected[0] + "");
     }
 

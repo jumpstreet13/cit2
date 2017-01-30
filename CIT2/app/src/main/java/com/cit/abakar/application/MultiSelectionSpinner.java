@@ -17,7 +17,6 @@ public class MultiSelectionSpinner extends Spinner implements DialogInterface.On
     private String defaultText;
     private MultiSpinnerListener listener;
     private Context context;
-    private MyMediaPlayer myMediaPlayer;
 
     public MultiSelectionSpinner(Context context) {
         super(context);

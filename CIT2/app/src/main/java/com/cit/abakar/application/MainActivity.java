@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
     private ListView listView;
     private ArrayList<Center> arr = new ArrayList<Center>();
     private YourAdapter adapter;
-    private MyMediaPlayer myMediaPlayer;
+
     private MenuItem connection;
     public ProgressBar progressBar;
     private static RestApi restApi;
@@ -77,11 +77,15 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MYURL = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE).getString("url", "http://10.39.5.76/apiv1/");
+        MYURL = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE).getString(URLSETTINS, "http://google/api/");
         getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInMainActivity);
         listView = (ListView) findViewById(R.id.listViewMain);
-        retrofit = new Retrofit.Builder().baseUrl(MYURL).addConverterFactory(GsonConverterFactory.create()).build();
+        try {
+            retrofit = new Retrofit.Builder().baseUrl(MYURL.trim()).addConverterFactory(GsonConverterFactory.create()).build();
+        }catch (Exception ex){
+            Toast.makeText(this, "Неккоректный адрес сервера", Toast.LENGTH_SHORT).show();
+        }
         restApi = retrofit.create(RestApi.class);
         progressBar.setVisibility(View.VISIBLE);
         restApi.getAllCenters().enqueue(new Callback<List<Center>>() {
@@ -112,9 +116,7 @@ public class MainActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                myMediaPlayer = new MyMediaPlayer(MainActivity.this, "Button");
-                myMediaPlayer.start();
-                myMediaPlayer.setFree();
+
                 visit = new Visit();
                 visit.centerId = arr.get(position).id;
                 visit.dateVisit = getCurrentDate();
@@ -227,9 +229,7 @@ public class MainActivity extends Activity {
                 userButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myMediaPlayer = new MyMediaPlayer(MainActivity.this, "Button");
-                        myMediaPlayer.start();
-                        myMediaPlayer.setFree();
+
                         EditText editText = (EditText) dialogUser.findViewById(R.id.editTextinMainActivityDialog);
                         SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
@@ -258,9 +258,7 @@ public class MainActivity extends Activity {
                 sendButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myMediaPlayer = new MyMediaPlayer(MainActivity.this, "Button");
-                        myMediaPlayer.start();
-                        myMediaPlayer.setFree();
+
                         EditText editText = (EditText) dialog.findViewById(R.id.editTextinMainActivityDialog);
                         SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
@@ -268,6 +266,8 @@ public class MainActivity extends Activity {
                         editor.apply();
                         imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
                         dialog.dismiss();
+                        Intent intent = getIntent();
+                        startActivity(intent);
                     }
                 });
                 return true;

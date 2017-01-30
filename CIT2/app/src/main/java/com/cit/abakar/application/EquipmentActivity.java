@@ -43,7 +43,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     private ListView listView;
     private ArrayList<Equipment> arr = new ArrayList<>();
-    private MyMediaPlayer myMediaPlayer;
     private MultiSelectionSpinner spinner;
     private MenuItem connection;
     private static RestApi restApi;
@@ -126,9 +125,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     @Override
     public void onBackPressed() {
-        myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
-        myMediaPlayer.start();
-        myMediaPlayer.setFree();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -158,9 +154,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 userButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
-                        myMediaPlayer.start();
-                        myMediaPlayer.setFree();
                         EditText editText = (EditText) dialogUser.findViewById(R.id.editTextinMainActivityDialog);
                         SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
@@ -189,9 +182,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 sendButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
-                        myMediaPlayer.start();
-                        myMediaPlayer.setFree();
                         EditText editText = (EditText) dialog.findViewById(R.id.editTextinMainActivityDialog);
                         SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
@@ -216,9 +206,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     @Override
     public void textViewClicked(int position) {
-        myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
-        myMediaPlayer.start();
-        myMediaPlayer.setFree();
+
         Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);
         intent.putExtra("id", getIntent().getIntExtra("id", -5));
         Log.e("PING", arr.get(position).id + "");
@@ -231,9 +219,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     @Override
     public void installationButtonClicked(final int position) {
-        myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
-        myMediaPlayer.start();
-        myMediaPlayer.setFree();
 
         final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
         dialog.setContentView(R.layout.equipment_dialog);
@@ -247,9 +232,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
-                myMediaPlayer.start();
-                myMediaPlayer.setFree();
+
                 EditText ed = (EditText) dialog.findViewById(R.id.editTextInInstallationDialog);
                 if (ed.getText().toString().equals("")) {
                     Toast toast = Toast.makeText(EquipmentActivity.this, R.string.YouDidNotWriteNumberOfAkt, Toast.LENGTH_SHORT);
@@ -289,9 +272,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     @Override
     public void deinstallationButtonClicked(final int position) {
-        myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
-        myMediaPlayer.start();
-        myMediaPlayer.setFree();
+
         final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
         dialog.setContentView(R.layout.equipment_deinstallation_dialog);
         dialog.setTitle(R.string.WriteNumberOfAkt);
@@ -311,9 +292,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
-                myMediaPlayer.start();
-                myMediaPlayer.setFree();
+
                 EditText ed = (EditText) dialog.findViewById(R.id.editTextinEquipmentDeinstallation);
                 if (ed.getText().toString().equals("")) {
                     Toast toast = Toast.makeText(EquipmentActivity.this, R.string.YouDidNotWriteNumberOfAkt, Toast.LENGTH_SHORT);
