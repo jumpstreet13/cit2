@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -28,6 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.cit.abakar.application.ExampleClasses.Center;
 import com.cit.abakar.application.ExampleClasses.Visit;
@@ -215,15 +217,26 @@ public class MainActivity extends Activity {
                 return true;
 
             case R.id.user:
+                final InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 final Dialog dialogUser = new Dialog(MainActivity.this, R.style.DialogTheme);
+                dialogUser.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
                 dialogUser.setContentView(R.layout.urldialog);
-                dialogUser.setTitle("Введите Имя пользователя");
+                Toolbar toolbar = (Toolbar) dialogUser.findViewById(R.id.toolbarInUrlDialog);
+                toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        dialogUser.dismiss();
+                        immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
+                        return true;
+                    }
+                });
+                toolbar.inflateMenu(R.menu.dialog_menu);
+                toolbar.setTitle(R.string.WriteNameOfUser);
                 SharedPreferences sharedPrefUser = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                 TextView textViewUser = (TextView) dialogUser.findViewById(R.id.textViewinMainActivityDialog);
                 textViewUser.setText(sharedPrefUser.getString(USERNAME, getString(R.string.UserIsNotInstalledYet)));
                 dialogUser.show();
                 dialogUser.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                final InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 immUser.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                 Button userButton = (Button) dialogUser.findViewById(R.id.buttoninMainActivityDialog);
                 userButton.setOnClickListener(new View.OnClickListener() {
@@ -243,15 +256,26 @@ public class MainActivity extends Activity {
                 return true;
 
             case R.id.htttp_settings:
+                final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 final Dialog dialog = new Dialog(MainActivity.this, R.style.DialogTheme);
+                dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.urldialog);
-                dialog.setTitle(R.string.WriteNewUrl);
+                Toolbar toolbarz = (Toolbar) dialog.findViewById(R.id.toolbarInUrlDialog);
+                toolbarz.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        dialog.dismiss();
+                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
+                        return true;
+                    }
+                });
+                toolbarz.inflateMenu(R.menu.dialog_menu);
+                toolbarz.setTitle(R.string.WriteNewUrl);
                 SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
                 TextView textView = (TextView) dialog.findViewById(R.id.textViewinMainActivityDialog);
                 textView.setText(sharedPref.getString(URLSETTINS, getString(R.string.Adress_is_not_set_yet)));
                 dialog.show();
                 dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
                 Button sendButton = (Button) dialog.findViewById(R.id.buttoninMainActivityDialog);

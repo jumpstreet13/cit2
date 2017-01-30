@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.cit.abakar.application.ExampleClasses.Condition;
 import com.cit.abakar.application.ExampleClasses.Equipment;
@@ -151,7 +153,11 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         switch3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinner.setVisibility(View.VISIBLE);
+                if (switch3.isChecked())
+                    spinner.setVisibility(View.VISIBLE);
+                else
+                    spinner.setVisibility(View.INVISIBLE);
+
 
             }
         });
@@ -172,12 +178,23 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
 
     public void sendReport(final String key) {
+        final InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         final Dialog dialogUser = new Dialog(EquipmentStateActivity.this, R.style.DialogTheme);
+        dialogUser.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialogUser.setContentView(R.layout.urldialog);
-        dialogUser.setTitle(R.string.Note);
+        Toolbar toolbar = (Toolbar) dialogUser.findViewById(R.id.toolbarInUrlDialog);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                dialogUser.dismiss();
+                immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                return true;
+            }
+        });
+        toolbar.inflateMenu(R.menu.dialog_menu);
+        toolbar.setTitle(R.string.Note);
         dialogUser.show();
         dialogUser.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        final InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         immUser.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
         Button button = (Button) dialogUser.findViewById(R.id.buttoninMainActivityDialog);
         button.setOnClickListener(new View.OnClickListener() {

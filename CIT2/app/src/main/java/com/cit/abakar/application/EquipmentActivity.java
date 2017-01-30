@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -20,6 +21,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
 
 import com.cit.abakar.application.ExampleClasses.Dismantling;
 import com.cit.abakar.application.ExampleClasses.Equipment;
@@ -223,13 +226,25 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     @Override
     public void installationButtonClicked(final int position) {
-
+        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.equipment_dialog);
-        dialog.setTitle(R.string.WriteNumberOfAkt);
+        dialog.setCancelable(true);
+        Toolbar toolbar = (Toolbar) dialog.findViewById(R.id.toolbarInEquipmentDialog);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                dialog.dismiss();
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
+                return true;
+            }
+        });
+        toolbar.inflateMenu(R.menu.dialog_menu);
+        toolbar.setTitle(R.string.WriteNumberOfAkt);
         dialog.show();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
         Button sendButton = (Button) dialog.findViewById(R.id.buttonSendNumberOfAkt);
@@ -276,13 +291,23 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     @Override
     public void deinstallationButtonClicked(final int position) {
-
+        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.equipment_deinstallation_dialog);
-        dialog.setTitle(R.string.WriteNumberOfAkt);
+        Toolbar toolbar = (Toolbar) dialog.findViewById(R.id.toolbarInEquipmentdeinstallationDialog);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                dialog.dismiss();
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
+                return true;
+            }
+        });
+        toolbar.inflateMenu(R.menu.dialog_menu);
+        toolbar.setTitle(R.string.WriteNumberOfAkt);
         dialog.show();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
         TelephonyManager tMgr = (TelephonyManager) EquipmentActivity.this.getSystemService(Context.TELEPHONY_SERVICE);
         SharedPreferences sharedPrefUser = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
