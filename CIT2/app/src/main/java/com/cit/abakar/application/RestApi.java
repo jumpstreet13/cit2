@@ -31,10 +31,8 @@ public interface RestApi {
     Call<List<Equipment>> getEquipment();
 
     @GET("visit/")
-    Call<Response<List<Visit>>> getVisits();
+    Call<List<Visit>> getVisits();
 
-    @GET("visit/")
-    Call<Response<List<Visit>>> getVisitsByDate(@Path("id") String id, @Path("date_visit") String date);
 
 
     @POST("visit/")
