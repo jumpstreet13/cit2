@@ -7,6 +7,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
+    android:background="@color/grey"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.cit.abakar.application.EquipmentStateActivity">
 
@@ -50,6 +51,21 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="56dp" />
 
+    <Button
+        android:text="@string/Send"
+        style="@style/ButtonSP"
+        android:elevation="24dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonInEquipmentState"
+        android:layout_marginTop="78dp"
+        android:typeface="serif"
+        android:visibility="visible"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        android:layout_below="@+id/spinnerInEquipmentStateActivity"
+        android:layout_centerHorizontal="true"
+        android:layout_width="150dp" />
+
     <Switch
         android:text="В наличии"
         android:layout_width="wrap_content"
@@ -74,21 +90,6 @@
         android:id="@+id/progressBarInEquipmentStateActivity"
         android:visibility="visible"
         android:layout_alignTop="@+id/spinnerInEquipmentStateActivity"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="@string/Send"
-        style="@style/ButtonSP"
-        android:elevation="24dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonInEquipmentState"
-        android:layout_marginTop="43dp"
-        android:typeface="serif"
-        android:visibility="visible"
-        android:textSize="18sp"
-        android:textStyle="bold|italic"
-        android:layout_width="150dp"
-        android:layout_below="@+id/progressBarInEquipmentStateActivity"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

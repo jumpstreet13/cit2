@@ -113,7 +113,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
             @Override
             public void onFailure(Call<List<Equipment>> call, Throwable t) {
-                Toast.makeText(EquipmentStateActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EquipmentStateActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
             }
         });
@@ -242,11 +242,11 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                                         Log.e("Device", "succes");
                                         Log.e("Device", response.isSuccessful() + "");
                                         Log.e("Device", response.code() + "");
-                                        progressBar.setVisibility(View.GONE);
                                         Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
                                         intent.putExtra("id", getIntent().getIntExtra("id", -5));
                                         intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
                                         startActivity(intent);
+                                        progressBar.setVisibility(View.GONE);
                                     }
 
                                     @Override
@@ -263,6 +263,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                             intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
                             startActivity(intent);
                         }
+                        sendIsSuccesful();
                     }
 
                     @Override
@@ -396,10 +397,12 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
     @Override
     public void onBackPressed() {
+        progressBar.setVisibility(View.VISIBLE);
         Intent intent = new Intent(this, EquipmentActivity.class);
         intent.putExtra("id", getIntent().getIntExtra("id", -5));
         intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
         startActivity(intent);
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override

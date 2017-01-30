@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onFailure(Call<List<Center>> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
                 //progressBar.setVisibility(View.GONE);
 
             }
@@ -137,6 +137,7 @@ public class MainActivity extends Activity {
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(MainActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
                         Log.e("TAZ", "wtf");
 
                     }

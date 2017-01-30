@@ -82,7 +82,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
             @Override
             public void onFailure(Call<List<Equipment>> call, Throwable t) {
-                Toast.makeText(EquipmentActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EquipmentActivity.this, "Нет соединения", Toast.LENGTH_SHORT);
                 progressBar.setVisibility(View.GONE);
 
             }
@@ -132,8 +132,10 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     @Override
     public void onBackPressed() {
+        progressBar.setVisibility(View.VISIBLE);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        progressBar.setVisibility(View.GONE);
     }
 
 
