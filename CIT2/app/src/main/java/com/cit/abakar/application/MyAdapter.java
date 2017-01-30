@@ -19,8 +19,8 @@ public class MyAdapter extends BaseAdapter {
 
     private ArrayList<Equipment> data = new ArrayList<Equipment>();
     private Context context;
-    private ImageButton buttonInstallation;
-    private ImageButton buttondeinstallation;
+    private Button buttonInstallation;
+    private Button buttondeinstallation;
     private AdapterInterface adapterInterface;
 
    /* public void setActivity(AdapterInterface adapterInterface){
@@ -59,9 +59,9 @@ public class MyAdapter extends BaseAdapter {
             //convertView = inflater.inflate(R.layout.mylist, parent, false);
             convertView = inflater.inflate(R.layout.mylist_forequipments, parent, false);
         }
-        TextView main = (TextView) convertView.findViewById(R.id.textViewForEquipments);
-        buttonInstallation = (ImageButton) convertView.findViewById(R.id.button_Installation);
-        buttondeinstallation = (ImageButton) convertView.findViewById(R.id.button_Deinstallation);
+        Button main = (Button) convertView.findViewById(R.id.textViewForEquipments);
+        buttonInstallation = (Button) convertView.findViewById(R.id.button_Installation);
+        buttondeinstallation = (Button) convertView.findViewById(R.id.button_Deinstallation);
        // buttondeinstallation.setElevation(5);
        // buttonInstallation.setElevation(5);
         main.setText(data.get(position).name);
