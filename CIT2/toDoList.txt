@@ -20,3 +20,5 @@ http://developer.alexanderklimov.ru/android/tips-studio.php
 http://stackoverflow.com/questions/1521640/standard-android-button-with-a-different-color/1726352#1726352
 
 дюрэ хмремрюл мнплюкэмше йнмярюмрш
+
+онвхрюрэ опн ANDROID NDK, Java RX9
