@@ -1,14 +1,18 @@
 package com.cit.abakar.application;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cit.abakar.application.ExampleClasses.Equipment;
 
@@ -18,6 +22,7 @@ import java.util.ArrayList;
 public class MyAdapter extends BaseAdapter {
 
     private ArrayList<Equipment> data = new ArrayList<Equipment>();
+    private ArrayList<Integer> veryfied = new ArrayList<Integer>();
     private Context context;
     private ImageButton buttonInstallation;
     private ImageButton buttondeinstallation;
@@ -28,9 +33,10 @@ public class MyAdapter extends BaseAdapter {
     }*/
 
 
-    public MyAdapter(Context context, ArrayList<Equipment> data){
+    public MyAdapter(Context context, ArrayList<Equipment> data, ArrayList<Integer> veryfied) {
         this.data = data;
         this.context = context;
+        this.veryfied = veryfied;
         adapterInterface = (AdapterInterface) context;
     }
 
@@ -50,20 +56,19 @@ public class MyAdapter extends BaseAdapter {
     }
 
 
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        if(convertView == null){
+        if (convertView == null) {
             //convertView = inflater.inflate(R.layout.mylist, parent, false);
             convertView = inflater.inflate(R.layout.mylist_forequipments, parent, false);
         }
         Button main = (Button) convertView.findViewById(R.id.textViewForEquipments);
         buttonInstallation = (ImageButton) convertView.findViewById(R.id.button_Installation);
         buttondeinstallation = (ImageButton) convertView.findViewById(R.id.button_Deinstallation);
-       // buttondeinstallation.setElevation(5);
-       // buttonInstallation.setElevation(5);
+        // buttondeinstallation.setElevation(5);
+        // buttonInstallation.setElevation(5);
         main.setText(data.get(position).name);
 
         main.setOnClickListener(new View.OnClickListener() {
@@ -89,19 +94,27 @@ public class MyAdapter extends BaseAdapter {
             }
         });
 
-        if(data.get(position).fgNotInstall.equals("false")){
+        if (data.get(position).fgNotInstall.equals("false")) {
             buttonInstallation.setEnabled(false);
-       //     buttonInstallation.setBackground(context.getDrawable(R.drawable.ic_build_black_24dpdisabled));
+            //   buttonInstallation.setBackground(context.getDrawable(R.drawable.ic_build_black_24dpdisabled));
             buttondeinstallation.setEnabled(true);
             main.setEnabled(true);
         }
 
-        if(data.get(position).fgNotInstall.equals("true")){
+        if (data.get(position).fgNotInstall.equals("true")) {
             buttonInstallation.setEnabled(true);
             buttondeinstallation.setEnabled(false);
             //buttondeinstallation.setBackground(context.getDrawable(R.drawable.ic_delete_forever_black_24dpcopy));
             main.setEnabled(false);
         }
+
+        for(Integer veryfi: veryfied){
+            if (data.get(position).id == veryfi){
+                main.setEnabled(false);
+                break;
+            }
+        }
+
 
        /* if(data.get(position).fgDismantled.equals("false")){
             main.setEnabled(false);

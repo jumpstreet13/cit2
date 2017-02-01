@@ -62,6 +62,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     private ProgressBar progressBar;
     private String note = "";
     private Boolean succes;
+    private ArrayList<Integer> veryfied = new ArrayList<Integer>();
 
 
     public void sendIsSuccesful() {
@@ -87,6 +88,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         progressBar = (ProgressBar) findViewById(R.id.progressBarInEquipmentStateActivity);
         spinner.registerRadioGroup(radioGroup);
         spinner.setContext(this);
+
+        veryfied.clear();
+        veryfied.addAll(getIntent().getIntegerArrayListExtra("veryfied"));
 
         /*InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         immUser.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);*/
@@ -217,7 +221,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 note = editText.getText().toString();
                 immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 dialogUser.dismiss();
-                Inspection inspection = new Inspection();
+                final Inspection inspection = new Inspection();
                 inspection.equipmentId = getIntent().getIntExtra("idOfEquipment", -5);
                 inspection.visitId = getIntent().getIntExtra("visitId", -5);
                 inspection.fgAvailability = switch1.isChecked();
@@ -255,6 +259,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                                         Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
                                         intent.putExtra("id", getIntent().getIntExtra("id", -5));
                                         intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
+                                        intent.putExtra("veryfied", veryfied);
                                         startActivity(intent);
                                         progressBar.setVisibility(View.GONE);
                                     }
@@ -271,6 +276,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                             Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
                             intent.putExtra("id", getIntent().getIntExtra("id", -5));
                             intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
+                            intent.putExtra("veryfied", veryfied);
                             startActivity(intent);
                         }
                         sendIsSuccesful();
@@ -411,6 +417,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         Intent intent = new Intent(this, EquipmentActivity.class);
         intent.putExtra("id", getIntent().getIntExtra("id", -5));
         intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
+        intent.putExtra("veryfied", veryfied);
         startActivity(intent);
         progressBar.setVisibility(View.GONE);
     }

@@ -52,6 +52,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     private Retrofit retrofit;
     private MyAdapter adapter;
     private ProgressBar progressBar;
+    private ArrayList<Integer> veryfied = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,12 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
         listView = (ListView) findViewById(R.id.listViewEquipment);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInEquipmentActivity);
+        veryfied.clear();
+        try {
+            veryfied.addAll(getIntent().getIntegerArrayListExtra("veryfied"));
+        } catch (NullPointerException np) {
+            np.printStackTrace();
+        }
         retrofit = new Retrofit.Builder().baseUrl(MYURL).addConverterFactory(GsonConverterFactory.create()).build();
         restApi = retrofit.create(RestApi.class);
 
@@ -75,7 +82,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                         arr.add(eq);
                     }
                 }
-                adapter = new MyAdapter(EquipmentActivity.this, arr);
+                adapter = new MyAdapter(EquipmentActivity.this, arr, veryfied);
                 listView.setAdapter(adapter);
                 progressBar.setVisibility(View.GONE);
             }
@@ -134,6 +141,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     public void onBackPressed() {
         progressBar.setVisibility(View.VISIBLE);
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("veryfied", veryfied);
         startActivity(intent);
         progressBar.setVisibility(View.GONE);
     }
@@ -221,6 +229,8 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         Log.e("PING", arr.get(position).id + "");
         intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
         intent.putExtra("idOfEquipment", arr.get(position).id);
+        veryfied.add(arr.get(position).id);
+        intent.putExtra("veryfied", veryfied);
         startActivity(intent);
 
     }

@@ -55,12 +55,12 @@ public class MainActivity extends Activity {
     private ListView listView;
     private ArrayList<Center> arr = new ArrayList<Center>();
     private YourAdapter adapter;
-
     private MenuItem connection;
     public ProgressBar progressBar;
     private static RestApi restApi;
     private Retrofit retrofit;
     private Visit visit;
+    private ArrayList<Integer> veryfied = new ArrayList<Integer>();
 
     //Version for show
 
@@ -82,6 +82,12 @@ public class MainActivity extends Activity {
         MYURL = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE).getString(URLSETTINS, "http://google/api/");
         getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInMainActivity);
+        veryfied.clear();
+        try {
+            veryfied.addAll(getIntent().getIntegerArrayListExtra("veryfied"));
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
         listView = (ListView) findViewById(R.id.listViewMain);
         try {
             retrofit = new Retrofit.Builder().baseUrl(MYURL.trim()).addConverterFactory(GsonConverterFactory.create()).build();
@@ -132,6 +138,7 @@ public class MainActivity extends Activity {
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         Log.e("TAZ", response.headers().toString());
                         intent.putExtra("visitId", getVisitId(response.headers().get("Location")));
+                        intent.putExtra("veryfied", veryfied);
                         startActivity(intent);
                     }
 
