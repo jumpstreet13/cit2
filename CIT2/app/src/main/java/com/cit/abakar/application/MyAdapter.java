@@ -108,13 +108,14 @@ public class MyAdapter extends BaseAdapter {
             main.setEnabled(false);
         }
 
-        for(Integer veryfi: veryfied){
-            if (data.get(position).id == veryfi){
+        for(int i = 1; i<veryfied.size(); i++){
+            Log.e("Snax", " " + data.get(position).id + " " + veryfied.get(i));
+            if(data.get(position).id == veryfied.get(i)){
+                Log.e("Snax", "succes");
                 main.setEnabled(false);
                 break;
             }
         }
-
 
        /* if(data.get(position).fgDismantled.equals("false")){
             main.setEnabled(false);

@@ -195,32 +195,6 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
 
     public void sendReport(final String key) {
-        final InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        final Dialog dialogUser = new Dialog(EquipmentStateActivity.this, R.style.DialogTheme);
-        dialogUser.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialogUser.setContentView(R.layout.urldialog);
-        Toolbar toolbar = (Toolbar) dialogUser.findViewById(R.id.toolbarInUrlDialog);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                dialogUser.dismiss();
-                immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                return true;
-            }
-        });
-        toolbar.inflateMenu(R.menu.dialog_menu);
-        toolbar.setTitle(R.string.Note);
-        dialogUser.show();
-        dialogUser.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        immUser.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-        Button button = (Button) dialogUser.findViewById(R.id.buttoninMainActivityDialog);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText editText = (EditText) dialogUser.findViewById(R.id.editTextinMainActivityDialog);
-                note = editText.getText().toString();
-                immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                dialogUser.dismiss();
                 final Inspection inspection = new Inspection();
                 inspection.equipmentId = getIntent().getIntExtra("idOfEquipment", -5);
                 inspection.visitId = getIntent().getIntExtra("visitId", -5);
@@ -288,8 +262,6 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         sendIsNotSucces();
                     }
                 });
-            }
-        });
 
     }
 
@@ -319,6 +291,37 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
         switch (id) {
             case R.id.search_settings:
+                return true;
+
+            case R.id.note:
+                final InputMethodManager immUserU = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                final Dialog dialogUserU = new Dialog(EquipmentStateActivity.this, R.style.DialogTheme);
+                dialogUserU.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                dialogUserU.setContentView(R.layout.urldialog);
+                Toolbar toolbar = (Toolbar) dialogUserU.findViewById(R.id.toolbarInUrlDialog);
+                toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        dialogUserU.dismiss();
+                        immUserU.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                        return true;
+                    }
+                });
+                toolbar.inflateMenu(R.menu.dialog_menu);
+                toolbar.setTitle(R.string.Note);
+                dialogUserU.show();
+                dialogUserU.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                immUserU.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                Button button = (Button) dialogUserU.findViewById(R.id.buttoninMainActivityDialog);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        EditText editText = (EditText) dialogUserU.findViewById(R.id.editTextinMainActivityDialog);
+                        note = editText.getText().toString();
+                        immUserU.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                        dialogUserU.dismiss();
+                    }
+                });
                 return true;
 
             case R.id.user:
@@ -392,6 +395,8 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         connection = menu.findItem(R.id.conntection_settings);
         MenuItem searchItem = menu.findItem(R.id.search_settings);
         MenuItem http = menu.findItem(R.id.htttp_settings);
+        MenuItem note = menu.findItem(R.id.note);
+        note.setVisible(true);
         http.setVisible(false);
         MenuItem user = menu.findItem(R.id.user);
         user.setVisible(false);

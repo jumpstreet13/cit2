@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
     private static RestApi restApi;
     private Retrofit retrofit;
     private Visit visit;
-    private ArrayList<Integer> veryfied = new ArrayList<Integer>();
+    private ArrayList<ArrayList<Integer>> veryfied = new ArrayList<ArrayList<Integer>>();
 
     //Version for show
 
@@ -84,7 +84,9 @@ public class MainActivity extends Activity {
         progressBar = (ProgressBar) findViewById(R.id.progressBarInMainActivity);
         veryfied.clear();
         try {
-            veryfied.addAll(getIntent().getIntegerArrayListExtra("veryfied"));
+            ArrayList<Integer> arr = new ArrayList<Integer>();
+            arr.addAll(getIntent().getIntegerArrayListExtra("veryfied"));
+            veryfied.add(arr);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -138,7 +140,16 @@ public class MainActivity extends Activity {
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         Log.e("TAZ", response.headers().toString());
                         intent.putExtra("visitId", getVisitId(response.headers().get("Location")));
-                        intent.putExtra("veryfied", veryfied);
+                        for(ArrayList<Integer> arr : veryfied){
+                            for(Integer in : arr ){
+                                Log.e("Byali", in + " " + visit.centerId);
+                                if(in == visit.centerId){
+                                    Log.e("Byali","Succes");
+                                    intent.putExtra("veryfied", arr);
+                                    break;
+                                }
+                            }
+                        }
                         startActivity(intent);
                     }
 
