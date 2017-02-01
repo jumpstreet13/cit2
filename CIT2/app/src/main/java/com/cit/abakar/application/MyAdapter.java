@@ -90,14 +90,14 @@ public class MyAdapter extends BaseAdapter {
         });
 
         if(data.get(position).fgNotInstall.equals("false")){
-            buttondeinstallation.setEnabled(false);
-            main.setEnabled(false);
+            buttondeinstallation.setEnabled(true);
+            main.setEnabled(true);
         }
 
         if(data.get(position).fgDismantled.equals("false")){
-            main.setEnabled(false);
-            buttondeinstallation.setEnabled(false);
-            buttonInstallation.setEnabled(false);
+            main.setEnabled(true);
+            buttondeinstallation.setEnabled(true);
+            buttonInstallation.setEnabled(true);
         }
 
         return convertView;
