@@ -318,6 +318,8 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                         EditText editText = (EditText) dialogUserU.findViewById(R.id.editTextinMainActivityDialog);
                         note = editText.getText().toString();
                         immUserU.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                        TextView textView = (TextView) findViewById(R.id.Note);
+                        textView.setText(note);
                         dialogUserU.dismiss();
                     }
                 });
@@ -421,7 +423,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         Intent intent = new Intent(this, EquipmentActivity.class);
         intent.putExtra("id", getIntent().getIntExtra("id", -5));
         intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
-        intent.putExtra("veryfied", veryfied);
+       // intent.putExtra("veryfied", veryfied);
         startActivity(intent);
         progressBar.setVisibility(View.GONE);
     }

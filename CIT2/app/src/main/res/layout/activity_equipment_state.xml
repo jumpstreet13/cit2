@@ -62,7 +62,7 @@
         android:visibility="visible"
         android:textSize="18sp"
         android:textStyle="bold|italic"
-        android:layout_below="@+id/radioGroup"
+        android:layout_below="@+id/Note"
         android:layout_centerHorizontal="true"
         android:layout_width="150dp" />
 
@@ -99,5 +99,18 @@
         android:paddingTop="10dp"
         android:layout_below="@+id/spinnerInEquipmentStateActivity"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text=""
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radioGroup"
+        android:paddingTop="10dp"
+        android:id="@+id/Note"
+        android:fontFamily="monospace"
+        android:typeface="serif"
+        android:textSize="14sp"
+        android:textStyle="normal|italic" />
 
 </RelativeLayout>
