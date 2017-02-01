@@ -19,8 +19,8 @@ public class MyAdapter extends BaseAdapter {
 
     private ArrayList<Equipment> data = new ArrayList<Equipment>();
     private Context context;
-    private Button buttonInstallation;
-    private Button buttondeinstallation;
+    private ImageButton buttonInstallation;
+    private ImageButton buttondeinstallation;
     private AdapterInterface adapterInterface;
 
    /* public void setActivity(AdapterInterface adapterInterface){
@@ -60,8 +60,8 @@ public class MyAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.mylist_forequipments, parent, false);
         }
         Button main = (Button) convertView.findViewById(R.id.textViewForEquipments);
-        buttonInstallation = (Button) convertView.findViewById(R.id.button_Installation);
-        buttondeinstallation = (Button) convertView.findViewById(R.id.button_Deinstallation);
+        buttonInstallation = (ImageButton) convertView.findViewById(R.id.button_Installation);
+        buttondeinstallation = (ImageButton) convertView.findViewById(R.id.button_Deinstallation);
        // buttondeinstallation.setElevation(5);
        // buttonInstallation.setElevation(5);
         main.setText(data.get(position).name);
@@ -90,15 +90,24 @@ public class MyAdapter extends BaseAdapter {
         });
 
         if(data.get(position).fgNotInstall.equals("false")){
+            buttonInstallation.setEnabled(false);
+       //     buttonInstallation.setBackground(context.getDrawable(R.drawable.ic_build_black_24dpdisabled));
             buttondeinstallation.setEnabled(true);
             main.setEnabled(true);
         }
 
-        if(data.get(position).fgDismantled.equals("false")){
-            main.setEnabled(true);
+        if(data.get(position).fgNotInstall.equals("true")){
+            buttonInstallation.setEnabled(true);
+            buttondeinstallation.setEnabled(false);
+            //buttondeinstallation.setBackground(context.getDrawable(R.drawable.ic_delete_forever_black_24dpcopy));
+            main.setEnabled(false);
+        }
+
+       /* if(data.get(position).fgDismantled.equals("false")){
+            main.setEnabled(false);
             buttondeinstallation.setEnabled(true);
             buttonInstallation.setEnabled(true);
-        }
+        }*/
 
         return convertView;
     }

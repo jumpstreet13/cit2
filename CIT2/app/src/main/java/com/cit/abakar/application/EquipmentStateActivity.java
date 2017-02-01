@@ -17,6 +17,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +46,8 @@ import static com.cit.abakar.application.MainActivity.hasConnection;
 
 public class EquipmentStateActivity extends Activity implements MultiSelectionSpinner.MultiSpinnerListener {
 
+
+    private RadioGroup radioGroup;
     private Button button;
     private EditText editTextIsWorking;
     private Switch switch1, switch2, switch3;
@@ -74,12 +78,15 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         setContentView(R.layout.activity_equipment_state);
         getActionBar().setTitle(R.string.ActionBarISOfflineEquipmentStateActivity);
 
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         button = (Button) findViewById(R.id.buttonInEquipmentState);
         switch1 = (Switch) findViewById(R.id.switch1InEquipmentState);
         switch2 = (Switch) findViewById(R.id.switch2InEquipmentState);
         switch3 = (Switch) findViewById(R.id.switchMalfunc);
         spinner = (MultiSelectionSpinner) findViewById(R.id.spinnerInEquipmentStateActivity);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInEquipmentStateActivity);
+        spinner.registerRadioGroup(radioGroup);
+        spinner.setContext(this);
 
         /*InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         immUser.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);*/

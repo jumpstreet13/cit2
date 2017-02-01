@@ -16,6 +16,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="IconsStyle" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:background">@drawable/icons</item>
+    </style>
+
     <style name="SpinnerSP" parent="android:Theme.Material.Light">
         <!--<item name="android:background">@drawable/roundedbutton</item>-->
         <item name="android:minHeight">48dip</item>

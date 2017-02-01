@@ -3,9 +3,15 @@ package com.cit.abakar.application;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CheckedTextView;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +23,7 @@ public class MultiSelectionSpinner extends Spinner implements DialogInterface.On
     private String defaultText;
     private MultiSpinnerListener listener;
     private Context context;
+    private RadioGroup radioGroup;
 
     public MultiSelectionSpinner(Context context) {
         super(context);
@@ -31,8 +38,17 @@ public class MultiSelectionSpinner extends Spinner implements DialogInterface.On
         super(arg0, arg1, arg2);
     }
 
+    public void registerRadioGroup(RadioGroup radioGroup){
+        this.radioGroup = radioGroup;
+    }
+
+    public void setContext(Context context){
+        this.context = context;
+    }
+
     @Override
     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+        radioGroup.removeAllViews();
         if (isChecked)
             selected[which] = true;
         else
@@ -54,6 +70,13 @@ public class MultiSelectionSpinner extends Spinner implements DialogInterface.On
         boolean someUnselected = false;
         for (int i = 0; i < items.size(); i++) {
             if (selected[i] == true) {
+                CheckBox textView = new CheckBox(context);
+                textView.setText(items.get(i));
+                textView.setClickable(false);
+                textView.setChecked(true);
+                textView.setTextSize(15);
+                textView.setTypeface(Typeface.SERIF);
+                radioGroup.addView(textView);
                 spinnerBuffer.append(items.get(i));
                 spinnerBuffer.append(", ");
             } else {
