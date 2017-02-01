@@ -65,6 +65,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         try {
             veryfied.addAll(getIntent().getIntegerArrayListExtra("veryfied"));
         } catch (NullPointerException np) {
+            veryfied.add(getIntent().getIntExtra("id", -5));
             np.printStackTrace();
         }
         retrofit = new Retrofit.Builder().baseUrl(MYURL).addConverterFactory(GsonConverterFactory.create()).build();

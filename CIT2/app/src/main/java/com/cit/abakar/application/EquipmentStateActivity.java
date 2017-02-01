@@ -265,7 +265,6 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
     }
 
-
     public ArrayList<Condition> compare(String[] reasons, List<Condition> conditions) {
 
         ArrayList<Condition> result = new ArrayList<Condition>();

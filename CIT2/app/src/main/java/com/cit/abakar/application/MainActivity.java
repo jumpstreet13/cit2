@@ -144,6 +144,7 @@ public class MainActivity extends Activity {
                             for(Integer in : arr ){
                                 Log.e("Byali", in + " " + visit.centerId);
                                 if(in == visit.centerId){
+                                    arr.add(visit.centerId);
                                     Log.e("Byali","Succes");
                                     intent.putExtra("veryfied", arr);
                                     break;
