@@ -5,14 +5,15 @@
     android:layout_height="230dp"
     android:theme="@style/DialogTheme" >
 
-    <Toolbar
+
+    <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/toolbarInUrlDialog"
         android:layout_alignParentTop="true"
         android:background="@color/grey"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-    </Toolbar>
+        android:theme="@style/DialogTheme">
+    </android.support.v7.widget.Toolbar>
 
 
     <EditText

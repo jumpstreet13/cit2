@@ -22,7 +22,7 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 
 import com.cit.abakar.application.ExampleClasses.Condition;
 import com.cit.abakar.application.ExampleClasses.Equipment;
