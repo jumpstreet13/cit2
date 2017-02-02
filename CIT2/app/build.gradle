@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.cit.abakar.application"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 25
         multiDexEnabled true
         versionCode 1
