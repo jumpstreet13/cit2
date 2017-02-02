@@ -425,6 +425,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         Intent intent = new Intent(this, EquipmentActivity.class);
         intent.putExtra("id", getIntent().getIntExtra("id", -5));
         intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
+        veryfied.remove(veryfied.size() - 1);
+        intent.putExtra("veryfied", veryfied);
+        startActivity(intent);
        // intent.putExtra("veryfied", veryfied);
         startActivity(intent);
         progressBar.setVisibility(View.GONE);
