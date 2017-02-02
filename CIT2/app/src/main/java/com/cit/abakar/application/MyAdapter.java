@@ -95,7 +95,7 @@ public class MyAdapter extends BaseAdapter {
         });
 
         if (data.get(position).fgNotInstall.equals("false")) {
-            buttonInstallation.setEnabled(true);
+            buttonInstallation.setEnabled(false);
             //   buttonInstallation.setBackground(context.getDrawable(R.drawable.ic_build_black_24dpdisabled));
             buttondeinstallation.setEnabled(true);
             main.setEnabled(true);
