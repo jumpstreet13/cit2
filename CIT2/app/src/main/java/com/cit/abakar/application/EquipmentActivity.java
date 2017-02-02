@@ -365,6 +365,12 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                         Log.e("Shox", response.code() + "");
                         progressBar.setVisibility(View.GONE);
                         sendIsSucces();
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                        dialog.dismiss();
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
                     }
 
                     @Override
@@ -374,9 +380,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                         sendIsNotSucces();
                     }
                 });
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                dialog.dismiss();
             }
         });
 
