@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
     private static RestApi restApi;
     private Retrofit retrofit;
     private Visit visit;
-    private ArrayList<ArrayList<Integer>> veryfied = new ArrayList<ArrayList<Integer>>();
+   // private ArrayList<ArrayList<Integer>> veryfied = new ArrayList<ArrayList<Integer>>();
 
     //Version for show
 
@@ -81,14 +81,14 @@ public class MainActivity extends Activity {
         MYURL = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE).getString(URLSETTINS, "http://10.39.5.76/apiv1/");
         getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInMainActivity);
-        veryfied.clear();
+       /* veryfied.clear();
         try {
             ArrayList<Integer> arr = new ArrayList<Integer>();
             arr.addAll(getIntent().getIntegerArrayListExtra("veryfied"));
             veryfied.add(arr);
         } catch (NullPointerException e) {
             e.printStackTrace();
-        }
+        }*/
         listView = (ListView) findViewById(R.id.listViewMain);
         try {
             retrofit = new Retrofit.Builder().baseUrl(MYURL.trim()).addConverterFactory(GsonConverterFactory.create()).build();
@@ -142,7 +142,7 @@ public class MainActivity extends Activity {
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         Log.e("TAZ", response.headers().toString());
                         intent.putExtra("visitId", getVisitId(response.headers().get("Location")));
-                        for(ArrayList<Integer> arr : veryfied){
+                       /* for(ArrayList<Integer> arr : veryfied){
                             for(Integer in : arr ){
                                 Log.e("Byali", in + " " + visit.centerId);
                                 if(in == visit.centerId){
@@ -152,7 +152,7 @@ public class MainActivity extends Activity {
                                     break;
                                 }
                             }
-                        }
+                        }*/
                         startActivity(intent);
                     }
 

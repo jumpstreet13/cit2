@@ -2,14 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="335dp"
     android:layout_height="230dp"
-    android:theme="@style/DialogTheme">
+    android:background="@color/black">
 
     <Toolbar
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/toolbarInEquipmentdeinstallationDialog"
-        android:background="@color/grey"
-        android:theme="@style/DialogTheme">
+        android:background="@color/back">
     </Toolbar>
 
     <EditText
@@ -27,7 +26,7 @@
     <TextView
         android:text=""
         android:textStyle="italic"
-        android:textColor="@color/grey"
+        android:textColor="@color/aquamarin"
         android:layout_marginTop="12dp"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
