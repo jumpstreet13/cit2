@@ -1,11 +1,17 @@
 package com.cit.abakar.application;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
@@ -28,6 +34,7 @@ import com.cit.abakar.application.ExampleClasses.Dismantling;
 import com.cit.abakar.application.ExampleClasses.Equipment;
 import com.cit.abakar.application.ExampleClasses.Installation;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +65,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment);
+        requestMultiplePermissions();
         getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
         listView = (ListView) findViewById(R.id.listViewEquipment);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInEquipmentActivity);
@@ -384,6 +392,34 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         });
 
     }
+
+    public File[] getExternalStorageFiles() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            final File externalStorage = Environment.getExternalStorageDirectory();
+            if (externalStorage != null) {
+                return externalStorage.listFiles();
+            }
+        }
+        return null;
+    }
+
+    public void requestMultiplePermissions() {
+        ActivityCompat.requestPermissions(this,
+                new String[] {
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_SMS
+                },
+                MainActivity.MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
 
     public void sendIsSucces() {
         Toast.makeText(this, R.string.SendIsSuccesful, Toast.LENGTH_SHORT).show();

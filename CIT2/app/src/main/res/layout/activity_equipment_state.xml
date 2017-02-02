@@ -107,6 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/radioGroup"
         android:paddingTop="10dp"
+        android:textColor="@color/aquamarin"
         android:id="@+id/Note"
         android:fontFamily="monospace"
         android:typeface="serif"

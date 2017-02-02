@@ -51,6 +51,7 @@ public class MainActivity extends Activity {
     public final static String URLSETTINS = "urlSettings";
     public final static String SHAREDNAME = "Preference";
     public final static String USERNAME = "user";
+    public final static int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
     private ListView listView;
     private ArrayList<Center> arr = new ArrayList<Center>();
     private YourAdapter adapter;
