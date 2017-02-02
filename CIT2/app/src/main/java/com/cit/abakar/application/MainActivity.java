@@ -1,14 +1,18 @@
 package com.cit.abakar.application;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,6 +64,7 @@ public class MainActivity extends Activity {
     private Retrofit retrofit;
     private Visit visit;
     private ArrayList<ArrayList<Integer>> veryfied = new ArrayList<ArrayList<Integer>>();
+    public static int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
 
     //Version for show
 
@@ -78,6 +83,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         MYURL = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE).getString(URLSETTINS, "http://10.39.5.76/apiv1/");
         getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInMainActivity);

@@ -1,11 +1,17 @@
 package com.cit.abakar.application;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
@@ -28,6 +34,7 @@ import com.cit.abakar.application.ExampleClasses.Dismantling;
 import com.cit.abakar.application.ExampleClasses.Equipment;
 import com.cit.abakar.application.ExampleClasses.Installation;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +45,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.cit.abakar.application.MainActivity.MYURL;
+import static com.cit.abakar.application.MainActivity.MY_PERMISSIONS_REQUEST_READ_CONTACTS;
 import static com.cit.abakar.application.MainActivity.SHAREDNAME;
 import static com.cit.abakar.application.MainActivity.USERNAME;
 import static com.cit.abakar.application.MainActivity.hasConnection;
@@ -305,6 +313,33 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     }
     //aadass
 
+    public File[] getExternalStorageFiles() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            final File externalStorage = Environment.getExternalStorageDirectory();
+            if (externalStorage != null) {
+                return externalStorage.listFiles();
+            }
+        }
+        return null;
+    }
+
+    public void requestMultiplePermissions() {
+        ActivityCompat.requestPermissions(this,
+                new String[] {
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_SMS
+                },
+                MainActivity.MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
 
     @Override
     public void deinstallationButtonClicked(final int position) {
@@ -326,13 +361,14 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         dialog.show();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-        TelephonyManager tMgr = (TelephonyManager) EquipmentActivity.this.getSystemService(Context.TELEPHONY_SERVICE);
-        SharedPreferences sharedPrefUser = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
-        String mPhoneNumber = sharedPrefUser.getString(USERNAME, getString(R.string.UserIsNotInstalledYet)) + "/" + tMgr.getLine1Number();
-        TextView tx = (TextView) dialog.findViewById(R.id.textViewinEquipmentDeinstallation);
-        String number = mPhoneNumber;
-        tx.setText(number);
-        Log.e("NUMBER", mPhoneNumber);
+            requestMultiplePermissions();
+            TelephonyManager tMgr = (TelephonyManager) EquipmentActivity.this.getSystemService(Context.TELEPHONY_SERVICE);
+            SharedPreferences sharedPrefUser = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
+            String mPhoneNumber = sharedPrefUser.getString(USERNAME, getString(R.string.UserIsNotInstalledYet)) + "/" + tMgr.getLine1Number();
+            TextView tx = (TextView) dialog.findViewById(R.id.textViewinEquipmentDeinstallation);
+            String number = mPhoneNumber;
+            tx.setText(number);
+            Log.e("NUMBER", mPhoneNumber);
 
         Button sendButton = (Button) dialog.findViewById(R.id.buttoninEqupmentDeinstallation);
         sendButton.setOnClickListener(new View.OnClickListener() {
