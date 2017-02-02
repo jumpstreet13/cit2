@@ -293,7 +293,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                         Log.e("ZEUS", "succes");
                         Log.e("ZEUS", response.isSuccessful() + "");
                         Log.e("ZEUS", response.code() + "");
-                        progressBar.setVisibility(View.GONE);
                         sendIsSucces();
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
@@ -301,6 +300,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                         Intent intent = getIntent();
                         finish();
                         startActivity(intent);
+                        progressBar.setVisibility(View.GONE);
 
                     }
 
@@ -407,7 +407,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                         Log.e("Shox", "succes");
                         Log.e("Shox", response.isSuccessful() + "");
                         Log.e("Shox", response.code() + "");
-                        progressBar.setVisibility(View.GONE);
                         sendIsSucces();
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
@@ -415,6 +414,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                         Intent intent = getIntent();
                         finish();
                         startActivity(intent);
+                        progressBar.setVisibility(View.GONE);
                     }
 
                     @Override
