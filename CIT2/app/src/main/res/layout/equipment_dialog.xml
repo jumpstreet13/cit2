@@ -30,7 +30,6 @@
         android:typeface="serif"
         android:textSize="18sp"
         android:fontFamily="monospace"
-        style="@android:style/Widget.Material.Light.EditText"
         android:textStyle="normal|bold|italic"
         android:singleLine="true"
         android:selectAllOnFocus="false" />
@@ -41,6 +40,5 @@
         android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonSendNumberOfAkt"
-        style="@android:style/Widget.Material.Button" />
+        android:id="@+id/buttonSendNumberOfAkt" />
 </LinearLayout>
