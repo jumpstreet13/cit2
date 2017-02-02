@@ -3,6 +3,7 @@
     package="com.cit.abakar.application">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
 
     <supports-screens android:smallScreens="true"
         android:normalScreens="true"

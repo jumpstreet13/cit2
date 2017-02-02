@@ -47,7 +47,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends Activity {
 
-
     public static String MYURL = "";
     public final static String URLSETTINS = "urlSettings";
     public final static String SHAREDNAME = "Preference";
@@ -94,8 +93,11 @@ public class MainActivity extends Activity {
         try {
             retrofit = new Retrofit.Builder().baseUrl(MYURL.trim()).addConverterFactory(GsonConverterFactory.create()).build();
         } catch (Exception ex) {
-            Toast.makeText(this, "Неккоректный адрес сервера", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Неккоректный адрес сервера, переход к адресу по умолчанию", Toast.LENGTH_SHORT).show();
+            MYURL = "http://10.39.5.76/apiv1/";
+            retrofit = new Retrofit.Builder().baseUrl(MYURL).addConverterFactory(GsonConverterFactory.create()).build();
         }
+
         restApi = retrofit.create(RestApi.class);
         progressBar.setVisibility(View.VISIBLE);
         restApi.getAllCenters().enqueue(new Callback<List<Center>>() {

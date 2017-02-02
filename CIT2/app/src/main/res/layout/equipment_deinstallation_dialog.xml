@@ -8,9 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/toolbarInEquipmentdeinstallationDialog"
-        android:layout_alignParentTop="true"
         android:background="@color/grey"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/DialogTheme">
     </Toolbar>
 
     <EditText

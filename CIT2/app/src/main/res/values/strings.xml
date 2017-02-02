@@ -36,6 +36,7 @@
     <string name="Malfunc">Неисправно</string>
     <string name="WeHaveIt">В наличии</string>
     <string name="Using">Используется</string>
+    <string name="Close">Закрыть</string>
 
     <string-array name="forSpinner">
         <item>Сломан кулер</item>

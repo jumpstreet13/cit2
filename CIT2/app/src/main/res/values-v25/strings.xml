@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Application</string>
+    <string name="ActionBarISOfflineEquipmentStateActivity">Состояние оборудования</string>
+    <string name="ActionBarIsOnlineEquipmentStateActivity">Состояние оборудования</string>
+    <string name="ActionBarISOfflineEquipmentActivity">Список оборудования</string>
+    <string name="ActionBarIsOnlineEquipmentActivity">Список оборудования</string>
+    <string name="ActionBarISOfflineMainActivity">Список узлов</string>
+    <string name="ActionBarIsOnlineMainActivity">Список узлов</string>
+    <string name="ChooseTheReason">Выбрать причину</string>
+    <string name="ToastYouDoNotChosenAnything">Вы ничего не выбрали</string>
+    <string name="DoesNotWork">Неисправно</string>
+    <string name="Send">Отправить</string>
+    <string name="Install">Установить</string>
+    <string name="DeInstall">Демонтировать</string>
+    <string name="SendNuberOfAkt">Отправить</string>
+    <string name="NumberOfAkt">Номер акта...</string>
+    <string name="Search">Поиск</string>
+    <string name="connection">соединение</string>
+    <string name="syncronization">Синхронизация</string>
+    <string name="ChooseAdressOfServer">Установить адрес сервера</string>
+    <string name="url">Введите новый URL...</string>
+    <string name="Adress_is_not_set_yet">Адрес пока не задан</string>
+    <string name="NumberOfThisPhone">"Номер телефона "</string>
+    <string name="fg_availability">В наличии</string>
+    <string name="fg_usings">Используется</string>
+    <string name="User_Name">Установить имя пользователя</string>
+    <string name="UserIsNotInstalledYet">Пользователь не задан</string>
+    <string name="WriteNewUrl">Введите новый URL</string>
+    <string name="NeworkConnection">Состояние сети</string>
+    <string name="WriteNameOfUser">Введите Имя пользователя</string>
+    <string name="WriteNumberOfAkt">Введите номер акта</string>
+    <string name="YouDidNotWriteNumberOfAkt">Вы не ввели номер акта</string>
+    <string name="SendIsSuccesful">Отправка выполнена успешно</string>
+    <string name="SendIsNotSucces">Отправка не выполнена</string>
+    <string name="Note">Написать отчет</string>
+    <string name="Malfunc">Неисправно</string>
+    <string name="WeHaveIt">В наличии</string>
+    <string name="Using">Используется</string>
+    <string name="Close">Закрыть</string>
+
+    <string-array name="forSpinner">
+        <item>Сломан кулер</item>
+        <item>Сгорела видеокарта</item>
+        <item>Отсутствует автофокус</item>
+        <item>Другое</item>
+    </string-array>
+</resources>
