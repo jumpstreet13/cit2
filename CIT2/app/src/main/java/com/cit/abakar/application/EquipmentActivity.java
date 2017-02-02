@@ -66,6 +66,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment);
+        requestMultiplePermissions();
         getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
         listView = (ListView) findViewById(R.id.listViewEquipment);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInEquipmentActivity);
@@ -361,8 +362,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         dialog.show();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-            requestMultiplePermissions();
-            TelephonyManager tMgr = (TelephonyManager) EquipmentActivity.this.getSystemService(Context.TELEPHONY_SERVICE);
+             TelephonyManager tMgr = (TelephonyManager) EquipmentActivity.this.getSystemService(Context.TELEPHONY_SERVICE);
             SharedPreferences sharedPrefUser = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
             String mPhoneNumber = sharedPrefUser.getString(USERNAME, getString(R.string.UserIsNotInstalledYet)) + "/" + tMgr.getLine1Number();
             TextView tx = (TextView) dialog.findViewById(R.id.textViewinEquipmentDeinstallation);
