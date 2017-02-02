@@ -303,6 +303,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             }
         });
     }
+    //aadass
 
 
     @Override
