@@ -21,4 +21,6 @@ http://stackoverflow.com/questions/1521640/standard-android-button-with-a-differ
 
 ДАТЬ ИНТЕНТАМ НОРМАЛЬНЫЕ КОНСТАНТЫ
 
-ПОЧИТАТЬ ПРО ANDROID NDK, Java RX9
+ПОЧИТАТЬ ПРО ANDROID NDK, Java RX9,
+
+Добавить папку Dimension для разных экранов
