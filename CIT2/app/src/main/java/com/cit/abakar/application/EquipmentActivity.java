@@ -218,7 +218,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     public void textViewClicked(int position) {
 
         Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);
-        intent.putExtra(ID, getIntent().getIntExtra("id", -5));
+        intent.putExtra(ID, getIntent().getIntExtra(ID, -5));
         intent.putExtra(VISITID, getIntent().getIntExtra(VISITID, -5));
         intent.putExtra(IDOFEQUIPMENT, arr.get(position).id);
         veryfied.add(arr.get(position).id);

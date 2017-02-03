@@ -179,11 +179,6 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                                 restApi.addMalfunction(malfunctions).enqueue(new Callback<Void>() {
                                     @Override
                                     public void onResponse(Call<Void> call, Response<Void> response) {
-                                        Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
-                                        intent.putExtra(ID, getIntent().getIntExtra(ID, -5));
-                                        intent.putExtra(VISITID, getIntent().getIntExtra(VISITID, -5));
-                                        intent.putExtra(VERYFIED, veryfied);
-                                        startActivity(intent);
                                         progressBar.setVisibility(View.GONE);
                                     }
 
@@ -194,6 +189,11 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                                     }
                                 });
                             }
+                            Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
+                            intent.putExtra(ID, getIntent().getIntExtra(ID, -5));
+                            intent.putExtra(VISITID, getIntent().getIntExtra(VISITID, -5));
+                            intent.putExtra(VERYFIED, veryfied);
+                            startActivity(intent);
                         } else {
                             Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
                             intent.putExtra(ID, getIntent().getIntExtra(ID, -5));
