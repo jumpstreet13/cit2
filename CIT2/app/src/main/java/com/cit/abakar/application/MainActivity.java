@@ -98,7 +98,7 @@ public class MainActivity extends Activity {
         try {
             retrofit = new Retrofit.Builder().baseUrl(MYURL.trim()).addConverterFactory(GsonConverterFactory.create()).build();
         } catch (Exception ex) {
-            Toast.makeText(this, "Неккоректный адрес сервера, переход к адресу по умолчанию", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Неккоректный адрес сервера, переход к адресу по умолчанию", Toast.LENGTH_LONG).show();
             MYURL = "http://10.39.5.76/apiv1/";
             retrofit = new Retrofit.Builder().baseUrl(MYURL).addConverterFactory(GsonConverterFactory.create()).build();
         }

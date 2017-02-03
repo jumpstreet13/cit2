@@ -78,6 +78,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             veryfied.add(getIntent().getIntExtra("id", -5));
             np.printStackTrace();
         }
+
          refreshList();
 
 
@@ -95,7 +96,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             }
         });*/
 
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -415,6 +416,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         arr.clear();
         retrofit = new Retrofit.Builder().baseUrl(MYURL).addConverterFactory(GsonConverterFactory.create()).build();
         restApi = retrofit.create(RestApi.class);
+
 
         progressBar.setVisibility(View.VISIBLE);
         restApi.getEquipment().enqueue(new Callback<List<Equipment>>() {
