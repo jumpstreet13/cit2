@@ -69,7 +69,7 @@ public class MultiSelectionSpinner extends Spinner implements DialogInterface.On
         StringBuffer spinnerBuffer = new StringBuffer();
         boolean someUnselected = false;
         for (int i = 0; i < items.size(); i++) {
-            if (selected[i] == true) {
+            if (selected[i] && radioGroup.getChildCount()!=selected.length) {
                 CheckBox textView = new CheckBox(context);
                 textView.setText(items.get(i));
                 textView.setClickable(false);
