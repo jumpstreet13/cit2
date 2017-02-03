@@ -44,6 +44,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+//import static com.cit.abakar.application.MainActivity.ID;
 import static com.cit.abakar.application.MainActivity.MYURL;
 import static com.cit.abakar.application.MainActivity.MY_PERMISSIONS_REQUEST_READ_CONTACTS;
 import static com.cit.abakar.application.MainActivity.SHAREDNAME;
@@ -77,33 +78,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             veryfied.add(getIntent().getIntExtra("id", -5));
             np.printStackTrace();
         }
-        retrofit = new Retrofit.Builder().baseUrl(MYURL).addConverterFactory(GsonConverterFactory.create()).build();
-        restApi = retrofit.create(RestApi.class);
-
-        progressBar.setVisibility(View.VISIBLE);
-        restApi.getEquipment().enqueue(new Callback<List<Equipment>>() {
-            @Override
-            public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
-                for (Equipment eq : response.body()) {
-                    Log.e("SeanGares", getIntent().getIntExtra("id", -5) + "");
-                    Log.e("SeanGares", eq.centerId + "");
-                    if (eq.centerId == getIntent().getIntExtra("id", -5)) {
-                        Log.e("SeanGares", eq.name);
-                        arr.add(eq);
-                    }
-                }
-                adapter = new MyAdapter(EquipmentActivity.this, arr, veryfied);
-                listView.setAdapter(adapter);
-                progressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onFailure(Call<List<Equipment>> call, Throwable t) {
-                Toast.makeText(EquipmentActivity.this, "Нет соединения", Toast.LENGTH_SHORT);
-                progressBar.setVisibility(View.GONE);
-
-            }
-        });
+         refreshList();
 
 
         /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -130,6 +105,8 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         MenuItem searchItem = menu.findItem(R.id.search_settings);
         MenuItem http = menu.findItem(R.id.htttp_settings);
         MenuItem user = menu.findItem(R.id.user);
+        MenuItem refresh = menu.findItem(R.id.refresh);
+        refresh.setVisible(true);
         user.setVisible(false);
         http.setVisible(false);
         searchItem.setVisible(false);
@@ -164,6 +141,13 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
         switch (id) {
             case R.id.search_settings:
+                return true;
+
+            case R.id.refresh:
+                refreshList();
+                Toast.makeText(this, "Обновлено", Toast.LENGTH_SHORT);
+
+
                 return true;
 
             case R.id.user:
@@ -427,6 +411,34 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             }
         });
 
+    }
+
+    public void refreshList(){
+        arr.clear();
+        retrofit = new Retrofit.Builder().baseUrl(MYURL).addConverterFactory(GsonConverterFactory.create()).build();
+        restApi = retrofit.create(RestApi.class);
+
+        progressBar.setVisibility(View.VISIBLE);
+        restApi.getEquipment().enqueue(new Callback<List<Equipment>>() {
+            @Override
+            public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
+                for (Equipment eq : response.body()) {
+                    if (eq.centerId == getIntent().getIntExtra(ID, -5)) {
+                        arr.add(eq);
+                    }
+                }
+                adapter = new MyAdapter(EquipmentActivity.this, arr, veryfied);
+                listView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<List<Equipment>> call, Throwable t) {
+                Toast.makeText(EquipmentActivity.this, "Нет соединения", Toast.LENGTH_SHORT);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
     public void sendIsSucces() {
