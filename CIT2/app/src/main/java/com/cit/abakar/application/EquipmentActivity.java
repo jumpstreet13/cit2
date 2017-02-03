@@ -145,9 +145,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
             case R.id.refresh:
                 refreshList();
-                Toast.makeText(this, "Обновлено", Toast.LENGTH_SHORT);
-
-
+                Toast.makeText(this, "Обновлено", Toast.LENGTH_SHORT).show();
                 return true;
 
             case R.id.user:
@@ -423,7 +421,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             @Override
             public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
                 for (Equipment eq : response.body()) {
-                    if (eq.centerId == getIntent().getIntExtra(ID, -5)) {
+                    if (eq.centerId == getIntent().getIntExtra("id", -5)) {
                         arr.add(eq);
                     }
                 }
