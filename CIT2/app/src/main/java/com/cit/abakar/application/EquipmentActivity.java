@@ -44,9 +44,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.cit.abakar.application.MainActivity.ID;
+import static com.cit.abakar.application.MainActivity.IDOFEQUIPMENT;
 import static com.cit.abakar.application.MainActivity.MYURL;
 import static com.cit.abakar.application.MainActivity.SHAREDNAME;
 import static com.cit.abakar.application.MainActivity.USERNAME;
+import static com.cit.abakar.application.MainActivity.VERYFIED;
+import static com.cit.abakar.application.MainActivity.VISITID;
 import static com.cit.abakar.application.MainActivity.hasConnection;
 
 public class EquipmentActivity extends Activity implements AdapterInterface, MultiSelectionSpinner.MultiSpinnerListener {
@@ -71,9 +75,9 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         progressBar = (ProgressBar) findViewById(R.id.progressBarInEquipmentActivity);
         veryfied.clear();
         try {
-            veryfied.addAll(getIntent().getIntegerArrayListExtra("veryfied"));
+            veryfied.addAll(getIntent().getIntegerArrayListExtra(VERYFIED));
         } catch (NullPointerException np) {
-            veryfied.add(getIntent().getIntExtra("id", -5));
+            veryfied.add(getIntent().getIntExtra(ID, -5));
             np.printStackTrace();
         }
         retrofit = new Retrofit.Builder().baseUrl(MYURL).addConverterFactory(GsonConverterFactory.create()).build();
@@ -84,10 +88,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             @Override
             public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
                 for (Equipment eq : response.body()) {
-                    Log.e("SeanGares", getIntent().getIntExtra("id", -5) + "");
-                    Log.e("SeanGares", eq.centerId + "");
-                    if (eq.centerId == getIntent().getIntExtra("id", -5)) {
-                        Log.e("SeanGares", eq.name);
+                    if (eq.centerId == getIntent().getIntExtra(ID, -5)) {
                         arr.add(eq);
                     }
                 }
@@ -103,21 +104,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
             }
         });
-
-
-        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(myMediaPlayer != null) {
-                    myMediaPlayer.reset();
-                }
-                myMediaPlayer = new MyMediaPlayer(EquipmentActivity.this, "Button");
-                myMediaPlayer.start();
-                myMediaPlayer.setFree();
-                Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);
-                startActivity(intent);
-            }
-        });*/
 
     }
 
@@ -150,7 +136,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     public void onBackPressed() {
         progressBar.setVisibility(View.VISIBLE);
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("veryfied", veryfied);
+        intent.putExtra(VERYFIED, veryfied);
         startActivity(intent);
         progressBar.setVisibility(View.GONE);
     }
@@ -234,12 +220,11 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     public void textViewClicked(int position) {
 
         Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);
-        intent.putExtra("id", getIntent().getIntExtra("id", -5));
-        Log.e("PING", arr.get(position).id + "");
-        intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
-        intent.putExtra("idOfEquipment", arr.get(position).id);
+        intent.putExtra(ID, getIntent().getIntExtra("id", -5));
+        intent.putExtra(VISITID, getIntent().getIntExtra(VISITID, -5));
+        intent.putExtra(IDOFEQUIPMENT, arr.get(position).id);
         veryfied.add(arr.get(position).id);
-        intent.putExtra("veryfied", veryfied);
+        intent.putExtra(VERYFIED, veryfied);
         startActivity(intent);
 
     }
@@ -282,16 +267,11 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 Installation installation = new Installation();
                 installation.aktNumber = ed.getText().toString();
                 installation.equipmentId = arr.get(position).id;
-                Log.e("NEO", arr.get(position).id + "");
-                installation.visitId = getIntent().getIntExtra("visitId", -5);
-                Log.e("NEO", getIntent().getIntExtra("visitId", -5) + "");
+                installation.visitId = getIntent().getIntExtra(VISITID, -5);
                 progressBar.setVisibility(View.VISIBLE);
                 restApi.addInstallation(installation).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        Log.e("ZEUS", "succes");
-                        Log.e("ZEUS", response.isSuccessful() + "");
-                        Log.e("ZEUS", response.code() + "");
                         sendIsSucces();
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
@@ -304,8 +284,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        Log.e("ZEUS", "wtf");
-                        Log.e("ZEUS", t.toString());
                         progressBar.setVisibility(View.GONE);
                         sendIsNotSucces();
                     }
@@ -345,7 +323,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         TextView tx = (TextView) dialog.findViewById(R.id.textViewinEquipmentDeinstallation);
         String number = mPhoneNumber;
         tx.setText(number);
-        Log.e("NUMBER", mPhoneNumber);
 
         Button sendButton = (Button) dialog.findViewById(R.id.buttoninEqupmentDeinstallation);
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -362,21 +339,14 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
                 Dismantling dismantling = new Dismantling();
                 dismantling.aktNumber = ed.getText().toString();
-                Log.e("Shox", ed.getText().toString());
                 dismantling.user = tx.getText().toString();
-                Log.e("Shox", tx.getText().toString());
                 dismantling.visitId = getIntent().getIntExtra("visitId", -5);
-                Log.e("Shox", getIntent().getIntExtra("visitId", -5) + "");
                 dismantling.equipmentId = arr.get(position).id;
-                Log.e("Shox", arr.get(position).id + "");
 
                 progressBar.setVisibility(View.VISIBLE);
                 restApi.addDismantling(dismantling).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        Log.e("Shox", "succes");
-                        Log.e("Shox", response.isSuccessful() + "");
-                        Log.e("Shox", response.code() + "");
                         sendIsSucces();
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
@@ -389,7 +359,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        Log.e("Shox", "wtf");
                         progressBar.setVisibility(View.GONE);
                         sendIsNotSucces();
                     }

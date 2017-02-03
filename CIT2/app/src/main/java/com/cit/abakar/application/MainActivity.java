@@ -53,28 +53,19 @@ public class MainActivity extends Activity {
     public final static String URLSETTINS = "urlSettings";
     public final static String SHAREDNAME = "Preference";
     public final static String USERNAME = "user";
+    public final static String ID = "id";
+    public final static String VISITID = "visitId";
+    public final static String VERYFIED = "verfied";
+    public final static String IDOFEQUIPMENT = "idOfEquipment";
     public final static int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
+    private static RestApi restApi;
     private ListView listView;
     private ArrayList<Center> arr = new ArrayList<Center>();
     private YourAdapter adapter;
     private MenuItem connection;
     public ProgressBar progressBar;
-    private static RestApi restApi;
     private Retrofit retrofit;
     private Visit visit;
-   // private ArrayList<ArrayList<Integer>> veryfied = new ArrayList<ArrayList<Integer>>();
-
-    //Version for show
-
-
-    public ArrayList<String> getArrString(ArrayList<Center> cr) {
-        ArrayList<String> arr = new ArrayList<String>();
-        for (Center cc : cr) {
-            arr.add(cc.name);
-            Log.e("NAME", cc.name);
-        }
-        return arr;
-    }
 
 
     @Override
@@ -84,14 +75,8 @@ public class MainActivity extends Activity {
         MYURL = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE).getString(URLSETTINS, "http://10.39.5.76/apiv1/");
         getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInMainActivity);
-       /* veryfied.clear();
-        try {
-            ArrayList<Integer> arr = new ArrayList<Integer>();
-            arr.addAll(getIntent().getIntegerArrayListExtra("veryfied"));
-            veryfied.add(arr);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }*/
+
+
         listView = (ListView) findViewById(R.id.listViewMain);
         try {
             retrofit = new Retrofit.Builder().baseUrl(MYURL.trim()).addConverterFactory(GsonConverterFactory.create()).build();
@@ -106,12 +91,7 @@ public class MainActivity extends Activity {
         restApi.getAllCenters().enqueue(new Callback<List<Center>>() {
             @Override
             public void onResponse(Call<List<Center>> call, Response<List<Center>> response) {
-                Log.e("REST", response.body().toString());
                 arr.addAll(response.body());
-               /* for (Center c : arr) {
-                    Log.e("REST", c.name);
-                    c.save();
-                }*/
                 adapter = new YourAdapter(MainActivity.this, arr);
                 listView.setAdapter(adapter);
                 progressBar.setVisibility(View.GONE);
@@ -120,12 +100,8 @@ public class MainActivity extends Activity {
             @Override
             public void onFailure(Call<List<Center>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
-                //progressBar.setVisibility(View.GONE);
-
             }
         });
-
-        //arr.addAll(Center.getAll());
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -137,33 +113,18 @@ public class MainActivity extends Activity {
                 visit.dateVisit = getCurrentDate();
                 visit.description = null;
                 final Intent intent = new Intent(MainActivity.this, EquipmentActivity.class);
-                //Log.e("PZD", arr.get(position).getId().toString());
-                intent.putExtra("id", arr.get(position).id);
+                intent.putExtra(ID, arr.get(position).id);
 
                 restApi.addVisit(visit).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        Log.e("TAZ", response.headers().toString());
-                        intent.putExtra("visitId", getVisitId(response.headers().get("Location")));
-                       /* for(ArrayList<Integer> arr : veryfied){
-                            for(Integer in : arr ){
-                                Log.e("Byali", in + " " + visit.centerId);
-                                if(in == visit.centerId){
-                                    arr.add(visit.centerId);
-                                    Log.e("Byali","Succes");
-                                    intent.putExtra("veryfied", arr);
-                                    break;
-                                }
-                            }
-                        }*/
+                        intent.putExtra(VISITID, getVisitId(response.headers().get("Location")));
                         startActivity(intent);
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         Toast.makeText(MainActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
-                        Log.e("TAZ", "wtf");
-
                     }
                 });
             }
@@ -171,15 +132,6 @@ public class MainActivity extends Activity {
 
     }
 
-    public String getCurrentDate() {
-        Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        return format.format(date);
-    }
-
-    public ArrayList<String> getBaseList() {
-        return getArrString(arr);
-    }
 
     @Override
     protected void onResume() {
@@ -235,7 +187,6 @@ public class MainActivity extends Activity {
         searchView.setIconified(false);
         searchView.requestFocus();
         searchView.requestFocusFromTouch();
-
         return true;
     }
 
@@ -343,15 +294,47 @@ public class MainActivity extends Activity {
     public void onBackPressed() {
     }
 
-   /* public boolean isContain(ArrayList<String> arrayList, String str){
 
-        for(int i = 0; i < arrayList.size(); i++){
-            if(arrayList.get(i).equals(str)){
-                return true;
-            }
+    public static boolean hasConnection(final Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (wifiInfo != null && wifiInfo.isConnected()) {
+            return true;
+        }
+        wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if (wifiInfo != null && wifiInfo.isConnected()) {
+            return true;
+        }
+        wifiInfo = cm.getActiveNetworkInfo();
+        if (wifiInfo != null && wifiInfo.isConnected()) {
+            return true;
         }
         return false;
-    }*/
+    }
+
+    public ArrayList<String> getArrString(ArrayList<Center> cr) {
+        ArrayList<String> arr = new ArrayList<String>();
+        for (Center cc : cr) {
+            arr.add(cc.name);
+        }
+        return arr;
+    }
+
+
+    public int getVisitId(String location) {
+        String[] s1 = location.split("/");
+        return Integer.parseInt(s1[s1.length - 1]);
+    }
+
+    public String getCurrentDate() {
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(date);
+    }
+
+    public ArrayList<String> getBaseList() {
+        return getArrString(arr);
+    }
 
 
     class YourAdapter extends BaseAdapter {
@@ -397,7 +380,6 @@ public class MainActivity extends Activity {
         }
 
         public void filter(String charText) {
-            Log.e("WTF", "call filter");
             charText = charText.toLowerCase();
             arr.clear();
             if (charText.length() == 0) {
@@ -413,54 +395,6 @@ public class MainActivity extends Activity {
 
         }
 
-
-    }
-
-    public static boolean hasConnection(final Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (wifiInfo != null && wifiInfo.isConnected()) {
-            return true;
-        }
-        wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        if (wifiInfo != null && wifiInfo.isConnected()) {
-            return true;
-        }
-        wifiInfo = cm.getActiveNetworkInfo();
-        if (wifiInfo != null && wifiInfo.isConnected()) {
-            return true;
-        }
-        return false;
-    }
-
-    /*  class MyTask extends AsyncTask<Void ,Void, Void>{
-        Activity activity;
-
-        public MyTask(Activity activity){
-            this.activity = activity;
-        }
-        @Override
-        protected void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            progressBar.setVisibility(View.GONE);
-            // ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.exampleForList));
-        }
-    }*/
-
-    public int getVisitId(String location) {
-        Log.e("TAZ", location);
-        String[] s1 = location.split("/");
-        Log.e("TAZ", s1[s1.length - 1]);
-        return Integer.parseInt(s1[s1.length - 1]);
     }
 
 }
