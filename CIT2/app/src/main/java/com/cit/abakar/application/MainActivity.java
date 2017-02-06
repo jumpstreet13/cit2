@@ -133,7 +133,7 @@ public class MainActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                progressBar.setVisibility(View.VISIBLE);
                 visit = new Visit();
                 visit.centerId = arr.get(position).id;
                 visit.dateVisit = getCurrentDate();
@@ -158,13 +158,13 @@ public class MainActivity extends Activity {
                             }
                         }*/
                         startActivity(intent);
+                        progressBar.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         Toast.makeText(MainActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
                         Log.e("TAZ", "wtf");
-
                     }
                 });
             }

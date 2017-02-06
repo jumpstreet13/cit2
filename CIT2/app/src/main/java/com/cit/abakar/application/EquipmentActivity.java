@@ -90,7 +90,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(EquipmentActivity.this, MainActivity.class);
-                intent.putExtra(VERYFIED, veryfied);
+                intent.putExtra("veryfied", veryfied);
                 startActivity(intent);
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(EquipmentActivity.this, "Инспекция прошла успешно", Toast.LENGTH_SHORT).show();
@@ -436,7 +436,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 listView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
                 int Shox = adapter.getCount();
-                if(isInspectionDone(getIntent().getIntegerArrayListExtra(VERYFIED), Shox)){
+                if(isInspectionDone(getIntent().getIntegerArrayListExtra("veryfied"), Shox)){
                     buttonInspectionDone.setEnabled(true);
                 }
                 progressBar.setVisibility(View.GONE);
