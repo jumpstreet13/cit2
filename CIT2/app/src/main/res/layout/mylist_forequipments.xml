@@ -10,7 +10,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/textViewForEquipments"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:fontFamily="monospace"
         android:typeface="serif"
         android:textSize="14sp"
@@ -24,7 +24,7 @@
         android:id="@+id/button_Installation"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="2" />
+        android:layout_weight="1" />
 
     <ImageButton
         style="@style/IconsStyle"
@@ -32,6 +32,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/button_Deinstallation"
-        android:layout_weight="2" />
+        android:layout_weight="1" />
 
 </LinearLayout>
