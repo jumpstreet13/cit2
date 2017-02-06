@@ -381,20 +381,13 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                         }
                     }
                 } catch (NullPointerException e) {
-                    arr = new ArrayList<Equipment>();
-                    buttonInspectionDone.setEnabled(true);
+                    arr.clear();
                     e.printStackTrace();
                 }
 
-                for(int i = 0; i<10; i++){
-                    Equipment equipment = new Equipment();
-                    equipment.id = i;
-                    equipment.name = i+"";
-                    equipment.fgDismantled = "false";
-                    equipment.fgNotInstall = "false";
-                    arr.add(equipment);
+                if(arr.isEmpty()){
+                    buttonInspectionDone.setEnabled(true);
                 }
-
 
                 adapter = new MyAdapter(EquipmentActivity.this, arr, veryfied);
                 listView.setAdapter(adapter);
