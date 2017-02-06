@@ -53,6 +53,7 @@ import static com.cit.abakar.application.MainActivity.hasConnection;
 
 public class EquipmentActivity extends Activity implements AdapterInterface, MultiSelectionSpinner.MultiSpinnerListener {
 
+    private Button buttonInspectionDone;
     private ListView listView;
     private ArrayList<Equipment> arr = new ArrayList<>();
     private MultiSelectionSpinner spinner;
@@ -70,6 +71,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         requestMultiplePermissions();
         getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
         listView = (ListView) findViewById(R.id.listViewEquipment);
+        buttonInspectionDone = (Button) findViewById(R.id.buttonInspectionDone);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInEquipmentActivity);
         veryfied.clear();
         try {
@@ -80,6 +82,21 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         }
 
         refreshList();
+
+
+
+        buttonInspectionDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(EquipmentActivity.this, MainActivity.class);
+                intent.putExtra(VERYFIED, veryfied);
+                startActivity(intent);
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(EquipmentActivity.this, "Инспекция прошла успешно", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 
@@ -125,14 +142,12 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             invalidateOptionsMenu();
         }
 
-        @Override
-        public void onBackPressed () {
-            progressBar.setVisibility(View.VISIBLE);
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("veryfied", veryfied);
-            startActivity(intent);
-            progressBar.setVisibility(View.GONE);
-        }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
 
 
         @Override
@@ -420,6 +435,10 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 adapter = new MyAdapter(EquipmentActivity.this, arr, veryfied);
                 listView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+                int Shox = adapter.getCount();
+                if(isInspectionDone(getIntent().getIntegerArrayListExtra(VERYFIED), Shox)){
+                    buttonInspectionDone.setEnabled(true);
+                }
                 progressBar.setVisibility(View.GONE);
             }
 
@@ -430,6 +449,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             }
         });
     }
+
 
     public void sendIsSucces() {
         Toast.makeText(this, R.string.SendIsSuccesful, Toast.LENGTH_SHORT).show();
@@ -443,4 +463,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     public void onItemsSelected(boolean[] selected) {
 
     }
+
+
 }

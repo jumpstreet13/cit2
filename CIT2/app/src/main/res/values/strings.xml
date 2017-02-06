@@ -38,6 +38,7 @@
     <string name="Using">Используется</string>
     <string name="Close">Закрыть</string>
     <string name="Refresh">Обновить</string>
+    <string name="EndOfInspection">Конец осмотра</string>
 
     <string-array name="forSpinner">
         <item>Сломан кулер</item>
