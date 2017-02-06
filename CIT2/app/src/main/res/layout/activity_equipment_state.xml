@@ -20,6 +20,7 @@
         android:id="@+id/switch2InEquipmentState"
         android:fontFamily="monospace"
         android:typeface="serif"
+        android:textColor="@color/material"
         android:textStyle="normal|italic"
         android:textAllCaps="false"
         android:textSize="18sp"
@@ -29,6 +30,7 @@
 
     <Switch
         android:text="@string/Malfunc"
+        android:textColor="@color/material"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/switchMalfunc"
@@ -70,6 +72,7 @@
         android:text="@string/WeHaveIt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/material"
         android:id="@+id/switch1InEquipmentState"
         android:elevation="25dp"
         android:layout_marginStart="13dp"
@@ -107,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/radioGroup"
         android:paddingTop="10dp"
-        android:textColor="@color/aquamarin"
+        android:textColor="@color/material"
         android:id="@+id/Note"
         android:fontFamily="monospace"
         android:typeface="serif"
