@@ -79,7 +79,8 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             np.printStackTrace();
         }
 
-         refreshList();
+        refreshList();
+    }
 
 
         /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,223 +98,212 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         });*/
 
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.searchmenu, menu);
-        connection = menu.findItem(R.id.conntection_settings);
-        MenuItem searchItem = menu.findItem(R.id.search_settings);
-        MenuItem http = menu.findItem(R.id.htttp_settings);
-        MenuItem user = menu.findItem(R.id.user);
-        MenuItem refresh = menu.findItem(R.id.refresh);
-        refresh.setVisible(true);
-        user.setVisible(false);
-        http.setVisible(false);
-        searchItem.setVisible(false);
-        if (hasConnection(this)) {
-            connection.setIcon(R.drawable.ic_network_cell_white_24dp);
-        } else {
-            connection.setIcon(R.drawable.ic_signal_cellular_off_white_24dp);
-        }
-        return true;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        invalidateOptionsMenu();
-    }
-
-    @Override
-    public void onBackPressed() {
-        progressBar.setVisibility(View.VISIBLE);
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("veryfied", veryfied);
-        startActivity(intent);
-        progressBar.setVisibility(View.GONE);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.search_settings:
-                return true;
-
-            case R.id.refresh:
-                refreshList();
-                Toast.makeText(this, "Обновлено", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.user:
-                final Dialog dialogUser = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
-                dialogUser.setContentView(R.layout.urldialog);
-                dialogUser.setTitle(R.string.WriteNameOfUser);
-                SharedPreferences sharedPrefUser = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
-                TextView textViewUser = (TextView) dialogUser.findViewById(R.id.textViewinMainActivityDialog);
-                textViewUser.setText(sharedPrefUser.getString(USERNAME, getString(R.string.UserIsNotInstalledYet)));
-                dialogUser.show();
-                dialogUser.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                final InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                immUser.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                Button userButton = (Button) dialogUser.findViewById(R.id.buttoninMainActivityDialog);
-                userButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        EditText editText = (EditText) dialogUser.findViewById(R.id.editTextinMainActivityDialog);
-                        SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putString(USERNAME, editText.getText().toString());
-                        editor.apply();
-                        immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                        dialogUser.dismiss();
-                    }
-                });
-
-                return true;
-
-            case R.id.htttp_settings:
-                final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
-                dialog.setContentView(R.layout.urldialog);
-                dialog.setTitle(R.string.WriteNewUrl);
-                SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
-                TextView textView = (TextView) dialog.findViewById(R.id.textViewinMainActivityDialog);
-                textView.setText(sharedPref.getString(MainActivity.URLSETTINS, getString(R.string.Adress_is_not_set_yet)));
-                dialog.show();
-                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-
-                Button sendButton = (Button) dialog.findViewById(R.id.buttoninMainActivityDialog);
-                sendButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        EditText editText = (EditText) dialog.findViewById(R.id.editTextinMainActivityDialog);
-                        SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putString(MainActivity.URLSETTINS, editText.getText().toString());
-                        editor.apply();
-                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                        dialog.dismiss();
-                    }
-                });
-                return true;
-
-            case R.id.conntection_settings:
-                Toast toast = Toast.makeText(EquipmentActivity.this, R.string.NeworkConnection, Toast.LENGTH_SHORT);
-                toast.show();
-
-                break;
-
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void textViewClicked(int position) {
-
-        Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);
-        intent.putExtra("id", getIntent().getIntExtra("id", -5));
-        Log.e("PING", arr.get(position).id + "");
-        intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
-        intent.putExtra("idOfEquipment", arr.get(position).id);
-        veryfied.add(arr.get(position).id);
-        intent.putExtra("veryfied", veryfied);
-        startActivity(intent);
-
-    }
-
-
-    @Override
-    public void installationButtonClicked(final int position) {
-        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
-        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.equipment_dialog);
-        dialog.setCancelable(true);
-        Toolbar toolbar = (Toolbar) dialog.findViewById(R.id.toolbarInEquipmentDialog);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                dialog.dismiss();
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                return true;
+        @Override
+        public boolean onCreateOptionsMenu (Menu menu){
+            MenuInflater menuInflater = getMenuInflater();
+            menuInflater.inflate(R.menu.searchmenu, menu);
+            connection = menu.findItem(R.id.conntection_settings);
+            MenuItem searchItem = menu.findItem(R.id.search_settings);
+            MenuItem http = menu.findItem(R.id.htttp_settings);
+            MenuItem user = menu.findItem(R.id.user);
+            MenuItem refresh = menu.findItem(R.id.refresh);
+            refresh.setVisible(true);
+            user.setVisible(false);
+            http.setVisible(false);
+            searchItem.setVisible(false);
+            if (hasConnection(this)) {
+                connection.setIcon(R.drawable.ic_network_cell_white_24dp);
+            } else {
+                connection.setIcon(R.drawable.ic_signal_cellular_off_white_24dp);
             }
-        });
-        toolbar.inflateMenu(R.menu.dialog_menu);
-        toolbar.setTitle(R.string.WriteNumberOfAkt);
-        dialog.show();
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+            return true;
+        }
 
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        @Override
+        protected void onResume () {
+            super.onResume();
+            invalidateOptionsMenu();
+        }
 
-        Button sendButton = (Button) dialog.findViewById(R.id.buttonSendNumberOfAkt);
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        @Override
+        public void onBackPressed () {
+            progressBar.setVisibility(View.VISIBLE);
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("veryfied", veryfied);
+            startActivity(intent);
+            progressBar.setVisibility(View.GONE);
+        }
 
-                EditText ed = (EditText) dialog.findViewById(R.id.editTextInInstallationDialog);
-                if (ed.getText().toString().equals("")) {
-                    Toast toast = Toast.makeText(EquipmentActivity.this, R.string.YouDidNotWriteNumberOfAkt, Toast.LENGTH_SHORT);
+
+        @Override
+        public boolean onOptionsItemSelected (MenuItem item){
+
+            int id = item.getItemId();
+
+            switch (id) {
+                case R.id.search_settings:
+                    return true;
+
+                case R.id.refresh:
+                    refreshList();
+                    Toast.makeText(this, "Обновлено", Toast.LENGTH_SHORT).show();
+                    return true;
+
+                case R.id.user:
+                    final Dialog dialogUser = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
+                    dialogUser.setContentView(R.layout.urldialog);
+                    dialogUser.setTitle(R.string.WriteNameOfUser);
+                    SharedPreferences sharedPrefUser = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
+                    TextView textViewUser = (TextView) dialogUser.findViewById(R.id.textViewinMainActivityDialog);
+                    textViewUser.setText(sharedPrefUser.getString(USERNAME, getString(R.string.UserIsNotInstalledYet)));
+                    dialogUser.show();
+                    dialogUser.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                    final InputMethodManager immUser = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    immUser.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                    Button userButton = (Button) dialogUser.findViewById(R.id.buttoninMainActivityDialog);
+                    userButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            EditText editText = (EditText) dialogUser.findViewById(R.id.editTextinMainActivityDialog);
+                            SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putString(USERNAME, editText.getText().toString());
+                            editor.apply();
+                            immUser.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                            dialogUser.dismiss();
+                        }
+                    });
+
+                    return true;
+
+                case R.id.htttp_settings:
+                    final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
+                    dialog.setContentView(R.layout.urldialog);
+                    dialog.setTitle(R.string.WriteNewUrl);
+                    SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
+                    TextView textView = (TextView) dialog.findViewById(R.id.textViewinMainActivityDialog);
+                    textView.setText(sharedPref.getString(MainActivity.URLSETTINS, getString(R.string.Adress_is_not_set_yet)));
+                    dialog.show();
+                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                    final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+                    Button sendButton = (Button) dialog.findViewById(R.id.buttoninMainActivityDialog);
+                    sendButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            EditText editText = (EditText) dialog.findViewById(R.id.editTextinMainActivityDialog);
+                            SharedPreferences sharedPref = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putString(MainActivity.URLSETTINS, editText.getText().toString());
+                            editor.apply();
+                            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                            dialog.dismiss();
+                        }
+                    });
+                    return true;
+
+                case R.id.conntection_settings:
+                    Toast toast = Toast.makeText(EquipmentActivity.this, R.string.NeworkConnection, Toast.LENGTH_SHORT);
                     toast.show();
-                    return;
-                }
-                Installation installation = new Installation();
-                installation.aktNumber = ed.getText().toString();
-                installation.equipmentId = arr.get(position).id;
-                Log.e("NEO", arr.get(position).id + "");
-                installation.visitId = getIntent().getIntExtra("visitId", -5);
-                Log.e("NEO", getIntent().getIntExtra("visitId", -5) + "");
-                progressBar.setVisibility(View.VISIBLE);
-                restApi.addInstallation(installation).enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        Log.e("ZEUS", "succes");
-                        Log.e("ZEUS", response.isSuccessful() + "");
-                        Log.e("ZEUS", response.code() + "");
-                        sendIsSucces();
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                        dialog.dismiss();
-                        Intent intent = getIntent();
-                        finish();
-                        startActivity(intent);
-                        progressBar.setVisibility(View.GONE);
 
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        Log.e("ZEUS", "wtf");
-                        Log.e("ZEUS", t.toString());
-                        progressBar.setVisibility(View.GONE);
-                        sendIsNotSucces();
-                    }
-                });
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                dialog.dismiss();
+                    break;
 
             }
-        });
-    }
+
+            return super.onOptionsItemSelected(item);
+        }
+
+        @Override
+        public void textViewClicked ( int position){
+
+            Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);
+            intent.putExtra("id", getIntent().getIntExtra("id", -5));
+            Log.e("PING", arr.get(position).id + "");
+            intent.putExtra("visitId", getIntent().getIntExtra("visitId", -5));
+            intent.putExtra("idOfEquipment", arr.get(position).id);
+            veryfied.add(arr.get(position).id);
+            intent.putExtra("veryfied", veryfied);
+            startActivity(intent);
+
+        }
+
+
+        @Override
+        public void installationButtonClicked ( final int position){
+            final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            final Dialog dialog = new Dialog(EquipmentActivity.this, R.style.DialogTheme);
+            dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.equipment_dialog);
+            dialog.setCancelable(true);
+            Toolbar toolbar = (Toolbar) dialog.findViewById(R.id.toolbarInEquipmentDialog);
+            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    dialog.dismiss();
+                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                    return true;
+                }
+            });
+            toolbar.inflateMenu(R.menu.dialog_menu);
+            toolbar.setTitle(R.string.WriteNumberOfAkt);
+            dialog.show();
+            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+            Button sendButton = (Button) dialog.findViewById(R.id.buttonSendNumberOfAkt);
+            sendButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    EditText ed = (EditText) dialog.findViewById(R.id.editTextInInstallationDialog);
+                    if (ed.getText().toString().equals("")) {
+                        Toast toast = Toast.makeText(EquipmentActivity.this, R.string.YouDidNotWriteNumberOfAkt, Toast.LENGTH_SHORT);
+                        toast.show();
+                        return;
+                    }
+                    Installation installation = new Installation();
+                    installation.aktNumber = ed.getText().toString();
+                    installation.equipmentId = arr.get(position).id;
+                    Log.e("NEO", arr.get(position).id + "");
+                    installation.visitId = getIntent().getIntExtra("visitId", -5);
+                    Log.e("NEO", getIntent().getIntExtra("visitId", -5) + "");
+                    progressBar.setVisibility(View.VISIBLE);
+                    restApi.addInstallation(installation).enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            Log.e("ZEUS", "succes");
+                            Log.e("ZEUS", response.isSuccessful() + "");
+                            Log.e("ZEUS", response.code() + "");
+                            sendIsSucces();
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                            dialog.dismiss();
+                            Intent intent = getIntent();
+                            finish();
+                            startActivity(intent);
+                            progressBar.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.e("ZEUS", "wtf");
+                            Log.e("ZEUS", t.toString());
+                            progressBar.setVisibility(View.GONE);
+                            sendIsNotSucces();
+                        }
+                    });
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                    dialog.dismiss();
+
+                }
+            });
+        }
     //aadass
 
-    public File[] getExternalStorageFiles() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED) {
-            final File externalStorage = Environment.getExternalStorageDirectory();
-            if (externalStorage != null) {
-                return externalStorage.listFiles();
-            }
-        }
-        return null;
-    }
 
     public void requestMultiplePermissions() {
         ActivityCompat.requestPermissions(this,
