@@ -27,3 +27,5 @@ http://stackoverflow.com/questions/1521640/standard-android-button-with-a-differ
 
 
 https://www.google.ru/webhp?sourceid=chrome-instant&rlz=1C1CAFA_enRU728RU728&ion=1&espv=2&ie=UTF-8#q=gof
+
+https://ru.wikipedia.org/wiki/Design_Patterns
