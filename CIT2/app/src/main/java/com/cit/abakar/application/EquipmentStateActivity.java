@@ -25,6 +25,7 @@ import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
 import com.cit.abakar.application.ExampleClasses.Condition;
+import com.cit.abakar.application.ExampleClasses.CreatedId;
 import com.cit.abakar.application.ExampleClasses.Equipment;
 import com.cit.abakar.application.ExampleClasses.Inspection;
 import com.cit.abakar.application.ExampleClasses.Malfunction;
@@ -205,14 +206,18 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 inspection.note = note;
 
                 progressBar.setVisibility(View.VISIBLE);
-                restApi.addInspection(inspection).enqueue(new Callback<Void>() {
+                restApi.addInspection(inspection).enqueue(new Callback<CreatedId>() {
                     @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
+
+                    public void onResponse(Call<CreatedID> call, Response<CreatedID> response) {
                         Log.e("Device", response.headers().get("Location"));
                         Log.e("Device", "success");
                         Log.e("Device", response.isSuccessful() + "");
                         Log.e("Device", response.code() + "");
-                        location = response.headers().get("Location");
+                        CreatedId createdId = response.body();
+=======
+                    public void onResponse(Call<CreatedId> call, Response<CreatedId> response) {
+                        CreatedId createdId = response.body();
                         if (key.equals("YES")) {
                             Log.e("Coldzera", "You shall not pass");
                             final String[] reasons = spinner.getSelectedItem().toString().split(",");
@@ -222,8 +227,12 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
                             for (Condition cc : result) {
                                 Malfunction malfunctions = new Malfunction();
-                                malfunctions.inspectionId = setInspectionId(location);
+
+                               malfunctions.inspectionId = createdId.getCreatedId();
                                 Log.e("Device malfunc", malfunctions.inspectionId + "");
+=======
+                                malfunctions.inspectionId = createdId.getCreatedId();
+
                                 malfunctions.conditionId = cc.id;
                                 Log.e("Device condi", malfunctions.conditionId + "");
                                 restApi.addMalfunction(malfunctions).enqueue(new Callback<Void>() {
@@ -259,10 +268,10 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                     }
 
                     @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
+
+                    public void onFailure(Call<CreatedID> call, Throwable t) {
                         Log.e("Device", "wtf");
                         sendIsNotSucces();
-                    }
                 });
 
     }
@@ -444,10 +453,34 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         return arr;
     }
 
-    public int setInspectionId(String location) {
-        Log.e("Device", location);
+      public ArrayList<Condition> compare(String[] reasons, List<Condition> conditions) {
+
+        ArrayList<Condition> result = new ArrayList<Condition>();
+        for (int i = 0; i < conditions.size(); i++) {
+            for (int j = 0; j < reasons.length; j++) {
+                if (conditions.get(i).name.trim().toLowerCase().equals(reasons[j].trim().toLowerCase())) {
+                    result.add(conditions.get(i));
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+
+   /* public int setInspectionId(String location) {
+>>>>>>> 9deaa68... new way of getting the id
         String[] s1 = location.split("/");
         Log.e("Device", s1[s1.length - 1]);
         return Integer.parseInt(s1[s1.length - 1]);
+
+    }*/
+
+    public void sendIsSuccesful() {
+        Toast.makeText(this, R.string.SendIsSuccesful, Toast.LENGTH_SHORT).show();
+    }
+
+    public void sendIsNotSucces() {
+        Toast.makeText(this, R.string.SendIsNotSucces, Toast.LENGTH_SHORT).show();
     }
 }

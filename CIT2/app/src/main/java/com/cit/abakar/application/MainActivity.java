@@ -36,6 +36,7 @@ import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
 import com.cit.abakar.application.ExampleClasses.Center;
+import com.cit.abakar.application.ExampleClasses.CreatedId;
 import com.cit.abakar.application.ExampleClasses.Visit;
 
 import java.text.SimpleDateFormat;
@@ -137,16 +138,18 @@ public class MainActivity extends Activity {
                 visit = new Visit();
                 visit.centerId = arr.get(position).id;
                 visit.dateVisit = getCurrentDate();
-                visit.description = null;
+                visit.description = "Тестовый запрос";
                 final Intent intent = new Intent(MainActivity.this, EquipmentActivity.class);
                 //Log.e("PZD", arr.get(position).getId().toString());
                 intent.putExtra("id", arr.get(position).id);
 
-                restApi.addVisit(visit).enqueue(new Callback<Void>() {
+                restApi.addVisit(visit).enqueue(new Callback<CreatedId>() {
                     @Override
+
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         Log.e("TAZ", response.headers().toString());
-                        intent.putExtra("visitId", getVisitId(response.headers().get("Location")));
+                        CreatedId createdId = response.body();
+                        intent.putExtra(VISITID, createdId.getCreatedId());
                        /* for(ArrayList<Integer> arr : veryfied){
                             for(Integer in : arr ){
                                 Log.e("Byali", in + " " + visit.centerId);
@@ -157,12 +160,17 @@ public class MainActivity extends Activity {
                                 }
                             }
                         }*/
+
+                    public void onResponse(Call<CreatedId> call, Response<CreatedId> response) {
+                        CreatedId createdId = response.body();
+                        intent.putExtra(VISITID, createdId.getCreatedId());
+
                         startActivity(intent);
                         progressBar.setVisibility(View.GONE);
                     }
 
                     @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
+                    public void onFailure(Call<CreatedId> call, Throwable t) {
                         Toast.makeText(MainActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
                         Log.e("TAZ", "wtf");
                     }
@@ -352,7 +360,32 @@ public class MainActivity extends Activity {
             }
         }
         return false;
+
     }*/
+
+    }
+
+    public ArrayList<String> getArrString(ArrayList<Center> cr) {
+        ArrayList<String> arr = new ArrayList<String>();
+        for (Center cc : cr) {
+            arr.add(cc.name);
+        }
+        return arr;
+    }
+
+
+
+    public String getCurrentDate() {
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        Log.e("Date", format.format(date)+"");
+        return format.format(date);
+    }
+
+    public ArrayList<String> getBaseList() {
+        return getArrString(arr);
+    }
+
 
 
     class YourAdapter extends BaseAdapter {
