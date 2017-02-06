@@ -89,6 +89,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         progressBar = (ProgressBar) findViewById(R.id.progressBarInEquipmentStateActivity);
         spinner.registerRadioGroup(radioGroup);
         spinner.setContext(this);
+        spinner.setBackgroundColor(getResources().getColor(R.color.material));
 
         veryfied.clear();
         veryfied.addAll(getIntent().getIntegerArrayListExtra("veryfied"));

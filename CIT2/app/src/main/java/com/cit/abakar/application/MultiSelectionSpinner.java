@@ -68,14 +68,16 @@ public class MultiSelectionSpinner extends Spinner implements DialogInterface.On
         // refresh text on spinner
         StringBuffer spinnerBuffer = new StringBuffer();
         boolean someUnselected = false;
+        radioGroup.removeAllViews();
         for (int i = 0; i < items.size(); i++) {
-            if (selected[i] && radioGroup.getChildCount()!=selected.length) {
+            if (selected[i]) {
                 CheckBox textView = new CheckBox(context);
                 textView.setText(items.get(i));
                 textView.setClickable(false);
                 textView.setChecked(true);
                 textView.setTextSize(15);
                 textView.setTypeface(Typeface.SERIF);
+                textView.setTextColor(getResources().getColor(R.color.material));
                 radioGroup.addView(textView);
                 spinnerBuffer.append(items.get(i));
                 spinnerBuffer.append(", ");

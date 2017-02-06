@@ -10,4 +10,6 @@
     <color name="disabled">#ADD8E6</color>
     <color name="back">#757575</color>
     <color name="black">#424242</color>
+    <color name="background">#638d94</color>
+    <color name="material">#80CBC4</color>
 </resources>
