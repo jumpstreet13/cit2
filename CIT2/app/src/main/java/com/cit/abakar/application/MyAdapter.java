@@ -14,6 +14,7 @@ import com.cit.abakar.application.ExampleClasses.Equipment;
 import java.util.ArrayList;
 
 
+
 public class MyAdapter extends BaseAdapter {
 
     private ArrayList<Equipment> data = new ArrayList<Equipment>();

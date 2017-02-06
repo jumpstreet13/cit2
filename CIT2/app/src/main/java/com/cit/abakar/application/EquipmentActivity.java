@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -53,6 +54,7 @@ import static com.cit.abakar.application.MainActivity.hasConnection;
 
 public class EquipmentActivity extends Activity implements AdapterInterface, MultiSelectionSpinner.MultiSpinnerListener {
 
+    private Button buttonInspectionDone;
     private ListView listView;
     private ArrayList<Equipment> arr = new ArrayList<>();
     private MultiSelectionSpinner spinner;
@@ -70,6 +72,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         requestMultiplePermissions();
         getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
         listView = (ListView) findViewById(R.id.listViewEquipment);
+        buttonInspectionDone = (Button) findViewById(R.id.buttonInspectionDone);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInEquipmentActivity);
         veryfied.clear();
         try {
@@ -79,6 +82,21 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             np.printStackTrace();
         }
         refreshList();
+
+
+
+        buttonInspectionDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(EquipmentActivity.this, MainActivity.class);
+                intent.putExtra(VERYFIED, veryfied);
+                startActivity(intent);
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(EquipmentActivity.this, "Инспекция прошла успешно", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
@@ -110,11 +128,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     @Override
     public void onBackPressed() {
-        progressBar.setVisibility(View.VISIBLE);
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(VERYFIED, veryfied);
-        startActivity(intent);
-        progressBar.setVisibility(View.GONE);
+
     }
 
 
@@ -366,6 +380,10 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 adapter = new MyAdapter(EquipmentActivity.this, arr, veryfied);
                 listView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+                int Shox = adapter.getCount();
+                if(isInspectionDone(getIntent().getIntegerArrayListExtra(VERYFIED), Shox)){
+                    buttonInspectionDone.setEnabled(true);
+                }
                 progressBar.setVisibility(View.GONE);
             }
 
@@ -386,6 +404,19 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             }
         }
         return null;
+    }
+
+    public boolean isInspectionDone(ArrayList<Integer> array, int Shox) {
+
+        if(array == null){
+            return false;
+        }
+
+        if(array.size() -1  == Shox){
+            return true;
+        }
+
+        return false;
     }
 
     public void requestMultiplePermissions() {
@@ -417,4 +448,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     public void onItemsSelected(boolean[] selected) {
 
     }
+
+
 }

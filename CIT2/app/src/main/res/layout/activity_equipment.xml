@@ -11,15 +11,25 @@
     android:background="@color/black"
     tools:context="com.cit.abakar.application.EquipmentActivity">
 
+    <Button
+        style="@style/ButtonSP"
+        android:enabled="false"
+        android:text="@string/EndOfInspection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonInspectionDone"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:layout_centerHorizontal="true" />
+
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/buttonInspectionDone"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="171dp"
-        android:id="@+id/progressBarInEquipmentActivity" />
+        android:layout_marginBottom="176dp"
+        android:id="@+id/progressBarInEquipmentActivity"  />
 
     <ListView
         android:id="@+id/listViewEquipment"
@@ -28,7 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:dividerHeight="5dp"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
 
