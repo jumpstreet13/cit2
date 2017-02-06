@@ -382,6 +382,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                     }
                 } catch (NullPointerException e) {
                     arr = new ArrayList<Equipment>();
+                    buttonInspectionDone.setEnabled(true);
                     e.printStackTrace();
                 }
 
