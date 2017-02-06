@@ -386,6 +386,15 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                     e.printStackTrace();
                 }
 
+                for(int i = 0; i<10; i++){
+                    Equipment equipment = new Equipment();
+                    equipment.id = i;
+                    equipment.name = i+"";
+                    equipment.fgDismantled = "false";
+                    equipment.fgNotInstall = "false";
+                    arr.add(equipment);
+                }
+
 
                 adapter = new MyAdapter(EquipmentActivity.this, arr, veryfied);
                 listView.setAdapter(adapter);
