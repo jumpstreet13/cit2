@@ -437,6 +437,9 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 } catch (Exception e) {
                     e.printStackTrace();
                     arr.clear();
+                }
+
+                if(arr.isEmpty()){
                     buttonInspectionDone.setEnabled(true);
                 }
 
