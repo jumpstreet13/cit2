@@ -426,21 +426,19 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         restApi.getEquipment().enqueue(new Callback<List<Equipment>>() {
             @Override
             public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
-                for (Equipment eq : response.body()) {
-                    if (eq.centerId == getIntent().getIntExtra("id", -5)) {
-                        arr.add(eq);
-                    }
-                }
-                Equipment equipment = new Equipment();
-                equipment.id = 3;
-                equipment.centerId = 1;
-                equipment.serialNumber = "gvdfv";
-                equipment.inventoryNumber  = "32fdsfs";
-                equipment.name = "Очень длинное название оборудования";
-                equipment.fgDismantled="false";
-                equipment.fgNotInstall="false";
 
-                arr.add(equipment);
+                try {
+                    ArrayList<Equipment> equipment = (ArrayList<Equipment>)response.body();
+                    for (Equipment eq : response.body()) {
+                        if (eq.centerId == getIntent().getIntExtra("id", -5)) {
+                            arr.add(eq);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    arr.clear();
+                    buttonInspectionDone.setEnabled(true);
+                }
 
                 adapter = new MyAdapter(EquipmentActivity.this, arr, veryfied);
                 listView.setAdapter(adapter);
