@@ -431,6 +431,17 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                         arr.add(eq);
                     }
                 }
+                Equipment equipment = new Equipment();
+                equipment.id = 3;
+                equipment.centerId = 1;
+                equipment.serialNumber = "gvdfv";
+                equipment.inventoryNumber  = "32fdsfs";
+                equipment.name = "Очень длинное название оборудования";
+                equipment.fgDismantled="false";
+                equipment.fgNotInstall="false";
+
+                arr.add(equipment);
+
                 adapter = new MyAdapter(EquipmentActivity.this, arr, veryfied);
                 listView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
