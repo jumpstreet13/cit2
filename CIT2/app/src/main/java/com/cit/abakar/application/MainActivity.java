@@ -32,6 +32,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.cit.abakar.application.ExampleClasses.Center;
+import com.cit.abakar.application.ExampleClasses.CreatedId;
 import com.cit.abakar.application.ExampleClasses.Visit;
 
 import java.text.SimpleDateFormat;
@@ -111,19 +112,20 @@ public class MainActivity extends Activity {
                 visit = new Visit();
                 visit.centerId = arr.get(position).id;
                 visit.dateVisit = getCurrentDate();
-                visit.description = null;
+                visit.description = "Тестовый запрос";
                 final Intent intent = new Intent(MainActivity.this, EquipmentActivity.class);
                 intent.putExtra(ID, arr.get(position).id);
 
-                restApi.addVisit(visit).enqueue(new Callback<Void>() {
+                restApi.addVisit(visit).enqueue(new Callback<CreatedId>() {
                     @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        intent.putExtra(VISITID, getVisitId(response.headers().get("Location")));
+                    public void onResponse(Call<CreatedId> call, Response<CreatedId> response) {
+                        CreatedId createdId = response.body();
+                        intent.putExtra(VISITID, createdId.getCreatedId());
                         startActivity(intent);
                     }
 
                     @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
+                    public void onFailure(Call<CreatedId> call, Throwable t) {
                         Toast.makeText(MainActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -321,10 +323,6 @@ public class MainActivity extends Activity {
     }
 
 
-    public int getVisitId(String location) {
-        String[] s1 = location.split("/");
-        return Integer.parseInt(s1[s1.length - 1]);
-    }
 
     public String getCurrentDate() {
         Date date = new Date();

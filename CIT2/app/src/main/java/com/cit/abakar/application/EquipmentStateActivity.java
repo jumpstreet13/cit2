@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.cit.abakar.application.ExampleClasses.Condition;
+import com.cit.abakar.application.ExampleClasses.CreatedId;
 import com.cit.abakar.application.ExampleClasses.Equipment;
 import com.cit.abakar.application.ExampleClasses.Inspection;
 import com.cit.abakar.application.ExampleClasses.Malfunction;
@@ -163,10 +165,10 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 inspection.note = note;
 
                 progressBar.setVisibility(View.VISIBLE);
-                restApi.addInspection(inspection).enqueue(new Callback<Void>() {
+                restApi.addInspection(inspection).enqueue(new Callback<CreatedId>() {
                     @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        location = response.headers().get("Location");
+                    public void onResponse(Call<CreatedId> call, Response<CreatedId> response) {
+                        CreatedId createdId = response.body();
                         if (key.equals("YES")) {
                             final String[] reasons = spinner.getSelectedItem().toString().split(",");
                             ArrayList<Condition> result = new ArrayList<Condition>();
@@ -174,7 +176,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
                             for (Condition cc : result) {
                                 Malfunction malfunctions = new Malfunction();
-                                malfunctions.inspectionId = setInspectionId(location);
+                                malfunctions.inspectionId = createdId.getCreatedId();
                                 malfunctions.conditionId = cc.id;
                                 restApi.addMalfunction(malfunctions).enqueue(new Callback<Void>() {
                                     @Override
@@ -205,7 +207,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                     }
 
                     @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
+                    public void onFailure(Call<CreatedId> call, Throwable t) {
                         sendIsNotSucces();
                     }
                 });
@@ -385,10 +387,10 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         return arr;
     }
 
-    public int setInspectionId(String location) {
+   /* public int setInspectionId(String location) {
         String[] s1 = location.split("/");
         return Integer.parseInt(s1[s1.length - 1]);
-    }
+    }*/
 
     public void sendIsSuccesful() {
         Toast.makeText(this, R.string.SendIsSuccesful, Toast.LENGTH_SHORT).show();

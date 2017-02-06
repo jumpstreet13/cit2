@@ -3,6 +3,7 @@ package com.cit.abakar.application;
 
 import com.cit.abakar.application.ExampleClasses.Center;
 import com.cit.abakar.application.ExampleClasses.Condition;
+import com.cit.abakar.application.ExampleClasses.CreatedId;
 import com.cit.abakar.application.ExampleClasses.Dismantling;
 import com.cit.abakar.application.ExampleClasses.Equipment;
 import com.cit.abakar.application.ExampleClasses.Inspection;
@@ -34,10 +35,10 @@ public interface RestApi {
 
 
     @POST("visit/")
-    Call<Void> addVisit(@Body Visit visit);
+    Call<CreatedId> addVisit(@Body Visit visit);
 
     @POST("inspection/")
-    Call<Void> addInspection(@Body Inspection inspection);
+    Call<CreatedId> addInspection(@Body Inspection inspection);
 
     @POST("malfunction/")
     Call<Void> addMalfunction(@Body Malfunction malfunctions);
