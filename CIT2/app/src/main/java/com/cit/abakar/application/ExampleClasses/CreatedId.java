@@ -5,4 +5,19 @@ package com.cit.abakar.application.ExampleClasses;
  */
 
 public class CreatedId {
+
+    int createdID;
+
+
+    public CreatedId(int createdID) {
+        this.createdID = createdID;
+    }
+
+    public int getCreatedID() {
+        return createdID;
+    }
+
+    public void setCreatedID(int createdID) {
+        this.createdID = createdID;
+    }
 }

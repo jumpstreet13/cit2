@@ -25,6 +25,7 @@ import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
 import com.cit.abakar.application.ExampleClasses.Condition;
+import com.cit.abakar.application.ExampleClasses.CreatedId;
 import com.cit.abakar.application.ExampleClasses.Equipment;
 import com.cit.abakar.application.ExampleClasses.Inspection;
 import com.cit.abakar.application.ExampleClasses.Malfunction;
@@ -205,14 +206,15 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                 inspection.note = note;
 
                 progressBar.setVisibility(View.VISIBLE);
-                restApi.addInspection(inspection).enqueue(new Callback<Void>() {
+                restApi.addInspection(inspection).enqueue(new Callback<CreatedId>() {
                     @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        Log.e("Device", response.headers().get("Location"));
+                    public void onResponse(Call<CreatedId> call, Response<CreatedId> response) {
+                        //Log.e("Device", response.headers().get("Location"));
                         Log.e("Device", "success");
                         Log.e("Device", response.isSuccessful() + "");
                         Log.e("Device", response.code() + "");
-                        location = response.headers().get("Location");
+                        //location = response.headers().get("Location");
+                        CreatedId createdId = response.body();
                         if (key.equals("YES")) {
                             Log.e("Coldzera", "You shall not pass");
                             final String[] reasons = spinner.getSelectedItem().toString().split(",");
@@ -222,7 +224,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
                             for (Condition cc : result) {
                                 Malfunction malfunctions = new Malfunction();
-                                malfunctions.inspectionId = setInspectionId(location);
+                                malfunctions.inspectionId = createdId.getCreatedID();
                                 Log.e("Device malfunc", malfunctions.inspectionId + "");
                                 malfunctions.conditionId = cc.id;
                                 Log.e("Device condi", malfunctions.conditionId + "");
@@ -259,7 +261,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                     }
 
                     @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
+                    public void onFailure(Call<CreatedId> call, Throwable t) {
                         Log.e("Device", "wtf");
                         sendIsNotSucces();
                     }
@@ -444,10 +446,10 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         return arr;
     }
 
-    public int setInspectionId(String location) {
+/*    public int setInspectionId(String location) {
         Log.e("Device", location);
         String[] s1 = location.split("/");
         Log.e("Device", s1[s1.length - 1]);
         return Integer.parseInt(s1[s1.length - 1]);
-    }
+    }*/
 }
