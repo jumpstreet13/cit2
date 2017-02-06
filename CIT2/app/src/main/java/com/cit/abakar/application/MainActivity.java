@@ -352,36 +352,7 @@ public class MainActivity extends Activity {
             }
         }
         return false;
-
     }*/
-
-    }
-
-    public ArrayList<String> getArrString(ArrayList<Center> cr) {
-        ArrayList<String> arr = new ArrayList<String>();
-        for (Center cc : cr) {
-            arr.add(cc.name);
-        }
-        return arr;
-    }
-
-
-    public int getVisitId(String location) {
-        String[] s1 = location.split("/");
-        return Integer.parseInt(s1[s1.length - 1]);
-    }
-
-    public String getCurrentDate() {
-        Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-        Log.e("Date", format.format(date)+"");
-        return format.format(date);
-    }
-
-    public ArrayList<String> getBaseList() {
-        return getArrString(arr);
-    }
-
 
 
     class YourAdapter extends BaseAdapter {
