@@ -80,14 +80,10 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             veryfied.add(getIntent().getIntExtra("id", -5));
             np.printStackTrace();
         }
-
-        refreshList();
-
-
-
         buttonInspectionDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("Work", "it works");
                 progressBar.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(EquipmentActivity.this, MainActivity.class);
                 intent.putExtra("veryfied", veryfied);
@@ -96,6 +92,9 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 Toast.makeText(EquipmentActivity.this, "Инспекция прошла успешно", Toast.LENGTH_SHORT).show();
             }
         });
+
+        refreshList();
+
 
     }
 
@@ -444,10 +443,23 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
             @Override
             public void onFailure(Call<List<Equipment>> call, Throwable t) {
-                Toast.makeText(EquipmentActivity.this, "Нет соединения", Toast.LENGTH_SHORT);
+                Toast.makeText(EquipmentActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
             }
         });
+    }
+
+    public boolean isInspectionDone(ArrayList<Integer> array, int Shox) {
+
+        if(array == null){
+            return false;
+        }
+
+        if(array.size() -1  == Shox){
+            return true;
+        }
+
+        return false;
     }
 
 
