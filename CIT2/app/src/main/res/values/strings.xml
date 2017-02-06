@@ -32,7 +32,7 @@
     <string name="YouDidNotWriteNumberOfAkt">Вы не ввели номер акта</string>
     <string name="SendIsSuccesful">Отправка выполнена успешно</string>
     <string name="SendIsNotSucces">Отправка не выполнена</string>
-    <string name="Note">Написать отчет</string>
+    <string name="Note">Оставить замечание</string>
     <string name="Malfunc">Неисправно</string>
     <string name="WeHaveIt">В наличии</string>
     <string name="Using">Используется</string>
