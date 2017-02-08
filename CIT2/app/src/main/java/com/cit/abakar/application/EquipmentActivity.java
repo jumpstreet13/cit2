@@ -13,7 +13,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -428,7 +427,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
             @Override
             public void onFailure(Call<List<Equipment>> call, Throwable t) {
-                Toast.makeText(EquipmentActivity.this, "Нет соединения", Toast.LENGTH_SHORT);
+                Toast.makeText(EquipmentActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
             }
         });

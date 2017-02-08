@@ -34,3 +34,5 @@ https://ru.wikipedia.org/wiki/Design_Patterns
 https://habrahabr.ru/company/rambler-co/blog/275943/
 
 https://habrahabr.ru/post/265269/
+
+https://developer.android.com/index.html

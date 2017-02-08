@@ -29,7 +29,7 @@
         android:fontFamily="monospace"
         style="@android:style/Widget.Material.Light.EditText"
         android:textStyle="normal|bold|italic"
-        android:singleLine="true"
+        android:maxLines="1"
         android:selectAllOnFocus="false" />
 
     <Button

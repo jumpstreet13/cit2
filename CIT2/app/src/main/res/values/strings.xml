@@ -13,12 +13,12 @@
     <string name="Install">Установить</string>
     <string name="DeInstall">Демонтировать</string>
     <string name="SendNuberOfAkt">Отправить</string>
-    <string name="NumberOfAkt">Номер акта...</string>
+    <string name="NumberOfAkt">Номер акта&#8230;</string>
     <string name="Search">Поиск</string>
     <string name="connection">соединение</string>
     <string name="syncronization">Синхронизация</string>
     <string name="ChooseAdressOfServer">Установить адрес сервера</string>
-    <string name="url">Введите новый URL...</string>
+    <string name="url">Введите новый URL&#8230;</string>
     <string name="Adress_is_not_set_yet">Адрес пока не задан</string>
     <string name="NumberOfThisPhone">"Номер телефона "</string>
     <string name="fg_availability">В наличии</string>
