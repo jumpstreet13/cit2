@@ -417,6 +417,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         invalidateOptionsMenu();
         if(!hasConnection(this)) {
             Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
+            network = false;
         }
         if(hasConnection(this) && !network){
             getConditions();
@@ -444,9 +445,6 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
     public void onItemsSelected(boolean[] selected) {
         Log.e("WTF", selected[0] + "");
-
-    public void onItemsSelected(boolean[] selected){
-
     }
 
     public void getConditions(){
@@ -468,19 +466,6 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         });
     }
 
-    public ArrayList<Condition> compare(String[] reasons, List<Condition> conditions) {
-
-        ArrayList<Condition> result = new ArrayList<Condition>();
-        for (int i = 0; i < conditions.size(); i++) {
-            for (int j = 0; j < reasons.length; j++) {
-                if (conditions.get(i).name.trim().toLowerCase().equals(reasons[j].trim().toLowerCase())) {
-                    result.add(conditions.get(i));
-                    break;
-                }
-            }
-        }
-        return result;
-    }
 
     public ArrayList<String> getConditionsTitle(List<Condition> list) {
         ArrayList<String> arr = new ArrayList<String>();
