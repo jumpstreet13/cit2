@@ -64,11 +64,17 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     private MyAdapter adapter;
     private ProgressBar progressBar;
     private ArrayList<Integer> veryfied = new ArrayList<Integer>();
+    private static boolean network;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment);
+        if(hasConnection(this)){
+            network = true;
+        }else {
+            network = false;
+        }
         requestMultiplePermissions();
         getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
         listView = (ListView) findViewById(R.id.listViewEquipment);
@@ -124,6 +130,14 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     protected void onResume() {
         super.onResume();
         invalidateOptionsMenu();
+        if(!hasConnection(this)){
+            Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(hasConnection(this) && !network){
+            refreshList();
+            network = true;
+        }
     }
 
     @Override
@@ -142,6 +156,10 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 return true;
 
             case R.id.refresh:
+                if(!hasConnection(EquipmentActivity.this)){
+                    Toast.makeText(this, "Не обновлено", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
                 refreshList();
                 Toast.makeText(this, "Обновлено", Toast.LENGTH_SHORT).show();
                 return true;
@@ -213,6 +231,10 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     @Override
     public void textViewClicked(int position) {
+        if(!hasConnection(this)){
+            Toast.makeText(this, "Нет соединения",Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);
         intent.putExtra(ID, getIntent().getIntExtra(ID, -5));
@@ -281,6 +303,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                     public void onFailure(Call<Void> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
                         sendIsNotSucces();
+                        dialog.dismiss();
                     }
                 });
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -356,6 +379,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                     public void onFailure(Call<Void> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
                         sendIsNotSucces();
+                        dialog.dismiss();
                     }
                 });
             }
