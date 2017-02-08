@@ -189,6 +189,10 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         invalidateOptionsMenu();
+        if(!hasConnection(this)){
+            Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
+            return;
+        }
     }
 
 
@@ -215,7 +219,14 @@ public class MainActivity extends Activity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.filter(newText.trim());
+                try {
+                    adapter.filter(newText.trim());
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
                 listView.invalidate();
                 return true;
             }

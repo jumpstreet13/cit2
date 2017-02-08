@@ -64,6 +64,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     private String note = "";
     private Boolean succes;
     private ArrayList<Integer> veryfied = new ArrayList<Integer>();
+    private boolean network;
+
+
 
 
     public void sendIsSuccesful() {
@@ -79,6 +82,11 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_state);
         getActionBar().setTitle(R.string.ActionBarISOfflineEquipmentStateActivity);
+        if(hasConnection(this)){
+            network = true;
+        }else {
+            network = false;
+        }
 
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         button = (Button) findViewById(R.id.buttonInEquipmentState);
@@ -99,6 +107,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         retrofit = new Retrofit.Builder().baseUrl(MYURL).
                 addConverterFactory(GsonConverterFactory.create()).build();
         restApi = retrofit.create(RestApi.class);
+
        /* progressBar.setVisibility(View.VISIBLE);
         restApi.getEquipment().enqueue(new Callback<List<Equipment>>() {
             @Override
@@ -134,24 +143,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         // Log.e("ZZ", equipment.fg_dismantled + " " + equipment.fg_not_install + " ");
 
 
-        progressBar.setVisibility(View.VISIBLE);
-        restApi.getConditios().enqueue(new Callback<List<Condition>>() {
-            @Override
-            public void onResponse(Call<List<Condition>> call, Response<List<Condition>> response) {
-                ar.addAll(response.body());
-                spinner.setItems(getConditionsTitle(ar), getString(R.string.ChooseTheReason), EquipmentStateActivity.this);
-                progressBar.setVisibility(View.GONE);
-            }
+        getConditions();
 
-            @Override
-            public void onFailure(Call<List<Condition>> call, Throwable t) {
-                Toast.makeText(EquipmentStateActivity.this, "Не удалось загрузить список ошибок", Toast.LENGTH_SHORT).show();
-                progressBar.setVisibility(View.GONE);
-            }
-        });
-        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.forSpinner, android.R.layout.simple_spinner_item);
-        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //spinner.setAdapter(adapter);
+
         switch1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -265,6 +259,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                     public void onFailure(Call<CreatedId> call, Throwable t) {
                         Log.e("Device", "wtf");
                         sendIsNotSucces();
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
 
@@ -420,10 +415,21 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     protected void onResume() {
         super.onResume();
         invalidateOptionsMenu();
+        if(!hasConnection(this)) {
+            Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
+        }
+        if(hasConnection(this) && !network){
+            getConditions();
+            network = true;
+        }
     }
 
     @Override
     public void onBackPressed() {
+        if(!hasConnection(this)){
+            Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
+            return;
+        }
         progressBar.setVisibility(View.VISIBLE);
         Intent intent = new Intent(this, EquipmentActivity.class);
         intent.putExtra("id", getIntent().getIntExtra("id", -5));
@@ -435,8 +441,45 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     }
 
     @Override
+
     public void onItemsSelected(boolean[] selected) {
         Log.e("WTF", selected[0] + "");
+
+    public void onItemsSelected(boolean[] selected){
+
+    }
+
+    public void getConditions(){
+
+        progressBar.setVisibility(View.VISIBLE);
+        restApi.getConditios().enqueue(new Callback<List<Condition>>() {
+            @Override
+            public void onResponse(Call<List<Condition>> call, Response<List<Condition>> response) {
+                ar.addAll(response.body());
+                spinner.setItems(getConditionsTitle(ar), getString(R.string.ChooseTheReason), EquipmentStateActivity.this);
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<List<Condition>> call, Throwable t) {
+                Toast.makeText(EquipmentStateActivity.this, "Не удалось загрузить список ошибок", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public ArrayList<Condition> compare(String[] reasons, List<Condition> conditions) {
+
+        ArrayList<Condition> result = new ArrayList<Condition>();
+        for (int i = 0; i < conditions.size(); i++) {
+            for (int j = 0; j < reasons.length; j++) {
+                if (conditions.get(i).name.trim().toLowerCase().equals(reasons[j].trim().toLowerCase())) {
+                    result.add(conditions.get(i));
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
     public ArrayList<String> getConditionsTitle(List<Condition> list) {

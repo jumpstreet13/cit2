@@ -63,11 +63,17 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     private MyAdapter adapter;
     private ProgressBar progressBar;
     private ArrayList<Integer> veryfied = new ArrayList<Integer>();
+    private static boolean network;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment);
+        if(hasConnection(this)){
+            network = true;
+        }else {
+            network = false;
+        }
         requestMultiplePermissions();
         getActionBar().setTitle(R.string.ActionBarIsOnlineEquipmentActivity);
         listView = (ListView) findViewById(R.id.listViewEquipment);
@@ -140,6 +146,21 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             super.onResume();
             invalidateOptionsMenu();
         }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        invalidateOptionsMenu();
+        if(!hasConnection(this)){
+            Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(hasConnection(this) && !network){
+            refreshList();
+            network = true;
+        }
+    }
 
 
     @Override
@@ -217,9 +238,20 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                     });
                     return true;
 
+
                 case R.id.conntection_settings:
                     Toast toast = Toast.makeText(EquipmentActivity.this, R.string.NeworkConnection, Toast.LENGTH_SHORT);
                     toast.show();
+
+            case R.id.refresh:
+                if(!hasConnection(EquipmentActivity.this)){
+                    Toast.makeText(this, "Не обновлено", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                refreshList();
+                Toast.makeText(this, "Обновлено", Toast.LENGTH_SHORT).show();
+                return true;
+
 
                     break;
 
@@ -230,6 +262,10 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
         @Override
         public void textViewClicked ( int position){
+          if(!hasConnection(this)){
+            Toast.makeText(this, "Нет соединения",Toast.LENGTH_SHORT).show();
+            return;
+        }
 
             Intent intent = new Intent(EquipmentActivity.this, EquipmentStateActivity.class);
             intent.putExtra("id", getIntent().getIntExtra("id", -5));
@@ -241,6 +277,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             startActivity(intent);
 
         }
+
 
 
         @Override
@@ -328,12 +365,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 MainActivity.MY_PERMISSIONS_REQUEST_READ_CONTACTS);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
 
 
     @Override
@@ -409,6 +440,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                         Log.e("Shox", "wtf");
                         progressBar.setVisibility(View.GONE);
                         sendIsNotSucces();
+                        dialog.dismiss();
                     }
                 });
             }
