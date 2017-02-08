@@ -132,11 +132,13 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         invalidateOptionsMenu();
         if(!hasConnection(this)){
             Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
+            network = false;
             return;
         }
         if(hasConnection(this) && !network){
             refreshList();
             network = true;
+            return;
         }
     }
 
@@ -158,6 +160,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             case R.id.refresh:
                 if(!hasConnection(EquipmentActivity.this)){
                     Toast.makeText(this, "Не обновлено", Toast.LENGTH_SHORT).show();
+                    network = false;
                     return true;
                 }
                 refreshList();

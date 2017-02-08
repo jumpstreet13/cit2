@@ -60,6 +60,7 @@ public class MultiSelectionSpinner extends Spinner implements DialogInterface.On
         return items;
     }
 
+
     @Override
     public void onCancel(DialogInterface dialog) {
         // refresh text on spinner

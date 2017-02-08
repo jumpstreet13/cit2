@@ -139,6 +139,11 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
             @Override
             public void onClick(View v) {
 
+                if(!isSelected(spinner.getSelected())){
+                    Toast.makeText(EquipmentStateActivity.this, "Вы не выбрали ни одной причины", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (switch3.isChecked()) {
                     sendReport("YES");
                 } else {
@@ -147,6 +152,14 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
             }
         });
+    }
+
+    public boolean isSelected(ArrayList<Boolean> arrayList){
+        for(Boolean bol : arrayList){
+            if (bol == true)
+                return true;
+        }
+        return false;
     }
 
 
@@ -343,10 +356,12 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         invalidateOptionsMenu();
         if(!hasConnection(this)) {
             Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
+            network = false;
         }
         if(hasConnection(this) && !network){
             getConditions();
             network = true;
+            return;
         }
     }
 
