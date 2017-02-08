@@ -191,7 +191,6 @@ public class MainActivity extends Activity {
         invalidateOptionsMenu();
         if(!hasConnection(this)){
             Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
-            return;
         }
     }
 
