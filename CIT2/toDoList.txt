@@ -38,3 +38,11 @@ https://habrahabr.ru/post/265269/
 https://developer.android.com/index.html
 
 https://habrahabr.ru/post/265119/
+
+http://www.quizful.net/post/java_reference_types
+
+https://developer.android.com/training/basics/fragments/communicating.html
+
+https://habrahabr.ru/company/badoo/blog/240479/
+
+https://habrahabr.ru/company/sebbia/blog/243537/
