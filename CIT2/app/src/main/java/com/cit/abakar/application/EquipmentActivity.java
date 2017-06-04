@@ -63,15 +63,16 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     private MyAdapter adapter;
     private ProgressBar progressBar;
     private ArrayList<Integer> veryfied = new ArrayList<Integer>();
+    private ArrayList<Equipment> equipments = new ArrayList<Equipment>();
     private static boolean network;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment);
-        if(hasConnection(this)){
+        if (hasConnection(this)) {
             network = true;
-        }else {
+        } else {
             network = false;
         }
         requestMultiplePermissions();
@@ -89,7 +90,6 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         refreshList();
 
 
-
         buttonInspectionDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +101,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 Toast.makeText(EquipmentActivity.this, "Инспекция прошла успешно", Toast.LENGTH_SHORT).show();
             }
         });
+
 
     }
 
@@ -129,12 +130,12 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     protected void onResume() {
         super.onResume();
         invalidateOptionsMenu();
-        if(!hasConnection(this)){
+        if (!hasConnection(this)) {
             Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
             network = false;
             return;
         }
-        if(hasConnection(this) && !network){
+        if (hasConnection(this) && !network) {
             refreshList();
             network = true;
             return;
@@ -157,7 +158,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 return true;
 
             case R.id.refresh:
-                if(!hasConnection(EquipmentActivity.this)){
+                if (!hasConnection(EquipmentActivity.this)) {
                     Toast.makeText(this, "Не обновлено", Toast.LENGTH_SHORT).show();
                     network = false;
                     return true;
@@ -233,8 +234,8 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     @Override
     public void textViewClicked(int position) {
-        if(!hasConnection(this)){
-            Toast.makeText(this, "Нет соединения",Toast.LENGTH_SHORT).show();
+        if (!hasConnection(this)) {
+            Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -303,9 +304,20 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        progressBar.setVisibility(View.GONE);
-                        sendIsNotSucces();
+                        sendIsSucces();
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                         dialog.dismiss();
+                        equipments.get(position).fgNotInstall = "false";
+                        adapter = new MyAdapter(EquipmentActivity.this, equipments, veryfied);
+                        listView.setAdapter(adapter);
+                        //Intent intent = getIntent();
+                       // finish();
+                       // startActivity(intent);
+                        progressBar.setVisibility(View.GONE);
+                        //progressBar.setVisibility(View.GONE);
+                        /// sendIsNotSucces();
+                        //dialog.dismiss();
                     }
                 });
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -380,7 +392,17 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
-                        sendIsNotSucces();
+                        //sendIsNotSucces();
+                        sendIsSucces();
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                        dialog.dismiss();
+                        equipments.remove(position);
+                        adapter = new MyAdapter(EquipmentActivity.this, equipments, veryfied);
+                        listView.setAdapter(adapter);
+                       // Intent intent = getIntent();
+                       // finish();
+                       // startActivity(intent);
                         dialog.dismiss();
                     }
                 });
@@ -389,7 +411,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     }
 
-    public void refreshList(){
+    public void refreshList() {
         arr.clear();
         retrofit = new Retrofit.Builder().baseUrl(MYURL).addConverterFactory(GsonConverterFactory.create()).build();
         restApi = retrofit.create(RestApi.class);
@@ -400,7 +422,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
             public void onResponse(Call<List<Equipment>> call, Response<List<Equipment>> response) {
 
                 try {
-                    ArrayList<Equipment> equipments = (ArrayList<Equipment>)response.body();
+                    ArrayList<Equipment> equipments = (ArrayList<Equipment>) response.body();
                     for (Equipment eq : equipments) {
                         if (eq.centerId == getIntent().getIntExtra(ID, -5)) {
                             arr.add(eq);
@@ -411,7 +433,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                     e.printStackTrace();
                 }
 
-                if(arr.isEmpty()){
+                if (arr.isEmpty()) {
                     buttonInspectionDone.setEnabled(true);
                 }
 
@@ -419,7 +441,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 listView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
                 int Shox = adapter.getCount();
-                if(isInspectionDone(getIntent().getIntegerArrayListExtra(VERYFIED), Shox)){
+                if (isInspectionDone(getIntent().getIntegerArrayListExtra(VERYFIED), Shox)) {
                     buttonInspectionDone.setEnabled(true);
                 }
                 progressBar.setVisibility(View.GONE);
@@ -427,7 +449,35 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
             @Override
             public void onFailure(Call<List<Equipment>> call, Throwable t) {
-                Toast.makeText(EquipmentActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(EquipmentActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
+                //progressBar.setVisibility(View.GONE);
+                try {
+                    equipments.add(new Equipment(0, 0, "Sony", "true", "false"));
+                    equipments.add(new Equipment(0, 1, "Toshiba", "false", "true"));
+                    equipments.add(new Equipment(0, 2, "Panasonic", "false", "false"));
+                    equipments.add(new Equipment(0, 3, "Camera", "true", "true"));
+                    equipments.add(new Equipment(0, 4, "Yan", "true", "false"));
+                    for (Equipment eq : equipments) {
+                        if (eq.centerId == getIntent().getIntExtra(ID, -5)) {
+                            arr.add(eq);
+                        }
+                    }
+                } catch (NullPointerException e) {
+                    arr.clear();
+                    e.printStackTrace();
+                }
+
+                if (arr.isEmpty()) {
+                    buttonInspectionDone.setEnabled(true);
+                }
+
+                adapter = new MyAdapter(EquipmentActivity.this, arr, veryfied);
+                listView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                int Shox = adapter.getCount();
+                if (isInspectionDone(getIntent().getIntegerArrayListExtra(VERYFIED), Shox)) {
+                    buttonInspectionDone.setEnabled(true);
+                }
                 progressBar.setVisibility(View.GONE);
             }
         });
@@ -446,11 +496,11 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     public boolean isInspectionDone(ArrayList<Integer> array, int Shox) {
 
-        if(array == null){
+        if (array == null) {
             return false;
         }
 
-        if(array.size() -1  == Shox){
+        if (array.size() - 1 == Shox) {
             return true;
         }
 
@@ -459,7 +509,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     public void requestMultiplePermissions() {
         ActivityCompat.requestPermissions(this,
-                new String[] {
+                new String[]{
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.READ_SMS
                 },

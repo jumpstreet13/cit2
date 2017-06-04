@@ -100,6 +100,14 @@ public class MainActivity extends Activity {
 
             @Override
             public void onFailure(Call<List<Center>> call, Throwable t) {
+                arr.add(new Center("Кущевская", 0));
+                arr.add(new Center("Пластуновская", 1));
+                arr.add(new Center("Кореновская", 2));
+                arr.add(new Center("Васюринская", 3));
+                arr.add(new Center("Веселовка", 4));
+                adapter = new YourAdapter(MainActivity.this, arr);
+                listView.setAdapter(adapter);
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(MainActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
             }
         });
@@ -126,7 +134,8 @@ public class MainActivity extends Activity {
 
                     @Override
                     public void onFailure(Call<CreatedId> call, Throwable t) {
-                        Toast.makeText(MainActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
                     }
                 });
             }
@@ -139,7 +148,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         invalidateOptionsMenu();
-        if(!hasConnection(this)){
+        if (!hasConnection(this)) {
             Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -334,11 +343,10 @@ public class MainActivity extends Activity {
     }
 
 
-
     public String getCurrentDate() {
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-        Log.e("Date", format.format(date)+"");
+        Log.e("Date", format.format(date) + "");
         return format.format(date);
     }
 

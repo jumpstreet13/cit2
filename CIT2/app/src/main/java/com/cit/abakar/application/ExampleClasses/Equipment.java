@@ -29,6 +29,12 @@ public class Equipment  {
 
     }
 
-
+    public Equipment(int centerId, int id, String name, String fgDismantled, String fgNotInstall) {
+        this.centerId = centerId;
+        this.id = id;
+        this.name = name;
+        this.fgDismantled = fgDismantled;
+        this.fgNotInstall = fgNotInstall;
+    }
 }
 

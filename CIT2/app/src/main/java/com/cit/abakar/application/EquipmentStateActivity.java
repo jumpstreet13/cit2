@@ -69,17 +69,14 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     private boolean network;
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_state);
         getActionBar().setTitle(R.string.ActionBarISOfflineEquipmentStateActivity);
-        if(hasConnection(this)){
+        if (hasConnection(this)) {
             network = true;
-        }else {
+        } else {
             network = false;
         }
 
@@ -124,8 +121,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
                     spinner.setVisibility(View.VISIBLE);
                     switch2.setChecked(false);
                     switch2.setEnabled(false);
-                }
-                else {
+                } else {
                     spinner.setVisibility(View.INVISIBLE);
                     switch2.setEnabled(true);
                 }
@@ -138,7 +134,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
             @Override
             public void onClick(View v) {
 
-                if(!isSelected(spinner.getSelected())){
+                if (!isSelected(spinner.getSelected())) {
                     Toast.makeText(EquipmentStateActivity.this, "Вы не выбрали ни одной причины", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -153,8 +149,8 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         });
     }
 
-    public boolean isSelected(ArrayList<Boolean> arrayList){
-        for(Boolean bol : arrayList){
+    public boolean isSelected(ArrayList<Boolean> arrayList) {
+        for (Boolean bol : arrayList) {
             if (bol == true)
                 return true;
         }
@@ -163,61 +159,77 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
 
     public void sendReport(final String key) {
-                final Inspection inspection = new Inspection();
-                inspection.equipmentId = getIntent().getIntExtra(IDOFEQUIPMENT, -5);
-                inspection.visitId = getIntent().getIntExtra(VISITID, -5);
-                inspection.fgAvailability = switch1.isChecked();
-                inspection.fgUsings = switch2.isChecked();
-                inspection.note = note;
+        final Inspection inspection = new Inspection();
+        inspection.equipmentId = getIntent().getIntExtra(IDOFEQUIPMENT, -5);
+        inspection.visitId = getIntent().getIntExtra(VISITID, -5);
+        inspection.fgAvailability = switch1.isChecked();
+        inspection.fgUsings = switch2.isChecked();
+        inspection.note = note;
 
-                progressBar.setVisibility(View.VISIBLE);
-                restApi.addInspection(inspection).enqueue(new Callback<CreatedId>() {
-                    @Override
-                    public void onResponse(Call<CreatedId> call, Response<CreatedId> response) {
-                        CreatedId createdId = response.body();
-                        if (key.equals("YES")) {
-                            final String[] reasons = spinner.getSelectedItem().toString().split(",");
-                            ArrayList<Condition> result = new ArrayList<Condition>();
-                            result.addAll(compare(reasons, ar));
+        progressBar.setVisibility(View.VISIBLE);
+        restApi.addInspection(inspection).enqueue(new Callback<CreatedId>() {
+            @Override
+            public void onResponse(Call<CreatedId> call, Response<CreatedId> response) {
+                CreatedId createdId = response.body();
+                if (key.equals("YES")) {
+                    final String[] reasons = spinner.getSelectedItem().toString().split(",");
+                    ArrayList<Condition> result = new ArrayList<Condition>();
+                    result.addAll(compare(reasons, ar));
 
-                            for (Condition cc : result) {
-                                Malfunction malfunctions = new Malfunction();
-                                malfunctions.inspectionId = createdId.getCreatedId();
-                                malfunctions.conditionId = cc.id;
-                                restApi.addMalfunction(malfunctions).enqueue(new Callback<Void>() {
-                                    @Override
-                                    public void onResponse(Call<Void> call, Response<Void> response) {
-                                        progressBar.setVisibility(View.GONE);
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<Void> call, Throwable t) {
-                                        Toast.makeText(EquipmentStateActivity.this, "Не удалось отправить неисправности", Toast.LENGTH_SHORT).show();
-                                        progressBar.setVisibility(View.GONE);
-                                    }
-                                });
+                    for (Condition cc : result) {
+                        Malfunction malfunctions = new Malfunction();
+                        malfunctions.inspectionId = createdId.getCreatedId();
+                        malfunctions.conditionId = cc.id;
+                        restApi.addMalfunction(malfunctions).enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                progressBar.setVisibility(View.GONE);
                             }
-                            Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
-                            intent.putExtra(ID, getIntent().getIntExtra(ID, -5));
-                            intent.putExtra(VISITID, getIntent().getIntExtra(VISITID, -5));
-                            intent.putExtra(VERYFIED, veryfied);
-                            startActivity(intent);
-                        } else {
-                            Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
-                            intent.putExtra(ID, getIntent().getIntExtra(ID, -5));
-                            intent.putExtra(VISITID, getIntent().getIntExtra(VISITID, -5));
-                            intent.putExtra(VERYFIED, veryfied);
-                            startActivity(intent);
-                        }
-                        sendIsSuccesful();
-                    }
 
-                    @Override
-                    public void onFailure(Call<CreatedId> call, Throwable t) {
-                        sendIsNotSucces();
-                        progressBar.setVisibility(View.GONE);
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                               // Toast.makeText(EquipmentStateActivity.this, "Не удалось отправить неисправности", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        });
                     }
-                });
+                    Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
+                    intent.putExtra(ID, getIntent().getIntExtra(ID, -5));
+                    intent.putExtra(VISITID, getIntent().getIntExtra(VISITID, -5));
+                    intent.putExtra(VERYFIED, veryfied);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
+                    intent.putExtra(ID, getIntent().getIntExtra(ID, -5));
+                    intent.putExtra(VISITID, getIntent().getIntExtra(VISITID, -5));
+                    intent.putExtra(VERYFIED, veryfied);
+                    startActivity(intent);
+                }
+                sendIsSuccesful();
+            }
+
+            @Override
+            public void onFailure(Call<CreatedId> call, Throwable t) {
+                if (key.equals("YES")) {
+                    final String[] reasons = spinner.getSelectedItem().toString().split(",");
+                    ArrayList<Condition> result = new ArrayList<Condition>();
+                    result.addAll(compare(reasons, ar));
+                    Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
+                    intent.putExtra(ID, getIntent().getIntExtra(ID, -5));
+                    intent.putExtra(VISITID, getIntent().getIntExtra(VISITID, -5));
+                    intent.putExtra(VERYFIED, veryfied);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(EquipmentStateActivity.this, EquipmentActivity.class);
+                    intent.putExtra(ID, getIntent().getIntExtra(ID, -5));
+                    intent.putExtra(VISITID, getIntent().getIntExtra(VISITID, -5));
+                    intent.putExtra(VERYFIED, veryfied);
+                    startActivity(intent);
+                }
+                sendIsSuccesful();
+                progressBar.setVisibility(View.GONE);
+            }
+        });
 
     }
 
@@ -353,11 +365,11 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     protected void onResume() {
         super.onResume();
         invalidateOptionsMenu();
-        if(!hasConnection(this)) {
+        if (!hasConnection(this)) {
             Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
             network = false;
         }
-        if(hasConnection(this) && !network){
+        if (hasConnection(this) && !network) {
             getConditions();
             network = true;
             return;
@@ -366,7 +378,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
     @Override
     public void onBackPressed() {
-        if(!hasConnection(this)){
+        if (!hasConnection(this)) {
             Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -381,11 +393,11 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     }
 
     @Override
-    public void onItemsSelected(boolean[] selected){
+    public void onItemsSelected(boolean[] selected) {
 
     }
 
-    public void getConditions(){
+    public void getConditions() {
 
         progressBar.setVisibility(View.VISIBLE);
         restApi.getConditios().enqueue(new Callback<List<Condition>>() {
@@ -398,7 +410,15 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
 
             @Override
             public void onFailure(Call<List<Condition>> call, Throwable t) {
-                Toast.makeText(EquipmentStateActivity.this, "Не удалось загрузить список ошибок", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(EquipmentStateActivity.this, "Не удалось загрузить список ошибок", Toast.LENGTH_SHORT).show();
+                List<Condition> conditions = new ArrayList<Condition>();
+                conditions.add(new Condition(0, "Сломан кулер", "Сломан кулер"));
+                conditions.add(new Condition(1, "Нет камеры", "Нет камеры"));
+                conditions.add(new Condition(2, "Сломано охлаждение", "Сломано охлаждение"));
+                conditions.add(new Condition(3, "Другая причина", "Другая причина"));
+                ar.addAll(conditions);
+                spinner.setItems(getConditionsTitle(ar), getString(R.string.ChooseTheReason), EquipmentStateActivity.this);
+                progressBar.setVisibility(View.GONE);
                 progressBar.setVisibility(View.GONE);
             }
         });
