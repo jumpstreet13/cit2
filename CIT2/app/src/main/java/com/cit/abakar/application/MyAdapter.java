@@ -23,6 +23,8 @@ public class MyAdapter extends BaseAdapter {
     private ImageButton buttonInstallation;
     private ImageButton buttondeinstallation;
     private AdapterInterface adapterInterface;
+    private Button main;
+    private static int counter;
 
    /* public void setActivity(AdapterInterface adapterInterface){
         this.adapterInterface =  adapterInterface;
@@ -60,7 +62,7 @@ public class MyAdapter extends BaseAdapter {
             //convertView = inflater.inflate(R.layout.mylist, parent, false);
             convertView = inflater.inflate(R.layout.mylist_forequipments, parent, false);
         }
-        Button main = (Button) convertView.findViewById(R.id.textViewForEquipments);
+        main = (Button) convertView.findViewById(R.id.textViewForEquipments);
         buttonInstallation = (ImageButton) convertView.findViewById(R.id.button_Installation);
         buttondeinstallation = (ImageButton) convertView.findViewById(R.id.button_Deinstallation);
         // buttondeinstallation.setElevation(5);
@@ -109,6 +111,14 @@ public class MyAdapter extends BaseAdapter {
                 main.setEnabled(false);
                 break;
             }
+        }
+
+        if(!main.isEnabled()){
+            counter++;
+        }
+
+        if(counter == 2){
+            EquipmentActivity.counter = 2;
         }
 
         return convertView;

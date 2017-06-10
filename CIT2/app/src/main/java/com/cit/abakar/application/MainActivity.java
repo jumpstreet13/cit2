@@ -39,7 +39,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -76,11 +78,15 @@ public class MainActivity extends Activity {
         MYURL = getSharedPreferences(SHAREDNAME, Context.MODE_PRIVATE).getString(URLSETTINS, "http://10.39.5.76/apiv1/");
         getActionBar().setTitle(R.string.ActionBarIsOnlineMainActivity);
         progressBar = (ProgressBar) findViewById(R.id.progressBarInMainActivity);
-
-
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(100, TimeUnit.MILLISECONDS)
+                .build();
         listView = (ListView) findViewById(R.id.listViewMain);
         try {
-            retrofit = new Retrofit.Builder().baseUrl(MYURL.trim()).addConverterFactory(GsonConverterFactory.create()).build();
+            retrofit = new Retrofit.Builder().baseUrl(MYURL.trim()).
+                    addConverterFactory(GsonConverterFactory.create())
+                    .client(client)
+                    .build();
         } catch (Exception ex) {
             Toast.makeText(this, "Неккоректный адрес сервера, переход к адресу по умолчанию", Toast.LENGTH_LONG).show();
             MYURL = "http://10.39.5.76/apiv1/";
@@ -108,7 +114,7 @@ public class MainActivity extends Activity {
                 adapter = new YourAdapter(MainActivity.this, arr);
                 listView.setAdapter(adapter);
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(MainActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Нет соединения", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -149,7 +155,7 @@ public class MainActivity extends Activity {
         super.onResume();
         invalidateOptionsMenu();
         if (!hasConnection(this)) {
-            Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
             return;
         }
     }

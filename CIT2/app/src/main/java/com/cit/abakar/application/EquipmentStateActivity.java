@@ -30,7 +30,9 @@ import com.cit.abakar.application.ExampleClasses.Malfunction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,6 +75,9 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_state);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(100, TimeUnit.MILLISECONDS)
+                .build();
         getActionBar().setTitle(R.string.ActionBarISOfflineEquipmentStateActivity);
         if (hasConnection(this)) {
             network = true;
@@ -95,7 +100,7 @@ public class EquipmentStateActivity extends Activity implements MultiSelectionSp
         veryfied.addAll(getIntent().getIntegerArrayListExtra(VERYFIED));
 
         retrofit = new Retrofit.Builder().baseUrl(MYURL).
-                addConverterFactory(GsonConverterFactory.create()).build();
+                addConverterFactory(GsonConverterFactory.create()).client(client).build();
         restApi = retrofit.create(RestApi.class);
         getConditions();
 

@@ -35,7 +35,9 @@ import com.cit.abakar.application.ExampleClasses.Installation;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,11 +67,16 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
     private ArrayList<Integer> veryfied = new ArrayList<Integer>();
     private ArrayList<Equipment> equipments = new ArrayList<Equipment>();
     private static boolean network;
+    private OkHttpClient client;
+    public static int counter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment);
+        client = new OkHttpClient.Builder()
+                .connectTimeout(100, TimeUnit.MILLISECONDS)
+                .build();
         if (hasConnection(this)) {
             network = true;
         } else {
@@ -131,7 +138,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
         super.onResume();
         invalidateOptionsMenu();
         if (!hasConnection(this)) {
-            Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(this, "Нет соединения", Toast.LENGTH_SHORT).show();
             network = false;
             return;
         }
@@ -159,7 +166,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
             case R.id.refresh:
                 if (!hasConnection(EquipmentActivity.this)) {
-                    Toast.makeText(this, "Не обновлено", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "Не обновлено", Toast.LENGTH_SHORT).show();
                     network = false;
                     return true;
                 }
@@ -413,7 +420,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
 
     public void refreshList() {
         arr.clear();
-        retrofit = new Retrofit.Builder().baseUrl(MYURL).addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl(MYURL).client(client).addConverterFactory(GsonConverterFactory.create()).build();
         restApi = retrofit.create(RestApi.class);
 
         progressBar.setVisibility(View.VISIBLE);
@@ -444,6 +451,7 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 if (isInspectionDone(getIntent().getIntegerArrayListExtra(VERYFIED), Shox)) {
                     buttonInspectionDone.setEnabled(true);
                 }
+
                 progressBar.setVisibility(View.GONE);
             }
 
@@ -477,6 +485,10 @@ public class EquipmentActivity extends Activity implements AdapterInterface, Mul
                 int Shox = adapter.getCount();
                 if (isInspectionDone(getIntent().getIntegerArrayListExtra(VERYFIED), Shox)) {
                     buttonInspectionDone.setEnabled(true);
+                }
+                if(counter == 2){
+                    buttonInspectionDone.setEnabled(true);
+                    counter = 0;
                 }
                 progressBar.setVisibility(View.GONE);
             }
